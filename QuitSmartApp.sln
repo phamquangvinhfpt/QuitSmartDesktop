@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuitSmartApp", "QuitSmartApp.csproj", "{FE29CDA6-5F1A-4355-A420-DE19E0BCC58B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE29CDA6-5F1A-4355-A420-DE19E0BCC58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE29CDA6-5F1A-4355-A420-DE19E0BCC58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE29CDA6-5F1A-4355-A420-DE19E0BCC58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE29CDA6-5F1A-4355-A420-DE19E0BCC58B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EE1E1CB-0749-422A-9C90-EA4ACE718AF4}
+	EndGlobalSection
+EndGlobal
