@@ -33,7 +33,7 @@ public partial class QuitSmartDesktopContext : DbContext
 
     public virtual DbSet<UserBadge> UserBadges { get; set; }
 
-    public virtual DbSet<UserBadgeCollection> UserBadgeCollections { get; set; }
+    public virtual DbSet<UserBadgeCollection> UserBadgeCollections { get; set; }    
 
     public virtual DbSet<UserOverview> UserOverviews { get; set; }
 
@@ -42,7 +42,6 @@ public partial class QuitSmartDesktopContext : DbContext
     public virtual DbSet<UserStatistic> UserStatistics { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
