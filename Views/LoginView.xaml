@@ -54,11 +54,12 @@
                 Background="ForestGreen">
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Center">
-                <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                             Glyph="&#xE8BC;"
-                             FontSize="80"
-                             Foreground="White"
-                             Margin="0,0,0,24"/>
+                <TextBlock Text="🚭"
+                           FontSize="80"
+                           FontWeight="Light"
+                           Foreground="Red"
+                           TextAlignment="Center"
+                           Margin="0,-60,0,24"/>
                 <TextBlock Text="QuitSmart"
                            FontSize="36"
                            FontWeight="Light"

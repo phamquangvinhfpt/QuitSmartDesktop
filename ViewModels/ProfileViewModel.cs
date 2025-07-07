@@ -31,6 +31,9 @@ namespace QuitSmartApp.ViewModels
         private bool _isLoading = false;
         private bool _hasChanges = false;
 
+        // Navigation action
+        public Action? NavigateBack { get; set; }
+
         public ProfileViewModel(IUserService userService, IAuthenticationService authenticationService)
         {
             _userService = userService;
@@ -39,6 +42,7 @@ namespace QuitSmartApp.ViewModels
             // Initialize commands
             SaveCommand = new RelayCommand(async () => await SaveProfileAsync(), () => _hasChanges && !_isLoading);
             CancelCommand = new RelayCommand(CancelChanges);
+            BackCommand = new RelayCommand(() => NavigateBack?.Invoke());
 
             // Initialize gender options
             GenderOptions = new List<string> { "Male", "Female", "Other" };
@@ -56,8 +60,8 @@ namespace QuitSmartApp.ViewModels
         public string FullName
         {
             get => _fullName;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _fullName, value))
                     OnProfileChanged();
             }
@@ -66,8 +70,8 @@ namespace QuitSmartApp.ViewModels
         public DateTime? DateOfBirth
         {
             get => _dateOfBirth;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _dateOfBirth, value))
                     OnProfileChanged();
             }
@@ -76,8 +80,8 @@ namespace QuitSmartApp.ViewModels
         public string Gender
         {
             get => _gender;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _gender, value))
                     OnProfileChanged();
             }
@@ -86,8 +90,8 @@ namespace QuitSmartApp.ViewModels
         public DateOnly QuitStartDate
         {
             get => _quitStartDate;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _quitStartDate, value))
                     OnProfileChanged();
             }
@@ -96,8 +100,8 @@ namespace QuitSmartApp.ViewModels
         public DateOnly? QuitGoalDate
         {
             get => _quitGoalDate;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _quitGoalDate, value))
                     OnProfileChanged();
             }
@@ -106,8 +110,8 @@ namespace QuitSmartApp.ViewModels
         public int CigarettesPerDay
         {
             get => _cigarettesPerDay;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _cigarettesPerDay, value))
                     OnProfileChanged();
             }
@@ -116,8 +120,8 @@ namespace QuitSmartApp.ViewModels
         public decimal PricePerPack
         {
             get => _pricePerPack;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _pricePerPack, value))
                     OnProfileChanged();
             }
@@ -126,8 +130,8 @@ namespace QuitSmartApp.ViewModels
         public int CigarettesPerPack
         {
             get => _cigarettesPerPack;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _cigarettesPerPack, value))
                     OnProfileChanged();
             }
@@ -136,8 +140,8 @@ namespace QuitSmartApp.ViewModels
         public int? SmokingYears
         {
             get => _smokingYears;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _smokingYears, value))
                     OnProfileChanged();
             }
@@ -146,8 +150,8 @@ namespace QuitSmartApp.ViewModels
         public string QuitReason
         {
             get => _quitReason;
-            set 
-            { 
+            set
+            {
                 if (SetProperty(ref _quitReason, value))
                     OnProfileChanged();
             }
@@ -182,6 +186,7 @@ namespace QuitSmartApp.ViewModels
         // Commands
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
+        public ICommand BackCommand { get; }
 
         // Methods
         private async void LoadProfileAsync()
@@ -250,7 +255,7 @@ namespace QuitSmartApp.ViewModels
                     };
 
                     await _userService.CreateOrUpdateProfileAsync(userId, profile);
-                    
+
                     SuccessMessage = "Hồ sơ đã được lưu thành công!";
                     HasChanges = false;
 

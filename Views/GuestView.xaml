@@ -68,7 +68,7 @@
                         <Border Style="{StaticResource HeroCardStyle}">
                                 <StackPanel HorizontalAlignment="Center">
                                         <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                     Glyph="&#xE8BC;"
+                                                     Glyph="&#xE7BA;"
                                                      FontSize="80"
                                                      Foreground="White"
                                                      HorizontalAlignment="Center"
@@ -124,7 +124,7 @@
                                         Style="{StaticResource InfoCardStyle}">
                                         <StackPanel>
                                                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                             Glyph="&#xE8F4;"
+                                                             Glyph="&#xE9F3;"
                                                              FontSize="32"
                                                              Foreground="ForestGreen"
                                                              HorizontalAlignment="Center"
@@ -172,7 +172,7 @@
                                         Style="{StaticResource InfoCardStyle}">
                                         <StackPanel>
                                                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                             Glyph="&#xE8D3;"
+                                                             Glyph="&#xE825;"
                                                              FontSize="32"
                                                              Foreground="ForestGreen"
                                                              HorizontalAlignment="Center"

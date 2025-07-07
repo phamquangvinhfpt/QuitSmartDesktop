@@ -223,21 +223,8 @@
                                          FontSize="16"
                                          Margin="0,0,24,0"
                                          Foreground="ForestGreen"
-                                         GroupName="SmokingStatus">
-                                <RadioButton.Style>
-                                    <Style TargetType="RadioButton">
-                                        <Setter Property="IsChecked"
-                                                Value="True"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding HasSmoked}"
-                                                         Value="True">
-                                                <Setter Property="IsChecked"
-                                                        Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </RadioButton.Style>
-                            </RadioButton>
+                                         GroupName="SmokingStatus"/>
+
                             <RadioButton Content="🚬 Có hút"
                                          IsChecked="{Binding HasSmoked}"
                                          FontSize="16"

@@ -95,7 +95,7 @@
                                         Style="{StaticResource StatsCardStyle}">
                                         <StackPanel>
                                                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                             Glyph="&#xE8F4;"
+                                                             Glyph="&#xE8BF;"
                                                              FontSize="32"
                                                              Foreground="ForestGreen"
                                                              HorizontalAlignment="Center"/>
@@ -111,7 +111,7 @@
                                         Style="{StaticResource StatsCardStyle}">
                                         <StackPanel>
                                                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                             Glyph="&#xE8D3;"
+                                                             Glyph="&#xE825;"
                                                              FontSize="32"
                                                              Foreground="ForestGreen"
                                                              HorizontalAlignment="Center"/>
@@ -149,7 +149,7 @@
                                                     HorizontalAlignment="Center"
                                                     Margin="0,0,0,16">
                                                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                                                             Glyph="&#xE8C7;"
+                                                             Glyph="&#xE8BD;"
                                                              FontSize="24"
                                                              Foreground="DarkSlateGray"
                                                              Margin="0,0,12,0"/>

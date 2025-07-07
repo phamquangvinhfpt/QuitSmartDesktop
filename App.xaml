@@ -3,31 +3,128 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:QuitSmartApp"
              xmlns:ui="http://schemas.modernwpf.com/2019">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ui:ThemeResources>
-                    <ui:ThemeResources.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
-                            <ResourceDictionary.MergedDictionaries>
-                                <ui:ColorPaletteResources
-                                    TargetTheme="Light"
-                                    Accent="#4CAF50"
-                                    AltHigh="LightGray" />
-                            </ResourceDictionary.MergedDictionaries>
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
-                            <ResourceDictionary.MergedDictionaries>
-                                <ui:ColorPaletteResources
-                                    TargetTheme="Dark"
-                                    Accent="#4CAF50"
-                                    AltHigh="DarkGray" />
-                            </ResourceDictionary.MergedDictionaries>
-                        </ResourceDictionary>
-                    </ui:ThemeResources.ThemeDictionaries>
-                </ui:ThemeResources>
-                <ui:XamlControlsResources />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
+        <Application.Resources>
+                <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                                <ui:ThemeResources>
+                                        <ui:ThemeResources.ThemeDictionaries>
+                                                <!-- Light theme with QuitSmart accent color -->
+                                                <ResourceDictionary x:Key="Light">
+                                                        <ResourceDictionary.MergedDictionaries>
+                                                                <ui:ColorPaletteResources
+                                                                        TargetTheme="Light"
+                                                                        Accent="#4CAF50"/>
+                                                        </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+
+                                                <!-- Dark theme with QuitSmart accent color -->
+                                                <ResourceDictionary x:Key="Dark">
+                                                        <ResourceDictionary.MergedDictionaries>
+                                                                <ui:ColorPaletteResources
+                                                                        TargetTheme="Dark"
+                                                                        Accent="#4CAF50"/>
+                                                        </ResourceDictionary.MergedDictionaries>
+                                                </ResourceDictionary>
+                                        </ui:ThemeResources.ThemeDictionaries>
+                                </ui:ThemeResources>
+                                <ui:XamlControlsResources/>
+                        </ResourceDictionary.MergedDictionaries>
+
+                        <!-- QuitSmart Primary Colors (chỉ giữ màu chính cho brand identity) -->
+                        <SolidColorBrush x:Key="QuitSmartPrimaryBrush"
+                                        Color="#4CAF50"/>
+                        <SolidColorBrush x:Key="QuitSmartSecondaryBrush"
+                                        Color="#2E7D32"/>
+                        <SolidColorBrush x:Key="QuitSmartAccentBrush"
+                                        Color="#8BC34A"/>
+
+                        <!-- Common Styles using Modern WPF system colors -->
+                        <Style x:Key="QuitSmartCardStyle"
+                                        TargetType="Border">
+                                <Setter Property="Background"
+                                                Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
+                                <Setter Property="BorderBrush"
+                                                Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+                                <Setter Property="BorderThickness"
+                                                Value="1"/>
+                                <Setter Property="CornerRadius"
+                                                Value="12"/>
+                                <Setter Property="Padding"
+                                                Value="20"/>
+                                <Setter Property="Margin"
+                                                Value="8"/>
+                                <Setter Property="Effect">
+                                        <Setter.Value>
+                                                <DropShadowEffect Color="Gray"
+                                                                  Direction="270"
+                                                                  ShadowDepth="3"
+                                                                  BlurRadius="10"
+                                                                  Opacity="0.15"/>
+                                        </Setter.Value>
+                                </Setter>
+                        </Style>
+
+                        <Style x:Key="QuitSmartButtonStyle"
+                                        TargetType="Button">
+                                <Setter Property="Background"
+                                                Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+                                <Setter Property="Foreground"
+                                                Value="White"/>
+                                <Setter Property="BorderBrush"
+                                                Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                <Setter Property="BorderThickness"
+                                                Value="2"/>
+                                <Setter Property="Padding"
+                                                Value="12,8"/>
+                                <Setter Property="FontWeight"
+                                                Value="SemiBold"/>
+                                <Setter Property="Cursor"
+                                                Value="Hand"/>
+                                <Setter Property="Template">
+                                        <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                CornerRadius="6">
+                                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                                  VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver"
+                                                                                Value="True">
+                                                                        <Setter Property="Background"
+                                                                                        Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                                                </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                        </Setter.Value>
+                                </Setter>
+                        </Style>
+
+                        <Style x:Key="QuitSmartHeaderTextStyle"
+                                        TargetType="TextBlock">
+                                <Setter Property="FontSize"
+                                                Value="22"/>
+                                <Setter Property="FontWeight"
+                                                Value="Bold"/>
+                                <Setter Property="Foreground"
+                                                Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                                <Setter Property="Margin"
+                                                Value="0,0,0,16"/>
+                        </Style>
+
+                        <Style x:Key="QuitSmartBodyTextStyle"
+                                        TargetType="TextBlock">
+                                <Setter Property="FontSize"
+                                                Value="14"/>
+                                <Setter Property="Foreground"
+                                                Value="{DynamicResource SystemControlForegroundBaseMediumBrush}"/>
+                                <Setter Property="TextWrapping"
+                                                Value="Wrap"/>
+                                <Setter Property="LineHeight"
+                                                Value="22"/>
+                        </Style>
+                </ResourceDictionary>
+        </Application.Resources>
 </Application>

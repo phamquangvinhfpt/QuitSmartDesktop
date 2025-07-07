@@ -142,25 +142,67 @@ namespace QuitSmartApp.ViewModels
         private void NavigateToProfile()
         {
             CurrentView = "Profile";
-            CurrentViewModel = App.ServiceProvider.GetService(typeof(ProfileViewModel)) as ProfileViewModel;
+            var profileViewModel = App.ServiceProvider.GetService(typeof(ProfileViewModel)) as ProfileViewModel;
+            if (profileViewModel != null)
+            {
+                // Set navigation back action based on current user type
+                if (_authenticationService.IsUserLoggedIn)
+                {
+                    profileViewModel.NavigateBack = () => NavigateToDashboard();
+                }
+                else if (_authenticationService.IsAdminLoggedIn)
+                {
+                    profileViewModel.NavigateBack = () => NavigateToAdmin();
+                }
+                else
+                {
+                    profileViewModel.NavigateBack = () => NavigateToGuest();
+                }
+                CurrentViewModel = profileViewModel;
+            }
         }
 
         private void NavigateToDailyTracking()
         {
             CurrentView = "DailyTracking";
-            CurrentViewModel = App.ServiceProvider.GetService(typeof(DailyTrackingViewModel)) as DailyTrackingViewModel;
+            var dailyTrackingViewModel = App.ServiceProvider.GetService(typeof(DailyTrackingViewModel)) as DailyTrackingViewModel;
+            if (dailyTrackingViewModel != null)
+            {
+                // Set navigation back action - always go back to dashboard for daily tracking
+                dailyTrackingViewModel.NavigateBack = () => NavigateToDashboard();
+                CurrentViewModel = dailyTrackingViewModel;
+            }
         }
 
         private void NavigateToBadges()
         {
             CurrentView = "Badges";
-            CurrentViewModel = App.ServiceProvider.GetService(typeof(BadgeCollectionViewModel)) as BadgeCollectionViewModel;
+            var badgeCollectionViewModel = App.ServiceProvider.GetService(typeof(BadgeCollectionViewModel)) as BadgeCollectionViewModel;
+            if (badgeCollectionViewModel != null)
+            {
+                // Set navigation back action - always go back to dashboard for badges
+                badgeCollectionViewModel.NavigateBack = () => NavigateToDashboard();
+                CurrentViewModel = badgeCollectionViewModel;
+            }
         }
 
         private void NavigateToHealthInfo()
         {
             CurrentView = "HealthInfo";
-            CurrentViewModel = App.ServiceProvider.GetService(typeof(HealthInfoViewModel)) as HealthInfoViewModel;
+            var healthInfoViewModel = App.ServiceProvider.GetService(typeof(HealthInfoViewModel)) as HealthInfoViewModel;
+            if (healthInfoViewModel != null)
+            {
+                // Set navigation back action based on context
+                if (_authenticationService.IsUserLoggedIn)
+                {
+                    healthInfoViewModel.NavigateBack = () => NavigateToDashboard();
+                }
+                else
+                {
+                    healthInfoViewModel.NavigateBack = () => NavigateToGuest();
+                }
+                CurrentViewModel = healthInfoViewModel;
+            }
         }
 
         private async void NavigateToAdmin()

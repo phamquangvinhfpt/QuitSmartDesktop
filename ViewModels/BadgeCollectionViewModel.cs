@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
@@ -19,10 +20,16 @@ namespace QuitSmartApp.ViewModels
         private ObservableCollection<BadgeDefinition> _availableBadges = new();
         private bool _isLoading = true;
 
+        // Navigation action
+        public Action? NavigateBack { get; set; }
+
         public BadgeCollectionViewModel(IBadgeService badgeService, IAuthenticationService authenticationService)
         {
             _badgeService = badgeService;
             _currentUserId = authenticationService.CurrentUserId ?? Guid.Empty;
+
+            // Initialize commands
+            BackCommand = new RelayCommand(() => NavigateBack?.Invoke());
 
             LoadBadgesAsync();
         }
@@ -45,6 +52,9 @@ namespace QuitSmartApp.ViewModels
             get => _isLoading;
             set => SetProperty(ref _isLoading, value);
         }
+
+        // Commands
+        public ICommand BackCommand { get; }
 
         // Methods
         private async void LoadBadgesAsync()

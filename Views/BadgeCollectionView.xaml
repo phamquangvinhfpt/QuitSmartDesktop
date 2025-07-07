@@ -3,168 +3,396 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="600"
-             d:DesignWidth="800"
-             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
+             d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        
-        <Style x:Key="BadgeCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="16"/>
-            <Setter Property="Margin" Value="8"/>
-            <Setter Property="Effect">
+
+        <Style x:Key="BackButtonStyle"
+               TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+            <Setter Property="Foreground"
+                    Value="White"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+            <Setter Property="BorderThickness"
+                    Value="2"/>
+            <Setter Property="Padding"
+                    Value="12,8"/>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="Template">
                 <Setter.Value>
-                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" BlurRadius="8" Opacity="0.2"/>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="EarnedBadgeStyle" TargetType="Border" BasedOn="{StaticResource BadgeCardStyle}">
-            <Setter Property="Background" Value="LightGreen"/>
-            <Setter Property="BorderBrush" Value="ForestGreen"/>
+        <Style x:Key="BadgeCardStyle"
+               TargetType="Border">
+            <Setter Property="Background"
+                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="CornerRadius"
+                    Value="15"/>
+            <Setter Property="Padding"
+                    Value="20"/>
+            <Setter Property="Margin"
+                    Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray"
+                                      Direction="270"
+                                      ShadowDepth="4"
+                                      BlurRadius="12"
+                                      Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style x:Key="LockedBadgeStyle" TargetType="Border" BasedOn="{StaticResource BadgeCardStyle}">
-            <Setter Property="Background" Value="LightGray"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+        <Style x:Key="BadgeProgressBarStyle"
+               TargetType="ProgressBar">
+            <Setter Property="Background"
+                    Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="Height"
+                    Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <Rectangle Name="PART_Track"
+                                       Fill="{TemplateBinding Foreground}"
+                                       HorizontalAlignment="Left"
+                                       Width="{TemplateBinding Value}"
+                                       RadiusX="4"
+                                       RadiusY="4"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="EarnedBadgeStyle"
+               TargetType="Border"
+               BasedOn="{StaticResource BadgeCardStyle}">
+            <Setter Property="Background"
+                    Value="{DynamicResource QuitSmartAccentBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+            <Setter Property="BorderThickness"
+                    Value="2"/>
+        </Style>
+
+        <Style x:Key="LockedBadgeStyle"
+               TargetType="Border"
+               BasedOn="{StaticResource BadgeCardStyle}">
+            <Setter Property="Background"
+                    Value="{DynamicResource SystemControlBackgroundBaseLowBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+            <Setter Property="Opacity"
+                    Value="0.7"/>
         </Style>
     </UserControl.Resources>
 
-    <ScrollViewer>
-        <StackPanel MaxWidth="1000" Margin="40,20">
-            
-            <!-- Header -->
-            <StackPanel Margin="0,0,0,32">
-                <TextBlock Text="🏆 Bộ sưu tập huy hiệu của tôi"
-                           FontSize="28"
-                           FontWeight="Light"
-                           Foreground="ForestGreen"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="Thành tích bạn đã đạt được trong hành trình cai thuốc lá"
-                           FontSize="16"
-                           Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
-                           HorizontalAlignment="Center"/>
+    <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+        <ScrollViewer>
+            <StackPanel MaxWidth="1000"
+                        Margin="32,20">
+
+                <!-- Header with Back Button -->
+                <Grid Margin="0,0,0,24">
+                    <Button Content="← Quay lại"
+                            Style="{StaticResource BackButtonStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding BackCommand}"/>
+
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="0,0,0,0">
+                        <TextBlock Text="Bộ sưu tập huy hiệu"
+                                   FontSize="32"
+                                   FontWeight="Light"
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="Theo dõi tiến trình và thành tựu của bạn"
+                                   FontSize="16"
+                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Loading Indicator -->
+                <ProgressBar IsIndeterminate="{Binding IsLoading}"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Margin="0,20,0,20"
+                             Height="4"
+                             Foreground="{DynamicResource QuitSmartPrimaryBrush}"/>
+
+                <!-- Content -->
+                <StackPanel>
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility"
+                                    Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsLoading}"
+                                             Value="True">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <!-- Statistics Summary -->
+                    <Border Style="{StaticResource BadgeCardStyle}"
+                            Margin="8,0,8,24">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="🏆"
+                                           FontSize="28"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="{Binding EarnedBadgeCount}"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource QuitSmartPrimaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Huy hiệu đạt được"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="🎯"
+                                           FontSize="28"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="{Binding InProgressBadgeCount}"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource QuitSmartAccentBrush}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Đang tiến triển"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="📋"
+                                           FontSize="28"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="{Binding TotalBadgeCount}"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Tổng huy hiệu"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Badges List -->
+                    <ItemsControl ItemsSource="{Binding UserBadges}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource BadgeCardStyle}"
+                                        Width="280"
+                                        Height="180">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Badge Icon and Status -->
+                                        <StackPanel Grid.Row="0"
+                                                    Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    Margin="0,0,0,12">
+                                            <TextBlock Text="{Binding BadgeDefinition.Icon}"
+                                                       FontSize="32"
+                                                       Margin="0,0,8,0"/>
+                                            <!-- Earned Badge Overlay -->
+                                            <Border Background="{DynamicResource QuitSmartPrimaryBrush}"
+                                                    CornerRadius="15"
+                                                    Padding="8,4"
+                                                    Visibility="{Binding IsEarned, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                <TextBlock Text="✓"
+                                                           Foreground="White"
+                                                           FontWeight="Bold"
+                                                           FontSize="12"/>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <!-- Badge Info -->
+                                        <StackPanel Grid.Row="1">
+                                            <TextBlock Text="{Binding BadgeDefinition.Name}"
+                                                       FontSize="16"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       Margin="0,0,0,8"/>
+                                            <TextBlock Text="{Binding BadgeDefinition.Description}"
+                                                       FontSize="12"
+                                                       Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,0,0,12"/>
+                                        </StackPanel>
+
+                                        <!-- Progress Bar (for in-progress badges) -->
+                                        <StackPanel Grid.Row="2">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsEarned}"
+                                                                           Value="False"/>
+                                                                <Condition Binding="{Binding Progress}"
+                                                                           Value="0"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility"
+                                                                    Value="Collapsed"/>
+                                                        </MultiDataTrigger>
+                                                        <DataTrigger Binding="{Binding IsEarned}"
+                                                                     Value="False">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <ProgressBar Value="{Binding Progress}"
+                                                         Maximum="100"
+                                                         Style="{StaticResource BadgeProgressBarStyle}"
+                                                         Margin="0,0,0,8"/>
+                                            <TextBlock FontSize="11"
+                                                       HorizontalAlignment="Center">
+                                                <Run Text="{Binding Progress, StringFormat=F0}"/>
+                                                <Run Text="% hoàn thành"/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <!-- Earned Date -->
+                                        <TextBlock Grid.Row="3"
+                                                   Text="{Binding EarnedDate, StringFormat='Đạt được: {0:dd/MM/yyyy}'}"
+                                                   FontSize="10"
+                                                   Foreground="{DynamicResource QuitSmartPrimaryBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   FontWeight="SemiBold"
+                                                   Visibility="{Binding IsEarned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Empty State -->
+                    <StackPanel HorizontalAlignment="Center"
+                                Margin="0,40,0,40">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding UserBadges.Count}"
+                                                 Value="0">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="🎖️"
+                                   FontSize="48"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,16"/>
+                        <TextBlock Text="Chưa có huy hiệu nào"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="Hãy bắt đầu hành trình cai thuốc để nhận những huy hiệu đầu tiên!"
+                                   FontSize="14"
+                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="400"/>
+                    </StackPanel>
+
+                </StackPanel>
+
             </StackPanel>
-
-            <!-- Loading Indicator -->
-            <ui:ProgressRing IsActive="{Binding IsLoading}"
-                           Margin="0,20,0,20"
-                           HorizontalAlignment="Center"/>
-
-            <!-- Content -->
-            <StackPanel>
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                
-                <!-- Earned Badges Section -->
-                <TextBlock Text="Huy hiệu đã đạt được"
-                          FontSize="20"
-                          FontWeight="SemiBold"
-                          Foreground="ForestGreen"
-                          Margin="0,0,0,16"/>
-
-                <ItemsControl ItemsSource="{Binding UserBadges}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource EarnedBadgeStyle}" Width="200" Height="180">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding BadgeDefinition.Icon}"
-                                             FontSize="36"
-                                             HorizontalAlignment="Center"
-                                             Margin="0,0,0,8"/>
-                                    <TextBlock Text="{Binding BadgeDefinition.Name}"
-                                             FontSize="16"
-                                             FontWeight="SemiBold"
-                                             Foreground="DarkSlateGray"
-                                             TextAlignment="Center"
-                                             TextWrapping="Wrap"
-                                             Margin="0,0,0,4"/>
-                                    <TextBlock Text="{Binding BadgeDefinition.Description}"
-                                             FontSize="12"
-                                             Foreground="DarkSlateGray"
-                                             TextAlignment="Center"
-                                             TextWrapping="Wrap"
-                                             Margin="0,0,0,8"/>
-                                    <TextBlock FontSize="11"
-                                             Foreground="DarkSlateGray"
-                                             TextAlignment="Center">
-                                        <Run Text="Đạt được ngày:"/>
-                                        <Run Text="{Binding EarnedAt, StringFormat=dd/MM/yyyy}"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <!-- Available Badges Section -->
-                <TextBlock Text="Huy hiệu có thể đạt được"
-                          FontSize="20"
-                          FontWeight="SemiBold"
-                          Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
-                          Margin="0,32,0,16"/>
-
-                <ItemsControl ItemsSource="{Binding AvailableBadges}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource LockedBadgeStyle}" Width="200" Height="180">
-                                <StackPanel>
-                                    <TextBlock Text="🔒"
-                                             FontSize="36"
-                                             HorizontalAlignment="Center"
-                                             Margin="0,0,0,8"/>
-                                    <TextBlock Text="{Binding Name}"
-                                             FontSize="16"
-                                             FontWeight="SemiBold"
-                                             Foreground="Gray"
-                                             TextAlignment="Center"
-                                             TextWrapping="Wrap"
-                                             Margin="0,0,0,4"/>
-                                    <TextBlock Text="{Binding Description}"
-                                             FontSize="12"
-                                             Foreground="Gray"
-                                             TextAlignment="Center"
-                                             TextWrapping="Wrap"
-                                             Margin="0,0,0,8"/>
-                                    <TextBlock Text="{Binding RequirementDescription}"
-                                             FontSize="11"
-                                             Foreground="Gray"
-                                             TextAlignment="Center"
-                                             TextWrapping="Wrap"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-            </StackPanel>
-            
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -7,7 +7,7 @@
              xmlns:helpers="clr-namespace:QuitSmartApp.Helpers"
              mc:Ignorable="d"
              d:DesignHeight="700"
-             d:DesignWidth="900"
+             d:DesignWidth="1000"
              Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
     <UserControl.Resources>
@@ -55,7 +55,7 @@
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Center">
                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                             Glyph="&#xE77B;"
+                             Glyph="&#xE908;"
                              FontSize="80"
                              Foreground="White"
                              Margin="0,0,0,24"/>
@@ -239,7 +239,7 @@
         <Border Grid.Column="2"
                 Background="DarkSeaGreen">
             <StackPanel VerticalAlignment="Center"
-                        Margin="40">
+                        Margin="20">
                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                              Glyph="&#xE95E;"
                              FontSize="64"

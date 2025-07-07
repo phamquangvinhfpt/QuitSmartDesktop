@@ -27,6 +27,9 @@ namespace QuitSmartApp.ViewModels
         private bool _isLoading = false;
         private bool _isToday = true;
 
+        // Navigation action
+        public Action? NavigateBack { get; set; }
+
         public DailyTrackingViewModel(IUserService userService, IAuthenticationService authenticationService)
         {
             _userService = userService;
@@ -37,6 +40,7 @@ namespace QuitSmartApp.ViewModels
             PreviousDayCommand = new RelayCommand(PreviousDay);
             NextDayCommand = new RelayCommand(NextDay, () => _selectedDate < DateOnly.FromDateTime(DateTime.Today));
             TodayCommand = new RelayCommand(GoToToday);
+            BackCommand = new RelayCommand(() => NavigateBack?.Invoke());
 
             // Initialize health status options
             HealthStatusOptions = new List<string> { "Good", "Average", "Poor" };
@@ -123,6 +127,7 @@ namespace QuitSmartApp.ViewModels
         public ICommand PreviousDayCommand { get; }
         public ICommand NextDayCommand { get; }
         public ICommand TodayCommand { get; }
+        public ICommand BackCommand { get; }
 
         // Methods
         private async void LoadDataAsync()
