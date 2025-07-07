@@ -87,7 +87,7 @@
                                FontWeight="Light"
                                Foreground="ForestGreen"
                                Margin="0,0,0,8"/>
-                    <TextBlock Text="Chào mừng bạn quay lại!"
+                    <TextBlock Text="Người dùng hoặc Quản trị viên"
                                FontSize="14"
                                Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
                 </StackPanel>
@@ -135,6 +135,7 @@
                     <CheckBox IsChecked="{Binding RememberMe}"
                               Content="Ghi nhớ đăng nhập"
                               Margin="0,0,0,24"
+                              Cursor="Hand"
                               FontSize="14"/>
 
                     <Button Content="Đăng nhập"
@@ -146,30 +147,6 @@
                             Margin="0,0,0,16"
                             Cursor="Hand"
                             Command="{Binding LoginCommand}">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="IsEnabled"
-                                        Value="True"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoading}"
-                                                 Value="True">
-                                        <Setter Property="IsEnabled"
-                                                Value="False"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-
-                    <Button Content="Đăng nhập Admin"
-                            Background="DarkSlateGray"
-                            Foreground="White"
-                            BorderBrush="DarkSlateGray"
-                            Padding="0,10"
-                            FontSize="14"
-                            Margin="0,0,0,16"
-                            Cursor="Hand"
-                            Command="{Binding AdminLoginCommand}">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="IsEnabled"

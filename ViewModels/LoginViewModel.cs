@@ -30,7 +30,6 @@ namespace QuitSmartApp.ViewModels
 
             // Initialize commands
             LoginCommand = new RelayCommand(async () => await LoginAsync(), () => !IsLoading && !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password));
-            AdminLoginCommand = new RelayCommand(async () => await AdminLoginAsync(), () => !IsLoading && !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password));
             NavigateToRegisterCommand = new RelayCommand(() => NavigateToRegisterRequested?.Invoke());
             NavigateToGuestCommand = new RelayCommand(() => NavigateToGuestRequested?.Invoke());
         }
@@ -80,7 +79,6 @@ namespace QuitSmartApp.ViewModels
 
         // Commands
         public ICommand LoginCommand { get; }
-        public ICommand AdminLoginCommand { get; }
         public ICommand NavigateToRegisterCommand { get; }
         public ICommand NavigateToGuestCommand { get; }
 
@@ -92,44 +90,26 @@ namespace QuitSmartApp.ViewModels
                 IsLoading = true;
                 ErrorMessage = string.Empty;
 
-                bool success = await _authenticationService.LoginUserAsync(Username, Password);
-
-                if (success)
+                // Try user login first
+                bool userLoginSuccess = await _authenticationService.LoginUserAsync(Username, Password);
+                
+                if (userLoginSuccess)
                 {
                     LoginSuccessful?.Invoke();
+                    return;
                 }
-                else
-                {
-                    ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng.";
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"Có lỗi xảy ra: {ex.Message}";
-            }
-            finally
-            {
-                IsLoading = false;
-            }
-        }
 
-        private async Task AdminLoginAsync()
-        {
-            try
-            {
-                IsLoading = true;
-                ErrorMessage = string.Empty;
-
-                bool success = await _authenticationService.LoginAdminAsync(Username, Password);
-
-                if (success)
+                // If user login fails, try admin login
+                bool adminLoginSuccess = await _authenticationService.LoginAdminAsync(Username, Password);
+                
+                if (adminLoginSuccess)
                 {
                     AdminLoginSuccessful?.Invoke();
+                    return;
                 }
-                else
-                {
-                    ErrorMessage = "Thông tin admin không đúng.";
-                }
+
+                // Both failed
+                ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng.";
             }
             catch (Exception ex)
             {
