@@ -5,6 +5,7 @@ using QuitSmartApp.Repositories;
 using QuitSmartApp.Repositories.Interfaces;
 using QuitSmartApp.Services;
 using QuitSmartApp.Services.Interfaces;
+using QuitSmartApp.ViewModels;
 using System;
 
 namespace QuitSmartApp.Configuration
@@ -41,6 +42,18 @@ namespace QuitSmartApp.Configuration
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMotivationalService, MotivationalService>();
             services.AddScoped<IAdminService, AdminService>();
+
+            // ViewModels
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<UserDashboardViewModel>();
+            services.AddTransient<GuestViewModel>();
+            services.AddTransient<ProfileViewModel>();
+            services.AddTransient<DailyTrackingViewModel>();
+            services.AddTransient<BadgeCollectionViewModel>();
+            services.AddTransient<HealthInfoViewModel>();
+            services.AddTransient<AdminDashboardViewModel>();
+            services.AddTransient<RegisterViewModel>();
 
             return services;
         }

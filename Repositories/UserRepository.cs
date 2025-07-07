@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuitSmartApp.Models;
 using QuitSmartApp.Repositories.Interfaces;
+using QuitSmartApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,13 @@ namespace QuitSmartApp.Repositories
         }
 
         public async Task<User?> ValidateUserAsync(string username, string password)
-        {            // NOTE: In production, use proper password hashing verification
+        {
             var user = await GetByUsernameAsync(username);
-            return user?.PasswordHash == password ? user : null;
+            if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+                return null;
+                
+            // Use PasswordHelper to verify password against hash
+            return PasswordHelper.VerifyPassword(password, user.PasswordHash) ? user : null;
         }
 
         public async Task<bool> IsUsernameExistsAsync(string username)

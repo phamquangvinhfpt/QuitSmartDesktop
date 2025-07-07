@@ -1,0 +1,482 @@
+<UserControl x:Class="QuitSmartApp.Views.DailyTrackingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="900"
+             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
+
+    <UserControl.Resources>
+        <Style x:Key="TrackingCardStyle"
+               TargetType="Border">
+            <Setter Property="Background"
+                    Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="CornerRadius"
+                    Value="8"/>
+            <Setter Property="Padding"
+                    Value="24"/>
+            <Setter Property="Margin"
+                    Value="0,0,0,20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray"
+                                      Direction="270"
+                                      ShadowDepth="2"
+                                      BlurRadius="8"
+                                      Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DateNavigationButtonStyle"
+               TargetType="Button">
+            <Setter Property="Background"
+                    Value="Transparent"/>
+            <Setter Property="BorderBrush"
+                    Value="ForestGreen"/>
+            <Setter Property="Foreground"
+                    Value="ForestGreen"/>
+            <Setter Property="FontSize"
+                    Value="16"/>
+            <Setter Property="Padding"
+                    Value="16,8"/>
+            <Setter Property="Margin"
+                    Value="8,0"/>
+        </Style>
+
+        <Style x:Key="HealthStatusRadioStyle"
+               TargetType="RadioButton">
+            <Setter Property="Margin"
+                    Value="0,0,20,0"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+        </Style>
+
+        <Style x:Key="LogHistoryItemStyle"
+               TargetType="Border">
+            <Setter Property="Background"
+                    Value="LightGreen"/>
+            <Setter Property="CornerRadius"
+                    Value="4"/>
+            <Setter Property="Padding"
+                    Value="16,12"/>
+            <Setter Property="Margin"
+                    Value="0,0,0,8"/>
+        </Style>
+
+        <Style x:Key="SmokedLogItemStyle"
+               TargetType="Border"
+               BasedOn="{StaticResource LogHistoryItemStyle}">
+            <Setter Property="Background"
+                    Value="MistyRose"/>
+            <Setter Property="BorderBrush"
+                    Value="Crimson"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <StackPanel MaxWidth="900"
+                    Margin="40,20">
+
+            <!-- Header -->
+            <StackPanel Margin="0,0,0,32">
+                <TextBlock Text="📝 Nhật ký hàng ngày"
+                           FontSize="28"
+                           FontWeight="Light"
+                           Foreground="ForestGreen"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,8"/>
+                <TextBlock Text="Ghi lại hành trình cai thuốc của bạn mỗi ngày"
+                           FontSize="16"
+                           Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Success/Error Messages -->
+            <TextBlock Text="{Binding SuccessMessage}"
+                       Foreground="ForestGreen"
+                       FontSize="14"
+                       Margin="0,0,0,8"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility"
+                                Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SuccessMessage}"
+                                         Value="{x:Null}">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SuccessMessage}"
+                                         Value="">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="Crimson"
+                       FontSize="14"
+                       Margin="0,0,0,16"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility"
+                                Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ErrorMessage}"
+                                         Value="{x:Null}">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ErrorMessage}"
+                                         Value="">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- Date Navigation -->
+            <Border Style="{StaticResource TrackingCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Chọn ngày"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="ForestGreen"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,16"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,16">
+                        <Button Content="← Hôm qua"
+                                Style="{StaticResource DateNavigationButtonStyle}"
+                                Cursor="Hand"
+                                Command="{Binding PreviousDayCommand}"/>
+
+                        <Border Background="ForestGreen"
+                                CornerRadius="4"
+                                Padding="16,8"
+                                Margin="8,0">
+                            <TextBlock Text="{Binding SelectedDateDisplay}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+
+                        <Button Content="Hôm sau →"
+                                Style="{StaticResource DateNavigationButtonStyle}"
+                                Cursor="Hand"
+                                Command="{Binding NextDayCommand}"/>
+                    </StackPanel>
+
+                    <Button Content="{Binding TodayButtonText}"
+                            Background="ForestGreen"
+                            Foreground="White"
+                            BorderBrush="ForestGreen"
+                            Padding="20,8"
+                            FontSize="14"
+                            HorizontalAlignment="Center"
+                            Cursor="Hand"
+                            Command="{Binding TodayCommand}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Daily Log Form -->
+            <Border Style="{StaticResource TrackingCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Ghi nhật ký"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="ForestGreen"
+                               Margin="0,0,0,20"/>
+
+                    <!-- Smoking Status -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Hôm nay bạn có hút thuốc không?"
+                                   FontSize="16"
+                                   FontWeight="Medium"
+                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                                   Margin="0,0,0,12"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="🚭 Không hút"
+                                         FontSize="16"
+                                         Margin="0,0,24,0"
+                                         Foreground="ForestGreen"
+                                         GroupName="SmokingStatus">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton">
+                                        <Setter Property="IsChecked"
+                                                Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasSmoked}"
+                                                         Value="True">
+                                                <Setter Property="IsChecked"
+                                                        Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                            <RadioButton Content="🚬 Có hút"
+                                         IsChecked="{Binding HasSmoked}"
+                                         FontSize="16"
+                                         Foreground="Crimson"
+                                         GroupName="SmokingStatus"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Health Status -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Tình trạng sức khỏe hôm nay?"
+                                   FontSize="16"
+                                   FontWeight="Medium"
+                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                                   Margin="0,0,0,12"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="😊 Tốt"
+                                         Foreground="ForestGreen"
+                                         GroupName="HealthStatus"
+                                         Tag="Good">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton"
+                                           BasedOn="{StaticResource HealthStatusRadioStyle}">
+                                        <Setter Property="IsChecked"
+                                                Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HealthStatus}"
+                                                         Value="Good">
+                                                <Setter Property="IsChecked"
+                                                        Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                            <RadioButton Content="😐 Trung bình"
+                                         Foreground="Orange"
+                                         GroupName="HealthStatus"
+                                         Tag="Average">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton"
+                                           BasedOn="{StaticResource HealthStatusRadioStyle}">
+                                        <Setter Property="IsChecked"
+                                                Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HealthStatus}"
+                                                         Value="Average">
+                                                <Setter Property="IsChecked"
+                                                        Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                            <RadioButton Content="😞 Kém"
+                                         Foreground="Crimson"
+                                         GroupName="HealthStatus"
+                                         Tag="Poor">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton"
+                                           BasedOn="{StaticResource HealthStatusRadioStyle}">
+                                        <Setter Property="IsChecked"
+                                                Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HealthStatus}"
+                                                         Value="Poor">
+                                                <Setter Property="IsChecked"
+                                                        Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RadioButton.Style>
+                            </RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Notes -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Ghi chú (tùy chọn)"
+                                   FontSize="16"
+                                   FontWeight="Medium"
+                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 ui:ControlHelper.PlaceholderText="Ghi lại cảm xúc, tâm trạng hoặc những gì đặc biệt trong ngày..."
+                                 FontSize="14"
+                                 Padding="12"/>
+                    </StackPanel>
+
+                    <!-- Save Button -->
+                    <Button Content="💾 Lưu nhật ký"
+                            Background="ForestGreen"
+                            Foreground="White"
+                            BorderBrush="ForestGreen"
+                            Padding="24,12"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center"
+                            Cursor="Hand"
+                            Command="{Binding SaveLogCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled"
+                                        Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsLoading}"
+                                                 Value="True">
+                                        <Setter Property="IsEnabled"
+                                                Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Recent Logs -->
+            <Border Style="{StaticResource TrackingCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Nhật ký gần đây"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="ForestGreen"
+                               Margin="0,0,0,16"/>
+
+                    <ui:ItemsRepeater ItemsSource="{Binding RecentLogs}">
+                        <ui:ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Style>
+                                        <Style TargetType="Border"
+                                               BasedOn="{StaticResource LogHistoryItemStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasSmoked}"
+                                                             Value="True">
+                                                    <Setter Property="Background"
+                                                            Value="MistyRose"/>
+                                                    <Setter Property="BorderBrush"
+                                                            Value="Crimson"/>
+                                                    <Setter Property="BorderThickness"
+                                                            Value="1"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0"
+                                                    Margin="0,0,16,0">
+                                            <TextBlock Text="{Binding LogDate, StringFormat='dd/MM'}"
+                                                       FontSize="16"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="DarkSlateGray"/>
+                                            <TextBlock Text="{Binding LogDate, StringFormat='dddd'}"
+                                                       FontSize="12"
+                                                       Foreground="DarkSlateGray"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+                                            <StackPanel Orientation="Horizontal"
+                                                        Margin="0,0,0,4">
+                                                <TextBlock FontSize="14">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text"
+                                                                    Value="🚭 Không hút thuốc"/>
+                                                            <Setter Property="Foreground"
+                                                                    Value="ForestGreen"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding HasSmoked}"
+                                                                             Value="True">
+                                                                    <Setter Property="Text"
+                                                                            Value="🚬 Có hút thuốc"/>
+                                                                    <Setter Property="Foreground"
+                                                                            Value="Crimson"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <TextBlock Text=" • "
+                                                           FontSize="14"
+                                                           Foreground="DarkSlateGray"
+                                                           Margin="8,0"/>
+
+                                                <TextBlock Text="{Binding HealthStatus}"
+                                                           FontSize="14"
+                                                           Foreground="DarkSlateGray"/>
+                                            </StackPanel>
+
+                                            <TextBlock Text="{Binding Notes}"
+                                                       FontSize="12"
+                                                       Foreground="DarkSlateGray"
+                                                       TextWrapping="Wrap"
+                                                       MaxWidth="400">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility"
+                                                                Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Notes}"
+                                                                         Value="{x:Null}">
+                                                                <Setter Property="Visibility"
+                                                                        Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Notes}"
+                                                                         Value="">
+                                                                <Setter Property="Visibility"
+                                                                        Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ui:ItemsRepeater.ItemTemplate>
+                    </ui:ItemsRepeater>
+                </StackPanel>
+            </Border>
+
+            <!-- Loading Indicator -->
+            <ui:ProgressRing IsActive="{Binding IsLoading}"
+                             Margin="0,20,0,0"
+                             HorizontalAlignment="Center"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

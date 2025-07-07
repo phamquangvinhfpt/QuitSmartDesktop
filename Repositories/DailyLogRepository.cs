@@ -25,7 +25,7 @@ namespace QuitSmartApp.Repositories
 
         public async Task<IEnumerable<DailyLog>> GetUserLogsAsync(Guid userId, int? days = null)
         {
-            var query = _dbSet.Where(d => d.UserId == userId)
+            IQueryable<DailyLog> query = _dbSet.Where(d => d.UserId == userId)
                 .OrderByDescending(d => d.LogDate);
 
             if (days.HasValue)
@@ -70,7 +70,7 @@ namespace QuitSmartApp.Repositories
         public async Task<DailyLog> CreateOrUpdateDailyLogAsync(Guid userId, DateOnly date, bool hasSmoked, string? healthStatus, string? notes)
         {
             var existingLog = await GetByUserAndDateAsync(userId, date);
-            
+
             if (existingLog != null)
             {
                 // Update existing log
@@ -78,7 +78,7 @@ namespace QuitSmartApp.Repositories
                 existingLog.HealthStatus = healthStatus;
                 existingLog.Notes = notes;
                 existingLog.UpdatedAt = DateTime.UtcNow;
-                
+
                 return await UpdateAsync(existingLog);
             }
             else
@@ -95,7 +95,7 @@ namespace QuitSmartApp.Repositories
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
-                
+
                 return await AddAsync(newLog);
             }
         }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using QuitSmartApp.Configuration;
+using QuitSmartApp.ViewModels;
+using QuitSmartApp.Models;
 using System;
 using System.Windows;
 
@@ -14,23 +16,35 @@ namespace QuitSmartApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Create service collection and configure services
-            var serviceCollection = new ServiceCollection();
-            
-            // Configure application services
-            serviceCollection.ConfigureServices(AppSettings.DefaultConnectionString);
-            
-            // Register MainWindow
-            serviceCollection.AddTransient<MainWindow>();
+            try
+            {
+                // Create service collection and configure services
+                var serviceCollection = new ServiceCollection();
 
-            // Build service provider
-            ServiceProvider = serviceCollection.BuildServiceProvider();
+                // Configure application services
+                serviceCollection.ConfigureServices(AppSettings.DefaultConnectionString);
 
-            // Start the main window
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+                // Register MainWindow and MainViewModel
+                serviceCollection.AddTransient<MainWindow>();
 
-            base.OnStartup(e);
+                // Build service provider
+                ServiceProvider = serviceCollection.BuildServiceProvider();
+
+                // Start the main window with MainViewModel
+                var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+                var mainViewModel = ServiceProvider.GetRequiredService<MainViewModel>();
+
+                mainWindow.DataContext = mainViewModel;
+                mainWindow.Show();
+
+                base.OnStartup(e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Startup Error: {ex.Message}\n\nDetails: {ex.InnerException?.Message}\n\nStack: {ex.StackTrace}",
+                    "Application Startup Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)

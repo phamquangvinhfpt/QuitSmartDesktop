@@ -33,7 +33,7 @@ public partial class QuitSmartDesktopContext : DbContext
 
     public virtual DbSet<UserBadge> UserBadges { get; set; }
 
-    public virtual DbSet<UserBadgeCollection> UserBadgeCollections { get; set; }    
+    public virtual DbSet<UserBadgeCollection> UserBadgeCollections { get; set; }
 
     public virtual DbSet<UserOverview> UserOverviews { get; set; }
 

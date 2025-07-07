@@ -44,7 +44,7 @@ namespace QuitSmartApp.Services
                 if (user != null)
                 {
                     _currentUser = user;
-                    _currentAdmin = null; // Clear admin session
+                    _currentAdmin = null;
                     return true;
                 }
                 return false;
