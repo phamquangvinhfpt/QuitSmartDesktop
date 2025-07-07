@@ -37,7 +37,7 @@ namespace QuitSmartApp.Configuration
             services.AddScoped<IAdminLogRepository, AdminLogRepository>();
 
             // Services - Note: Order matters due to dependencies
-            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IBadgeService, BadgeService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMotivationalService, MotivationalService>();

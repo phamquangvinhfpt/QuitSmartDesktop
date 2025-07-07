@@ -11,14 +11,14 @@ namespace QuitSmartApp.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;
-        
+
         private BaseViewModel? _currentViewModel;
         private string _currentView = "Guest";
 
         public MainViewModel(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
-            
+
             // Initialize commands
             NavigateToLoginCommand = new RelayCommand(NavigateToLogin);
             NavigateToRegisterCommand = new RelayCommand(NavigateToRegister);
@@ -124,17 +124,17 @@ namespace QuitSmartApp.ViewModels
         private void NavigateToDashboard()
         {
             CurrentView = "Dashboard";
-            
+
             // Get UserDashboardViewModel from DI container
             var dashboardViewModel = App.ServiceProvider.GetService(typeof(UserDashboardViewModel)) as UserDashboardViewModel;
-            
+
             if (dashboardViewModel != null)
             {
                 // Set navigation actions
                 dashboardViewModel.NavigateToHealthInfo = () => NavigateToHealthInfo();
                 dashboardViewModel.NavigateToDailyTracking = () => NavigateToDailyTracking();
                 dashboardViewModel.NavigateToBadges = () => NavigateToBadges();
-                
+
                 CurrentViewModel = dashboardViewModel;
             }
         }
@@ -163,33 +163,36 @@ namespace QuitSmartApp.ViewModels
             CurrentViewModel = App.ServiceProvider.GetService(typeof(HealthInfoViewModel)) as HealthInfoViewModel;
         }
 
-        private void NavigateToAdmin()
+        private async void NavigateToAdmin()
         {
             try
             {
                 CurrentView = "Admin";
-                
+
                 // Get AdminDashboardViewModel from DI container
                 var adminViewModel = App.ServiceProvider.GetService(typeof(AdminDashboardViewModel)) as AdminDashboardViewModel;
-                
+
                 if (adminViewModel != null)
                 {
                     // Set navigation actions
                     adminViewModel.NavigateToGuest = () => NavigateToGuest();
-                    
+
                     CurrentViewModel = adminViewModel;
+
+                    // Initialize the view model after setting it as current
+                    await adminViewModel.InitializeAsync();
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("Không thể tạo AdminDashboardViewModel. Vui lòng kiểm tra cấu hình DI.", 
+                    System.Windows.MessageBox.Show("Không thể tạo AdminDashboardViewModel. Vui lòng kiểm tra cấu hình DI.",
                         "Lỗi", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show($"Lỗi khi điều hướng đến Admin Dashboard: {ex.Message}\n\nDetails: {ex.InnerException?.Message}", 
+                System.Windows.MessageBox.Show($"Lỗi khi điều hướng đến Admin Dashboard: {ex.Message}",
                     "Lỗi", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                
+
                 // Fallback to guest view
                 NavigateToGuest();
             }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace QuitSmartApp.ViewModels
 {
@@ -36,13 +37,110 @@ namespace QuitSmartApp.ViewModels
 
             // Initialize commands
             LogoutCommand = new RelayCommand(() => LogoutAsync());
-            RefreshDataCommand = new RelayCommand(() => LoadDashboardDataAsync());
+            RefreshDataCommand = new RelayCommand(async () => await LoadDashboardDataAsync());
             ViewUserDetailsCommand = new RelayCommand<UserOverview>(ViewUserDetails);
             DeleteUserCommand = new RelayCommand<UserOverview>(DeleteUser, CanDeleteUser);
             EditUserCommand = new RelayCommand<UserOverview>(EditUser);
             ViewUserLogsCommand = new RelayCommand<UserOverview>(ViewUserLogs);
 
-            LoadDashboardDataAsync();
+            // Don't call LoadDashboardDataAsync() here - will be called when view loads
+        }
+
+        // Add this method to be called after ViewModel is fully initialized
+        public async Task InitializeAsync()
+        {
+            try
+            {
+                // Try simple initialization first without loading data
+                Users = new ObservableCollection<UserOverview>();
+                AdminLogs = new ObservableCollection<AdminLog>();
+                TotalUsers = 0;
+                ActiveUsers = 0;
+                TotalSessions = 0;
+                TotalMoneySaved = 0;
+                AverageDaysQuit = 0;
+                IsLoading = false;
+
+                // Now try to load real data
+                await LoadDataSafely();
+            }
+            catch (Exception ex)
+            {
+                // Show error to user instead of crashing
+                System.Windows.MessageBox.Show(
+                    $"Lỗi khi khởi tạo Admin Dashboard:\n{ex.Message}",
+                    "Lỗi khởi tạo",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
+
+                // Set default values to prevent further crashes
+                Users = new ObservableCollection<UserOverview>();
+                AdminLogs = new ObservableCollection<AdminLog>();
+                TotalUsers = 0;
+                ActiveUsers = 0;
+                TotalSessions = 0;
+                TotalMoneySaved = 0;
+                AverageDaysQuit = 0;
+                IsLoading = false;
+            }
+        }
+
+        private async Task LoadDataSafely()
+        {
+            try
+            {
+                // Dispatch to UI thread for safety
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
+                {
+                    await LoadDashboardDataAsync();
+                });
+            }
+            catch (Exception)
+            {
+                // Fallback to sample data
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    LoadSampleData();
+                });
+            }
+        }
+
+        private void LoadSampleData()
+        {
+            var sampleUsers = new List<UserOverview>
+            {
+                new UserOverview
+                {
+                    UserId = Guid.NewGuid(),
+                    Username = "sample_user",
+                    Email = "sample@test.com",
+                    FullName = "Sample User",
+                    Gender = "Nam",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-30),
+                    QuitStartDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-15)),
+                    CigarettesPerDay = 10,
+                    PricePerPack = 50000,
+                    TotalDaysQuit = 15,
+                    TotalMoneySaved = 750000,
+                    CurrentStreak = 15,
+                    LongestStreak = 15,
+                    TotalBadges = 2
+                }
+            };
+
+            Users = new ObservableCollection<UserOverview>(sampleUsers);
+            AdminLogs = new ObservableCollection<AdminLog>();
+
+            TotalUsers = 1;
+            ActiveUsers = 1;
+            TotalSessions = 1;
+            TotalMoneySaved = 750000;
+            AverageDaysQuit = 15;
+
+            OnPropertyChanged(nameof(ActiveUsersPercentage));
+            OnPropertyChanged(nameof(InactiveUsersPercentage));
+            OnPropertyChanged(nameof(InactiveUsers));
         }
 
         // Properties
@@ -114,7 +212,7 @@ namespace QuitSmartApp.ViewModels
         public ICommand ViewUserLogsCommand { get; }
 
         // Methods
-        private async void LoadDashboardDataAsync()
+        private async Task LoadDashboardDataAsync()
         {
             try
             {
@@ -122,11 +220,11 @@ namespace QuitSmartApp.ViewModels
 
                 // Load users overview  
                 var usersOverview = await _adminService.GetAllUsersOverviewAsync();
-                Users = new ObservableCollection<UserOverview>(usersOverview);
+                Users = new ObservableCollection<UserOverview>(usersOverview ?? new List<UserOverview>());
 
                 // Load admin logs
                 var logs = await _adminService.GetAdminLogsAsync();
-                AdminLogs = new ObservableCollection<AdminLog>(logs.Take(50));
+                AdminLogs = new ObservableCollection<AdminLog>(logs?.Take(50) ?? new List<AdminLog>());
 
                 // Calculate statistics
                 TotalUsers = Users.Count;
@@ -150,9 +248,13 @@ namespace QuitSmartApp.ViewModels
                 TotalSessions = 0;
                 TotalMoneySaved = 0;
                 AverageDaysQuit = 0;
-                
-                // Optionally show error message to user
-                System.Diagnostics.Debug.WriteLine($"Error loading admin dashboard data: {ex.Message}");
+
+                // Show error message
+                System.Windows.MessageBox.Show(
+                    $"Lỗi khi tải dữ liệu: {ex.Message}",
+                    "Lỗi tải dữ liệu",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Warning);
             }
             finally
             {
@@ -170,7 +272,7 @@ namespace QuitSmartApp.ViewModels
         private void ViewUserDetails(UserOverview? user)
         {
             if (user == null) return;
-            
+
             // For now, show message box with user details
             var details = $"Chi tiết người dùng:\n\n" +
                          $"ID: {user.UserId}\n" +
@@ -185,8 +287,8 @@ namespace QuitSmartApp.ViewModels
                          $"Chuỗi ngày hiện tại: {user.CurrentStreak}\n" +
                          $"Chuỗi ngày dài nhất: {user.LongestStreak}\n" +
                          $"Số huy hiệu: {user.TotalBadges}";
-            
-            System.Windows.MessageBox.Show(details, "Chi tiết người dùng", 
+
+            System.Windows.MessageBox.Show(details, "Chi tiết người dùng",
                 System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
@@ -214,10 +316,10 @@ namespace QuitSmartApp.ViewModels
                             user.UserId,
                             $"Đã xóa người dùng {user.FullName} ({user.Username})"
                         );
-                        
+
                         // Recalculate statistics
-                        LoadDashboardDataAsync();
-                        
+                        await LoadDashboardDataAsync();
+
                         System.Windows.MessageBox.Show("Người dùng đã được xóa thành công!", "Thành công",
                             System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                     }
@@ -243,7 +345,7 @@ namespace QuitSmartApp.ViewModels
         private void EditUser(UserOverview? user)
         {
             if (user == null) return;
-            
+
             System.Windows.MessageBox.Show(
                 "Chức năng sửa người dùng sẽ được triển khai trong phiên bản tiếp theo.",
                 "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
@@ -256,7 +358,7 @@ namespace QuitSmartApp.ViewModels
             try
             {
                 var userLogs = await _adminService.GetUserDailyLogsAsync(user.UserId);
-                var logsText = string.Join("\n", userLogs.Take(10).Select(log => 
+                var logsText = string.Join("\n", userLogs.Take(10).Select(log =>
                     $"[{log.LogDate:dd/MM/yyyy}] Hút thuốc: {(log.HasSmoked == true ? "Có" : "Không")}, " +
                     $"Tình trạng sức khỏe: {log.HealthStatus ?? "Không ghi nhận"}, Ghi chú: {log.Notes ?? "Không có"}"));
 

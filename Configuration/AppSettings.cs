@@ -6,7 +6,7 @@ namespace QuitSmartApp.Configuration
     public static class AppSettings
     {
         // Database settings
-        public const string DefaultConnectionString = "Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;Trusted_Connection=True;TrustServerCertificate=True;";
+        public const string DefaultConnectionString = "Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;TrustServerCertificate=True;";
 
         // UI Theme settings
         public const string PrimaryColor = "#4CAF50"; // Green color theme

@@ -9,308 +9,431 @@
              d:DesignWidth="1200"
              Background="White">
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        
-        <Style x:Key="AdminStatsCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="LightGray"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="16"/>
-            <Setter Property="Margin" Value="6"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="2" BlurRadius="8" Opacity="0.2"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <UserControl.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-        <Style x:Key="AdminStatValueStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="Foreground" Value="DodgerBlue"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
+                <Style x:Key="AdminStatsCardStyle"
+                       TargetType="Border">
+                        <Setter Property="Background"
+                                Value="White"/>
+                        <Setter Property="BorderBrush"
+                                Value="LightGray"/>
+                        <Setter Property="BorderThickness"
+                                Value="1"/>
+                        <Setter Property="CornerRadius"
+                                Value="8"/>
+                        <Setter Property="Padding"
+                                Value="16"/>
+                        <Setter Property="Margin"
+                                Value="6"/>
+                        <Setter Property="Effect">
+                                <Setter.Value>
+                                        <DropShadowEffect Color="Gray"
+                                                          Direction="270"
+                                                          ShadowDepth="2"
+                                                          BlurRadius="8"
+                                                          Opacity="0.2"/>
+                                </Setter.Value>
+                        </Setter>
+                </Style>
 
-        <Style x:Key="AdminStatLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,6,0,0"/>
-        </Style>
-        
-        <Style x:Key="ActionButtonStyle" TargetType="Button">
-            <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-    </UserControl.Resources>
+                <Style x:Key="AdminStatValueStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="24"/>
+                        <Setter Property="FontWeight"
+                                Value="Light"/>
+                        <Setter Property="Foreground"
+                                Value="DodgerBlue"/>
+                        <Setter Property="HorizontalAlignment"
+                                Value="Center"/>
+                </Style>
 
-    <ScrollViewer>
-        <StackPanel MaxWidth="1400" Margin="32,16">
-            
-            <!-- Header -->
-            <StackPanel Margin="0,0,0,24">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,12">
-                    <TextBlock Text="🛠️" FontSize="28" Margin="0,0,12,0"/>
-                    <TextBlock Text="Bảng điều khiển Admin"
-                               FontSize="24"
-                               FontWeight="SemiBold"
-                               Foreground="DodgerBlue"/>
-                </StackPanel>
-                
-                <TextBlock Text="Quản lý hệ thống và người dùng QuitSmart"
-                           FontSize="14"
-                           Foreground="Gray"
-                           HorizontalAlignment="Center"/>
-                           
-                <!-- Action Buttons -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
-                    <Button Content="🔄 Làm mới"
-                            Background="DodgerBlue"
-                            Foreground="White"
-                            BorderBrush="DodgerBlue"
-                            Padding="10,6"
-                            FontSize="13"
-                            Margin="0,0,8,0"
-                            Cursor="Hand"
-                            Command="{Binding RefreshDataCommand}"/>
-                    
-                    <Button Content="🚪 Đăng xuất"
-                            Background="Crimson"
-                            Foreground="White"
-                            BorderBrush="Crimson"
-                            Padding="10,6"
-                            FontSize="13"
-                            Cursor="Hand"
-                            Command="{Binding LogoutCommand}"/>
-                </StackPanel>
-            </StackPanel>
+                <Style x:Key="AdminStatLabelStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="12"/>
+                        <Setter Property="FontWeight"
+                                Value="Medium"/>
+                        <Setter Property="Foreground"
+                                Value="Gray"/>
+                        <Setter Property="HorizontalAlignment"
+                                Value="Center"/>
+                        <Setter Property="TextAlignment"
+                                Value="Center"/>
+                        <Setter Property="Margin"
+                                Value="0,6,0,0"/>
+                </Style>
 
-            <!-- Loading Indicator -->
-            <ui:ProgressRing IsActive="{Binding IsLoading}"
-                           Margin="0,16,0,16"
-                           HorizontalAlignment="Center"/>
+                <Style x:Key="ActionButtonStyle"
+                       TargetType="Button">
+                        <Setter Property="Padding"
+                                Value="8,4"/>
+                        <Setter Property="FontSize"
+                                Value="12"/>
+                        <Setter Property="Margin"
+                                Value="2"/>
+                        <Setter Property="Cursor"
+                                Value="Hand"/>
+                </Style>
+        </UserControl.Resources>
 
-            <!-- Content -->
-            <StackPanel>
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
+        <ScrollViewer>
+                <StackPanel MaxWidth="1400"
+                            Margin="32,16">
 
-                <!-- Statistics Row 1 -->
-                <Grid Margin="0,0,0,16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                        <!-- Header -->
+                        <StackPanel Margin="0,0,0,24">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,12">
+                                        <TextBlock Text="🛠️"
+                                                   FontSize="28"
+                                                   Margin="0,0,12,0"/>
+                                        <TextBlock Text="Bảng điều khiển Admin"
+                                                   FontSize="24"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="DodgerBlue"/>
+                                </StackPanel>
 
-                    <!-- Total Users -->
-                    <Border Grid.Column="0" Style="{StaticResource AdminStatsCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="👥" FontSize="24" HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding TotalUsers}" Style="{StaticResource AdminStatValueStyle}"/>
-                            <TextBlock Text="Tổng người dùng" Style="{StaticResource AdminStatLabelStyle}"/>
+                                <TextBlock Text="Quản lý hệ thống và người dùng QuitSmart"
+                                           FontSize="14"
+                                           Foreground="Gray"
+                                           HorizontalAlignment="Center"/>
+
+                                <!-- Action Buttons -->
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,12,0,0">
+                                        <Button Content="🔄 Làm mới"
+                                                Background="DodgerBlue"
+                                                Foreground="White"
+                                                BorderBrush="DodgerBlue"
+                                                Padding="10,6"
+                                                FontSize="13"
+                                                Margin="0,0,8,0"
+                                                Cursor="Hand"
+                                                Command="{Binding RefreshDataCommand}"/>
+
+                                        <Button Content="🚪 Đăng xuất"
+                                                Background="Crimson"
+                                                Foreground="White"
+                                                BorderBrush="Crimson"
+                                                Padding="10,6"
+                                                FontSize="13"
+                                                Cursor="Hand"
+                                                Command="{Binding LogoutCommand}"/>
+                                </StackPanel>
                         </StackPanel>
-                    </Border>
 
-                    <!-- Active Users -->
-                    <Border Grid.Column="1" Style="{StaticResource AdminStatsCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="✅" FontSize="24" HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding ActiveUsers}" Style="{StaticResource AdminStatValueStyle}" Foreground="ForestGreen"/>
-                            <TextBlock Text="Đang hoạt động" Style="{StaticResource AdminStatLabelStyle}"/>
-                        </StackPanel>
-                    </Border>
+                        <!-- Loading Indicator -->
+                        <ui:ProgressRing IsActive="{Binding IsLoading}"
+                                         Margin="0,16,0,16"
+                                         HorizontalAlignment="Center"/>
 
-                    <!-- Total Money Saved -->
-                    <Border Grid.Column="2" Style="{StaticResource AdminStatsCardStyle}">
+                        <!-- Content -->
                         <StackPanel>
-                            <TextBlock Text="💰" FontSize="24" HorizontalAlignment="Center"/>
-                            <TextBlock Style="{StaticResource AdminStatValueStyle}" Foreground="Orange">
+                                <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible"/>
+                                                <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsLoading}"
+                                                                     Value="True">
+                                                                <Setter Property="Visibility"
+                                                                        Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                </Style.Triggers>
+                                        </Style>
+                                </StackPanel.Style>
+
+                                <!-- Statistics Row 1 -->
+                                <Grid Margin="0,0,0,16">
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Total Users -->
+                                        <Border Grid.Column="0"
+                                                Style="{StaticResource AdminStatsCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="👥"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding TotalUsers}"
+                                                                   Style="{StaticResource AdminStatValueStyle}"/>
+                                                        <TextBlock Text="Tổng người dùng"
+                                                                   Style="{StaticResource AdminStatLabelStyle}"/>
+                                                </StackPanel>
+                                        </Border>
+
+                                        <!-- Active Users -->
+                                        <Border Grid.Column="1"
+                                                Style="{StaticResource AdminStatsCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="✅"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding ActiveUsers}"
+                                                                   Style="{StaticResource AdminStatValueStyle}"
+                                                                   Foreground="ForestGreen"/>
+                                                        <TextBlock Text="Đang hoạt động"
+                                                                   Style="{StaticResource AdminStatLabelStyle}"/>
+                                                </StackPanel>
+                                        </Border>
+
+                                        <!-- Total Money Saved -->
+                                        <Border Grid.Column="2"
+                                                Style="{StaticResource AdminStatsCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="💰"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Style="{StaticResource AdminStatValueStyle}"
+                                                                   Foreground="Orange">
                                 <Run Text="{Binding TotalMoneySaved, StringFormat=N0}"/>
-                            </TextBlock>
-                            <TextBlock Text="Tổng tiền tiết kiệm (₫)" Style="{StaticResource AdminStatLabelStyle}"/>
-                        </StackPanel>
-                    </Border>
+                                                        </TextBlock>
+                                                        <TextBlock Text="Tổng tiền tiết kiệm (₫)"
+                                                                   Style="{StaticResource AdminStatLabelStyle}"/>
+                                                </StackPanel>
+                                        </Border>
 
-                    <!-- Average Days Quit -->
-                    <Border Grid.Column="3" Style="{StaticResource AdminStatsCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="📅" FontSize="24" HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding AverageDaysQuit}" Style="{StaticResource AdminStatValueStyle}" Foreground="Purple"/>
-                            <TextBlock Text="Trung bình ngày cai" Style="{StaticResource AdminStatLabelStyle}"/>
-                        </StackPanel>
-                    </Border>
+                                        <!-- Average Days Quit -->
+                                        <Border Grid.Column="3"
+                                                Style="{StaticResource AdminStatsCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="📅"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding AverageDaysQuit}"
+                                                                   Style="{StaticResource AdminStatValueStyle}"
+                                                                   Foreground="Purple"/>
+                                                        <TextBlock Text="Trung bình ngày cai"
+                                                                   Style="{StaticResource AdminStatLabelStyle}"/>
+                                                </StackPanel>
+                                        </Border>
 
-                    <!-- Sessions -->
-                    <Border Grid.Column="4" Style="{StaticResource AdminStatsCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="📊" FontSize="24" HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding TotalSessions}" Style="{StaticResource AdminStatValueStyle}" Foreground="CornflowerBlue"/>
-                            <TextBlock Text="Phiên làm việc" Style="{StaticResource AdminStatLabelStyle}"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <!-- Charts Section -->
-                <Border Style="{StaticResource AdminStatsCardStyle}" Margin="6,8,6,16">
-                    <StackPanel>
-                        <TextBlock Text="📊 Biểu đồ thống kê"
-                                   FontSize="16"
-                                   FontWeight="SemiBold"
-                                   Foreground="DodgerBlue"
-                                   Margin="0,0,0,12"/>
-
-                        <!-- Simple Progress Bar Chart for Active vs Inactive Users -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Active Users Chart -->
-                            <StackPanel Grid.Column="0" Margin="0,0,16,0">
-                                <TextBlock Text="Người dùng hoạt động" FontSize="14" FontWeight="Medium" Margin="0,0,0,8"/>
-                                <Grid>
-                                    <ProgressBar Value="{Binding ActiveUsersPercentage}" Maximum="100" Height="20" 
-                                               Foreground="ForestGreen" Background="LightGray"/>
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                             FontSize="12" FontWeight="Bold" Foreground="White">
-                                        <Run Text="{Binding ActiveUsersPercentage, StringFormat=F1}"/><Run Text="%"/>
-                                    </TextBlock>
+                                        <!-- Sessions -->
+                                        <Border Grid.Column="4"
+                                                Style="{StaticResource AdminStatsCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="📊"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding TotalSessions}"
+                                                                   Style="{StaticResource AdminStatValueStyle}"
+                                                                   Foreground="CornflowerBlue"/>
+                                                        <TextBlock Text="Phiên làm việc"
+                                                                   Style="{StaticResource AdminStatLabelStyle}"/>
+                                                </StackPanel>
+                                        </Border>
                                 </Grid>
-                                <TextBlock FontSize="12" Foreground="ForestGreen" Margin="0,4,0,0">
+
+                                <!-- Charts Section -->
+                                <Border Style="{StaticResource AdminStatsCardStyle}"
+                                        Margin="6,8,6,16">
+                                        <StackPanel>
+                                                <TextBlock Text="📊 Biểu đồ thống kê"
+                                                           FontSize="16"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="DodgerBlue"
+                                                           Margin="0,0,0,12"/>
+
+                                                <!-- Simple Progress Bar Chart for Active vs Inactive Users -->
+                                                <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <!-- Active Users Chart -->
+                                                        <StackPanel Grid.Column="0"
+                                                                    Margin="0,0,16,0">
+                                                                <TextBlock Text="Người dùng hoạt động"
+                                                                           FontSize="14"
+                                                                           FontWeight="Medium"
+                                                                           Margin="0,0,0,8"/>
+                                                                <Grid>
+                                                                        <ProgressBar Value="{Binding ActiveUsersPercentage, Mode=OneWay}"
+                                                                                     Maximum="100"
+                                                                                     Height="20"
+                                                                                     Foreground="ForestGreen"
+                                                                                     Background="LightGray"/>
+                                                                        <TextBlock HorizontalAlignment="Center"
+                                                                                   VerticalAlignment="Center"
+                                                                                   FontSize="12"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="White">
+                                        <Run Text="{Binding ActiveUsersPercentage, StringFormat=F1, Mode=OneWay}"/><Run Text="%"/>
+                                                                        </TextBlock>
+                                                                </Grid>
+                                                                <TextBlock FontSize="12"
+                                                                           Foreground="ForestGreen"
+                                                                           Margin="0,4,0,0">
                                     <Run Text="Hoạt động: "/>
-                                    <Run Text="{Binding ActiveUsers}"/>
+                                    <Run Text="{Binding ActiveUsers, Mode=OneWay}"/>
                                     <Run Text=" người"/>
-                                </TextBlock>
-                            </StackPanel>
+                                                                </TextBlock>
+                                                        </StackPanel>
 
-                            <!-- Inactive Users Chart -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="Người dùng không hoạt động" FontSize="14" FontWeight="Medium" Margin="0,0,0,8"/>
-                                <Grid>
-                                    <ProgressBar Value="{Binding InactiveUsersPercentage}" Maximum="100" Height="20" 
-                                               Foreground="Crimson" Background="LightGray"/>
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                             FontSize="12" FontWeight="Bold" Foreground="White">
-                                        <Run Text="{Binding InactiveUsersPercentage, StringFormat=F1}"/><Run Text="%"/>
-                                    </TextBlock>
-                                </Grid>
-                                <TextBlock FontSize="12" Foreground="Crimson" Margin="0,4,0,0">
+                                                        <!-- Inactive Users Chart -->
+                                                        <StackPanel Grid.Column="1">
+                                                                <TextBlock Text="Người dùng không hoạt động"
+                                                                           FontSize="14"
+                                                                           FontWeight="Medium"
+                                                                           Margin="0,0,0,8"/>
+                                                                <Grid>
+                                                                        <ProgressBar Value="{Binding InactiveUsersPercentage, Mode=OneWay}"
+                                                                                     Maximum="100"
+                                                                                     Height="20"
+                                                                                     Foreground="Crimson"
+                                                                                     Background="LightGray"/>
+                                                                        <TextBlock HorizontalAlignment="Center"
+                                                                                   VerticalAlignment="Center"
+                                                                                   FontSize="12"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="White">
+                                        <Run Text="{Binding InactiveUsersPercentage, StringFormat=F1, Mode=OneWay}"/><Run Text="%"/>
+                                                                        </TextBlock>
+                                                                </Grid>
+                                                                <TextBlock FontSize="12"
+                                                                           Foreground="Crimson"
+                                                                           Margin="0,4,0,0">
                                     <Run Text="Không hoạt động: "/>
-                                    <Run Text="{Binding InactiveUsers}"/>
+                                    <Run Text="{Binding InactiveUsers, Mode=OneWay}"/>
                                     <Run Text=" người"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
+                                                                </TextBlock>
+                                                        </StackPanel>
+                                                </Grid>
+                                        </StackPanel>
+                                </Border>
 
-                <!-- Users Management Section -->
-                <Border Style="{StaticResource AdminStatsCardStyle}" Margin="6,8,6,8">
-                    <StackPanel>
-                        <TextBlock Text="👥 Quản lý người dùng"
-                                   FontSize="16"
-                                   FontWeight="SemiBold"
-                                   Foreground="DodgerBlue"
-                                   Margin="0,0,0,12"/>
+                                <!-- Users Management Section -->
+                                <Border Style="{StaticResource AdminStatsCardStyle}"
+                                        Margin="6,8,6,8">
+                                        <StackPanel>
+                                                <TextBlock Text="👥 Quản lý người dùng"
+                                                           FontSize="16"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="DodgerBlue"
+                                                           Margin="0,0,0,12"/>
 
-                        <DataGrid ItemsSource="{Binding Users}"
-                                  SelectedItem="{Binding SelectedUser}"
-                                  AutoGenerateColumns="False"
-                                  IsReadOnly="True"
-                                  GridLinesVisibility="Horizontal"
-                                  HeadersVisibility="Column"
-                                  CanUserAddRows="False"
-                                  CanUserDeleteRows="False"
-                                  MaxHeight="300"
-                                  SelectionMode="Single">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Tên đăng nhập" Binding="{Binding Username}" Width="120"/>
-                                <DataGridTextColumn Header="Họ tên" Binding="{Binding FullName}" Width="140"/>
-                                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="180"/>
-                                <DataGridCheckBoxColumn Header="Hoạt động" Binding="{Binding IsActive}" Width="70"/>
-                                <DataGridTextColumn Header="Ngày tạo" Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy}" Width="90"/>
-                                <DataGridTextColumn Header="Ngày cai" Binding="{Binding TotalDaysQuit}" Width="70"/>
-                                <DataGridTextColumn Header="Tiền tiết kiệm" Binding="{Binding TotalMoneySaved, StringFormat=N0}" Width="100"/>
-                                <DataGridTemplateColumn Header="Hành động" Width="200">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Button Content="👁️" ToolTip="Xem chi tiết"
-                                                        Style="{StaticResource ActionButtonStyle}"
-                                                        Background="DodgerBlue" Foreground="White"
-                                                        Command="{Binding DataContext.ViewUserDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                        CommandParameter="{Binding}"/>
-                                                <Button Content="📋" ToolTip="Xem nhật ký"
-                                                        Style="{StaticResource ActionButtonStyle}"
-                                                        Background="Green" Foreground="White"
-                                                        Command="{Binding DataContext.ViewUserLogsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                        CommandParameter="{Binding}"/>
-                                                <Button Content="✏️" ToolTip="Sửa"
-                                                        Style="{StaticResource ActionButtonStyle}"
-                                                        Background="Orange" Foreground="White"
-                                                        Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                        CommandParameter="{Binding}"/>
-                                                <Button Content="🗑️" ToolTip="Xóa (chỉ user không hoạt động)"
-                                                        Style="{StaticResource ActionButtonStyle}"
-                                                        Background="Crimson" Foreground="White"
-                                                        Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                        CommandParameter="{Binding}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </StackPanel>
-                </Border>
+                                                <DataGrid ItemsSource="{Binding Users}"
+                                                          SelectedItem="{Binding SelectedUser}"
+                                                          AutoGenerateColumns="False"
+                                                          IsReadOnly="True"
+                                                          GridLinesVisibility="Horizontal"
+                                                          HeadersVisibility="Column"
+                                                          CanUserAddRows="False"
+                                                          CanUserDeleteRows="False"
+                                                          MaxHeight="300"
+                                                          SelectionMode="Single">
+                                                        <DataGrid.Columns>
+                                                                <DataGridTextColumn Header="Tên đăng nhập"
+                                                                                    Binding="{Binding Username}"
+                                                                                    Width="120"/>
+                                                                <DataGridTextColumn Header="Họ tên"
+                                                                                    Binding="{Binding FullName}"
+                                                                                    Width="140"/>
+                                                                <DataGridTextColumn Header="Email"
+                                                                                    Binding="{Binding Email}"
+                                                                                    Width="180"/>
+                                                                <DataGridCheckBoxColumn Header="Hoạt động"
+                                                                                        Binding="{Binding IsActive}"
+                                                                                        Width="70"/>
+                                                                <DataGridTextColumn Header="Ngày tạo"
+                                                                                    Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy}"
+                                                                                    Width="90"/>
+                                                                <DataGridTextColumn Header="Ngày cai"
+                                                                                    Binding="{Binding TotalDaysQuit}"
+                                                                                    Width="70"/>
+                                                                <DataGridTextColumn Header="Tiền tiết kiệm"
+                                                                                    Binding="{Binding TotalMoneySaved, StringFormat=N0}"
+                                                                                    Width="100"/>
+                                                                <DataGridTemplateColumn Header="Hành động"
+                                                                                        Width="200">
+                                                                        <DataGridTemplateColumn.CellTemplate>
+                                                                                <DataTemplate>
+                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                <Button Content="👁️"
+                                                                                                        ToolTip="Xem chi tiết"
+                                                                                                        Style="{StaticResource ActionButtonStyle}"
+                                                                                                        Background="DodgerBlue"
+                                                                                                        Foreground="White"
+                                                                                                        Command="{Binding DataContext.ViewUserDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                                <Button Content="📋"
+                                                                                                        ToolTip="Xem nhật ký"
+                                                                                                        Style="{StaticResource ActionButtonStyle}"
+                                                                                                        Background="Green"
+                                                                                                        Foreground="White"
+                                                                                                        Command="{Binding DataContext.ViewUserLogsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                                <Button Content="✏️"
+                                                                                                        ToolTip="Sửa"
+                                                                                                        Style="{StaticResource ActionButtonStyle}"
+                                                                                                        Background="Orange"
+                                                                                                        Foreground="White"
+                                                                                                        Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                                <Button Content="🗑️"
+                                                                                                        ToolTip="Xóa (chỉ user không hoạt động)"
+                                                                                                        Style="{StaticResource ActionButtonStyle}"
+                                                                                                        Background="Crimson"
+                                                                                                        Foreground="White"
+                                                                                                        Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                        CommandParameter="{Binding}"/>
+                                                                                        </StackPanel>
+                                                                                </DataTemplate>
+                                                                        </DataGridTemplateColumn.CellTemplate>
+                                                                </DataGridTemplateColumn>
+                                                        </DataGrid.Columns>
+                                                </DataGrid>
+                                        </StackPanel>
+                                </Border>
 
-                <!-- Admin Logs Section -->
-                <Border Style="{StaticResource AdminStatsCardStyle}" Margin="6,8,6,8">
-                    <StackPanel>
-                        <TextBlock Text="📋 Nhật ký hoạt động Admin (50 gần nhất)"
-                                   FontSize="16"
-                                   FontWeight="SemiBold"
-                                   Foreground="DodgerBlue"
-                                   Margin="0,0,0,12"/>
+                                <!-- Admin Logs Section -->
+                                <Border Style="{StaticResource AdminStatsCardStyle}"
+                                        Margin="6,8,6,8">
+                                        <StackPanel>
+                                                <TextBlock Text="📋 Nhật ký hoạt động Admin (50 gần nhất)"
+                                                           FontSize="16"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="DodgerBlue"
+                                                           Margin="0,0,0,12"/>
 
-                        <DataGrid ItemsSource="{Binding AdminLogs}"
-                                  AutoGenerateColumns="False"
-                                  IsReadOnly="True"
-                                  GridLinesVisibility="Horizontal"
-                                  HeadersVisibility="Column"
-                                  CanUserAddRows="False"
-                                  CanUserDeleteRows="False"
-                                  MaxHeight="250">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Thời gian" Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy HH:mm:ss}" Width="130"/>
-                                <DataGridTextColumn Header="Admin" Binding="{Binding Admin.Username}" Width="100"/>
-                                <DataGridTextColumn Header="Hành động" Binding="{Binding Action}" Width="180"/>
-                                <DataGridTextColumn Header="Chi tiết" Binding="{Binding Details}" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </StackPanel>
-                </Border>
-                
-            </StackPanel>
-            
-        </StackPanel>
-    </ScrollViewer>
+                                                <DataGrid ItemsSource="{Binding AdminLogs}"
+                                                          AutoGenerateColumns="False"
+                                                          IsReadOnly="True"
+                                                          GridLinesVisibility="Horizontal"
+                                                          HeadersVisibility="Column"
+                                                          CanUserAddRows="False"
+                                                          CanUserDeleteRows="False"
+                                                          MaxHeight="250">
+                                                        <DataGrid.Columns>
+                                                                <DataGridTextColumn Header="Thời gian"
+                                                                                    Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy HH:mm:ss}"
+                                                                                    Width="130"/>
+                                                                <DataGridTextColumn Header="Admin"
+                                                                                    Binding="{Binding Admin.Username}"
+                                                                                    Width="100"/>
+                                                                <DataGridTextColumn Header="Hành động"
+                                                                                    Binding="{Binding Action}"
+                                                                                    Width="180"/>
+                                                                <DataGridTextColumn Header="Chi tiết"
+                                                                                    Binding="{Binding Details}"
+                                                                                    Width="*"/>
+                                                        </DataGrid.Columns>
+                                                </DataGrid>
+                                        </StackPanel>
+                                </Border>
+
+                        </StackPanel>
+
+                </StackPanel>
+        </ScrollViewer>
 </UserControl>

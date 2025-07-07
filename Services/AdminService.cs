@@ -33,6 +33,7 @@ namespace QuitSmartApp.Services
             {
                 // Try to get real data from repository
                 var users = await _userRepository.GetActiveUsersAsync();
+
                 var userOverviews = users.Select(u => new UserOverview
                 {
                     UserId = u.UserId,
@@ -173,13 +174,13 @@ namespace QuitSmartApp.Services
             try
             {
                 var logs = await _adminLogRepository.GetAdminLogsAsync(adminId, 100); // Limit to 100 recent logs
-                
+
                 // If no real data, return sample data for testing
                 if (!logs.Any())
                 {
                     return GetSampleAdminLogs();
                 }
-                
+
                 return logs;
             }
             catch (Exception)
@@ -193,7 +194,7 @@ namespace QuitSmartApp.Services
         {
             var admin1Id = Guid.NewGuid();
             var admin2Id = Guid.NewGuid();
-            
+
             return new List<AdminLog>
             {
                 new AdminLog

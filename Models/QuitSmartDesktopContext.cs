@@ -42,7 +42,7 @@ public partial class QuitSmartDesktopContext : DbContext
     public virtual DbSet<UserStatistic> UserStatistics { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
