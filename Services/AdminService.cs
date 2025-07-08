@@ -53,9 +53,10 @@ namespace QuitSmartApp.Services
 
                 return userOverviews;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Console.WriteLine("There is some trouble");
+                throw new Exception("ex", ex);
             }
         }
 
