@@ -10,6 +10,45 @@
              Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
     <UserControl.Resources>
+        <Style x:Key="BackButtonStyle"
+               TargetType="Button">
+            <Setter Property="Background"
+                    Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+            <Setter Property="Foreground"
+                    Value="White"/>
+            <Setter Property="Padding"
+                    Value="16,8"/>
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+            <Setter Property="FontWeight"
+                    Value="Medium"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter Property="Background"
+                                                    Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="TrackingCardStyle"
                TargetType="Border">
             <Setter Property="Background"
@@ -84,22 +123,33 @@
     </UserControl.Resources>
 
     <ScrollViewer>
-        <StackPanel MaxWidth="900"
-                    Margin="40,20">
+        <StackPanel MaxWidth="1000"
+                    Margin="32,20">
 
-            <!-- Header -->
-            <StackPanel Margin="0,0,0,32">
-                <TextBlock Text="📝 Nhật ký hàng ngày"
-                           FontSize="28"
-                           FontWeight="Light"
-                           Foreground="ForestGreen"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,8"/>
-                <TextBlock Text="Ghi lại hành trình cai thuốc của bạn mỗi ngày"
-                           FontSize="16"
-                           Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
+            <!-- Header với Back Button -->
+            <Grid Margin="0,0,0,24">
+                <Button Content="← Quay lại"
+                        Style="{StaticResource BackButtonStyle}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding BackCommand}"/>
+
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,0,0,0">
+                    <TextBlock Text="📝 Nhật ký hàng ngày"
+                               FontSize="32"
+                               FontWeight="Light"
+                               Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,8"/>
+                    <TextBlock Text="Ghi lại hành trình cai thuốc của bạn mỗi ngày"
+                               FontSize="16"
+                               Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
 
             <!-- Success/Error Messages -->
             <TextBlock Text="{Binding SuccessMessage}"

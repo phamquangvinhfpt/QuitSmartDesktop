@@ -8,560 +8,576 @@
              d:DesignWidth="900"
              Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
-        <UserControl.Resources>
-                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-                <Style x:Key="BackButtonStyle"
+        <Style x:Key="BackButtonStyle"
                        TargetType="Button">
-                        <Setter Property="Background"
+            <Setter Property="Background"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="White"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="16,8"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="0"/>
-                        <Setter Property="FontWeight"
+            <Setter Property="FontWeight"
                                 Value="Medium"/>
-                        <Setter Property="Cursor"
+            <Setter Property="Cursor"
                                 Value="Hand"/>
-                        <Setter Property="Template">
-                                <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}"
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
                                                         CornerRadius="8"
                                                         Padding="{TemplateBinding Padding}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
+                            <ContentPresenter HorizontalAlignment="Center"
                                                                           VerticalAlignment="Center"/>
-                                                        <Border.Style>
-                                                                <Style TargetType="Border">
-                                                                        <Style.Triggers>
-                                                                                <Trigger Property="IsMouseOver"
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
                                                                                          Value="True">
-                                                                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                                                                                                 Value="{DynamicResource QuitSmartSecondaryBrush}"/>
-                                                                                </Trigger>
-                                                                        </Style.Triggers>
-                                                                </Style>
-                                                        </Border.Style>
-                                                </Border>
-                                        </ControlTemplate>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <!-- Enhanced button style with clear hover for dark mode -->
-                <Style x:Key="SecondaryButtonStyle"
+        <!-- Enhanced button style with clear hover for dark mode -->
+        <Style x:Key="SecondaryButtonStyle"
                        TargetType="Button">
-                        <Setter Property="Background"
+            <Setter Property="Background"
                                 Value="Transparent"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="{DynamicResource QuitSmartAccentBrush}"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartSecondaryBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="2"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="12,8"/>
-                        <Setter Property="FontWeight"
+            <Setter Property="FontWeight"
                                 Value="SemiBold"/>
-                        <Setter Property="Cursor"
+            <Setter Property="Cursor"
                                 Value="Hand"/>
-                        <Setter Property="Template">
-                                <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}"
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
                                                         CornerRadius="6"
                                                         Padding="{TemplateBinding Padding}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
+                            <ContentPresenter HorizontalAlignment="Center"
                                                                           VerticalAlignment="Center"
                                                                           TextBlock.Foreground="{TemplateBinding Foreground}"/>
-                                                        <Border.Style>
-                                                                <Style TargetType="Border">
-                                                                        <Style.Triggers>
-                                                                                <Trigger Property="IsMouseOver"
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
                                                                                          Value="True">
-                                                                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                                                                                                 Value="{DynamicResource QuitSmartAccentBrush}"/>
-                                                                                        <Setter Property="BorderBrush"
+                                            <Setter Property="BorderBrush"
                                                                                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                                                                                </Trigger>
-                                                                        </Style.Triggers>
-                                                                </Style>
-                                                        </Border.Style>
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver"
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
                                                                  Value="True">
-                                                                <Setter Property="Foreground"
+                                <Setter Property="Foreground"
                                                                         Value="White"/>
-                                                        </Trigger>
-                                                </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <!-- Danger button style for delete actions -->
-                <Style x:Key="DangerButtonStyle"
+        <!-- Danger button style for delete actions -->
+        <Style x:Key="DangerButtonStyle"
                        TargetType="Button">
-                        <Setter Property="Background"
+            <Setter Property="Background"
                                 Value="#F44336"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="White"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="0"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="12,8"/>
-                        <Setter Property="Cursor"
+            <Setter Property="Cursor"
                                 Value="Hand"/>
-                        <Setter Property="Template">
-                                <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}"
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
                                                         CornerRadius="6"
                                                         Padding="{TemplateBinding Padding}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
+                            <ContentPresenter HorizontalAlignment="Center"
                                                                           VerticalAlignment="Center"/>
-                                                        <Border.Style>
-                                                                <Style TargetType="Border">
-                                                                        <Style.Triggers>
-                                                                                <Trigger Property="IsMouseOver"
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
                                                                                          Value="True">
-                                                                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                                                                                                 Value="#D32F2F"/>
-                                                                                </Trigger>
-                                                                        </Style.Triggers>
-                                                                </Style>
-                                                        </Border.Style>
-                                                </Border>
-                                        </ControlTemplate>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Style x:Key="ProfileCardStyle"
+        <Style x:Key="ProfileCardStyle"
                        TargetType="Border">
-                        <Setter Property="Background"
+            <Setter Property="Background"
                                 Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="1"/>
-                        <Setter Property="CornerRadius"
+            <Setter Property="CornerRadius"
                                 Value="12"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="20"/>
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="8"/>
-                        <Setter Property="Effect">
-                                <Setter.Value>
-                                        <DropShadowEffect Color="Gray"
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray"
                                                           Direction="270"
                                                           ShadowDepth="3"
                                                           BlurRadius="10"
                                                           Opacity="0.15"/>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Style x:Key="FormTextBoxStyle"
+        <Style x:Key="FormTextBoxStyle"
                        TargetType="TextBox">
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="0,0,0,16"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="12,10"/>
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="14"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="2"/>
-                        <Setter Property="Template">
-                                <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                                <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
                                                         CornerRadius="6">
-                                                        <ScrollViewer x:Name="PART_ContentHost"
+                            <ScrollViewer x:Name="PART_ContentHost"
                                                                       Margin="{TemplateBinding Padding}"/>
-                                                </Border>
-                                        </ControlTemplate>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Style x:Key="FormComboBoxStyle"
+        <Style x:Key="FormComboBoxStyle"
                        TargetType="ComboBox">
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="0,0,0,16"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="12,10"/>
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="14"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="2"/>
-                </Style>
+        </Style>
 
-                <Style x:Key="FormDatePickerStyle"
+        <Style x:Key="FormDatePickerStyle"
                        TargetType="DatePicker">
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="0,0,0,16"/>
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="14"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="2"/>
-                </Style>
+        </Style>
 
-                <Style x:Key="FormLabelStyle"
+        <Style x:Key="FormLabelStyle"
                        TargetType="TextBlock">
-                        <Setter Property="FontWeight"
+            <Setter Property="FontWeight"
                                 Value="Medium"/>
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="0,0,0,8"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="14"/>
-                </Style>
+        </Style>
 
-                <Style x:Key="SectionHeaderStyle"
+        <Style x:Key="SectionHeaderStyle"
                        TargetType="TextBlock">
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="20"/>
-                        <Setter Property="FontWeight"
+            <Setter Property="FontWeight"
                                 Value="Bold"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="{DynamicResource QuitSmartSecondaryBrush}"/>
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="0,0,0,20"/>
-                </Style>
+        </Style>
 
-                <Style x:Key="StatCardStyle"
+        <Style x:Key="StatCardStyle"
                        TargetType="Border">
-                        <Setter Property="Background"
+            <Setter Property="Background"
                                 Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-                        <Setter Property="BorderBrush"
+            <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
-                        <Setter Property="BorderThickness"
+            <Setter Property="BorderThickness"
                                 Value="2"/>
-                        <Setter Property="CornerRadius"
+            <Setter Property="CornerRadius"
                                 Value="10"/>
-                        <Setter Property="Padding"
+            <Setter Property="Padding"
                                 Value="16"/>
-                        <Setter Property="Margin"
+            <Setter Property="Margin"
                                 Value="8"/>
-                        <Setter Property="Effect">
-                                <Setter.Value>
-                                        <DropShadowEffect Color="Gray"
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray"
                                                           Direction="270"
                                                           ShadowDepth="2"
                                                           BlurRadius="8"
                                                           Opacity="0.2"/>
-                                </Setter.Value>
-                        </Setter>
-                </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <Style x:Key="ProfileContentTextStyle"
+        <Style x:Key="ProfileContentTextStyle"
                        TargetType="TextBlock">
-                        <Setter Property="FontSize"
+            <Setter Property="FontSize"
                                 Value="14"/>
-                        <Setter Property="Foreground"
+            <Setter Property="Foreground"
                                 Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
-                        <Setter Property="TextWrapping"
+            <Setter Property="TextWrapping"
                                 Value="Wrap"/>
-                        <Setter Property="LineHeight"
+            <Setter Property="LineHeight"
                                 Value="22"/>
-                </Style>
-        </UserControl.Resources>
+        </Style>
+    </UserControl.Resources>
 
-        <Grid Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
-                <ScrollViewer>
-                        <StackPanel MaxWidth="1000"
+    <Grid Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
+        <ScrollViewer>
+            <StackPanel MaxWidth="1000"
                                     Margin="32,20">
 
-                                <!-- Header với Back Button -->
-                                <Grid Margin="0,0,0,24">
-                                        <Button Content="← Quay lại"
+                <!-- Header với Back Button -->
+                <Grid Margin="0,0,0,24">
+                    <Button Content="← Quay lại"
                                                 Style="{StaticResource BackButtonStyle}"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Command="{Binding BackCommand}"/>
 
-                                        <StackPanel HorizontalAlignment="Center"
+                    <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Margin="0,0,0,0">
-                                                <TextBlock Text="Hồ sơ cá nhân"
+                        <TextBlock Text="Hồ sơ cá nhân"
                                                            FontSize="32"
                                                            FontWeight="Light"
                                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                                            HorizontalAlignment="Center"
                                                            Margin="0,0,0,8"/>
-                                                <TextBlock Text="Quản lý thông tin và theo dõi tiến trình cai thuốc"
+                        <TextBlock Text="Quản lý thông tin và theo dõi tiến trình cai thuốc"
                                                            FontSize="16"
                                                            Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                            HorizontalAlignment="Center"
                                                            TextAlignment="Center"/>
-                                        </StackPanel>
-                                </Grid>
+                    </StackPanel>
+                </Grid>
 
-                                <!-- Thông tin người dùng -->
-                                <TextBlock Text="👤 Thông tin cá nhân"
+                <!-- Thông tin người dùng -->
+                <TextBlock Text="👤 Thông tin cá nhân"
                                            FontSize="20"
                                            FontWeight="Bold"
                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                            Margin="8,0,8,16"/>
 
-                                <Border Style="{StaticResource ProfileCardStyle}">
-                                        <Grid>
-                                                <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="150"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource ProfileCardStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                                                <!-- Username -->
-                                                <TextBlock Grid.Row="0"
+                        <!-- Username -->
+                        <TextBlock Grid.Row="0"
                                                            Grid.Column="0"
                                                            Text="Tên đăng nhập:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <TextBox Grid.Row="0"
+                        <TextBox Grid.Row="0"
                                                          Grid.Column="1"
-                                                         Text="{Binding UserProfile.Username, Mode=TwoWay}"
+                                                         Text="{Binding Username}"
                                                          Margin="0,0,0,12"
                                                          IsReadOnly="True"
                                                          Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
                                                          BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
-                                                <!-- Email -->
-                                                <TextBlock Grid.Row="1"
+                        <!-- Email -->
+                        <TextBlock Grid.Row="1"
                                                            Grid.Column="0"
                                                            Text="Email:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <TextBox Grid.Row="1"
+                        <TextBox Grid.Row="1"
                                                          Grid.Column="1"
-                                                         Text="{Binding UserProfile.Email, Mode=TwoWay}"
+                                                         Text="{Binding Email}"
                                                          Margin="0,0,0,12"
+                                                         IsReadOnly="True"
+                                                         Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
                                                          Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                          BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
-                                                <!-- Full Name -->
-                                                <TextBlock Grid.Row="2"
+                        <!-- Full Name -->
+                        <TextBlock Grid.Row="2"
                                                            Grid.Column="0"
                                                            Text="Họ và tên:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <TextBox Grid.Row="2"
+                        <TextBox Grid.Row="2"
                                                          Grid.Column="1"
-                                                         Text="{Binding UserProfile.FullName, Mode=TwoWay}"
+                                                         Text="{Binding FullName, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
                                                          BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
-                                                <!-- Phone -->
-                                                <TextBlock Grid.Row="3"
+                        <!-- Date of Birth -->
+                        <TextBlock Grid.Row="3"
                                                            Grid.Column="0"
-                                                           Text="Số điện thoại:"
+                                                           Text="Ngày sinh:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <TextBox Grid.Row="3"
-                                                         Grid.Column="1"
-                                                         Text="{Binding UserProfile.Phone, Mode=TwoWay}"
-                                                         Margin="0,0,0,12"
-                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+                        <DatePicker Grid.Row="3"
+                                                            Grid.Column="1"
+                                                            SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
+                                                            Margin="0,0,0,12"
+                                                            FontSize="14"/>
 
-                                                <!-- Quit Date -->
-                                                <TextBlock Grid.Row="4"
+                        <!-- Gender -->
+                        <TextBlock Grid.Row="4"
+                                                           Grid.Column="0"
+                                                           Text="Giới tính:"
+                                                           FontWeight="SemiBold"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,0,12"/>
+                        <ComboBox Grid.Row="4"
+                                                          Grid.Column="1"
+                                                          SelectedItem="{Binding Gender, Mode=TwoWay}"
+                                                          ItemsSource="{Binding GenderOptions}"
+                                                          Margin="0,0,0,12"
+                                                          FontSize="14"/>
+
+                        <!-- Quit Date -->
+                        <TextBlock Grid.Row="5"
                                                            Grid.Column="0"
                                                            Text="Ngày bắt đầu cai:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <DatePicker Grid.Row="4"
+                        <DatePicker Grid.Row="5"
                                                             Grid.Column="1"
-                                                            SelectedDate="{Binding UserProfile.QuitDate, Mode=TwoWay}"
-                                                            Margin="0,0,0,12"/>
+                                                            SelectedDate="{Binding QuitStartDateTime, Mode=TwoWay}"
+                                                            Margin="0,0,0,12"
+                                                            FontSize="14"/>
 
-                                                <!-- Daily Cigarettes -->
-                                                <TextBlock Grid.Row="5"
+                        <!-- Daily Cigarettes -->
+                        <TextBlock Grid.Row="6"
                                                            Grid.Column="0"
                                                            Text="Thuốc lá/ngày:"
                                                            FontWeight="SemiBold"
                                                            VerticalAlignment="Center"
                                                            Margin="0,0,0,12"/>
-                                                <TextBox Grid.Row="5"
+                        <TextBox Grid.Row="6"
                                                          Grid.Column="1"
-                                                         Text="{Binding UserProfile.DailyCigarettes, Mode=TwoWay}"
+                                                         Text="{Binding CigarettesPerDay, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
                                                          BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
-                                                <!-- Delete Account Button -->
-                                                <Button Grid.Row="6"
-                                                        Grid.Column="0"
-                                                        Grid.ColumnSpan="2"
+                        <!-- Delete Account Button -->
+                        <!--<Button Grid.Row="6"
+                                                        Grid.Column="1"
                                                         Content="❌ Xóa tài khoản"
                                                         Style="{StaticResource DangerButtonStyle}"
                                                         HorizontalAlignment="Right"
-                                                        Margin="0,16,0,0"
-                                                        Command="{Binding DeleteAccountCommand}"/>
+                                                        Margin="0,71,0,-80"
+                                                        Command="{Binding DeleteAccountCommand}" Width="84"/>-->
 
-                                        </Grid>
-                                </Border>
+                    </Grid>
+                </Border>
 
-                                <!-- Buttons -->
-                                <StackPanel Orientation="Horizontal"
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center"
                                             Margin="0,16,0,24">
-                                        <Button Content="💾 Lưu thông tin"
+                    <Button Content="💾 Lưu thông tin"
                                                 Style="{StaticResource BackButtonStyle}"
                                                 Margin="0,0,12,0"
                                                 Command="{Binding SaveProfileCommand}"/>
-                                        <Button Content="🔑 Đổi mật khẩu"
+                    <Button Content="🔑 Đổi mật khẩu"
                                                 Style="{StaticResource SecondaryButtonStyle}"
                                                 Command="{Binding ChangePasswordCommand}"/>
-                                </StackPanel>
+                </StackPanel>
 
-                                <!-- Thống kê và Thành tựu -->
-                                <TextBlock Text="📊 Thống kê và thành tựu"
+                <!-- Thống kê và Thành tựu -->
+                <TextBlock Text="📊 Thống kê và thành tựu"
                                            FontSize="20"
                                            FontWeight="Bold"
                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                            Margin="8,0,8,16"/>
 
-                                <Grid Margin="0,0,0,24">
-                                        <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                                        <!-- Days Quit -->
-                                        <Border Grid.Column="0"
+                    <!-- Days Quit -->
+                    <Border Grid.Column="0"
                                                 Style="{StaticResource StatCardStyle}">
-                                                <StackPanel HorizontalAlignment="Center">
-                                                        <TextBlock Text="🗓️"
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="🗓️"
                                                                    FontSize="24"
                                                                    HorizontalAlignment="Center"
                                                                    Margin="0,0,0,8"/>
-                                                        <TextBlock Text="{Binding UserStatistic.TotalDaysQuit}"
+                            <TextBlock Text="{Binding UserStatistic.TotalDaysQuit}"
                                                                    FontSize="32"
                                                                    FontWeight="Bold"
                                                                    Foreground="{DynamicResource QuitSmartPrimaryBrush}"
                                                                    HorizontalAlignment="Center"/>
-                                                        <TextBlock Text="Ngày cai thuốc"
+                            <TextBlock Text="Ngày cai thuốc"
                                                                    FontSize="12"
                                                                    Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
-                                                </StackPanel>
-                                        </Border>
+                        </StackPanel>
+                    </Border>
 
-                                        <!-- Money Saved -->
-                                        <Border Grid.Column="1"
+                    <!-- Money Saved -->
+                    <Border Grid.Column="1"
                                                 Style="{StaticResource StatCardStyle}">
-                                                <StackPanel HorizontalAlignment="Center">
-                                                        <TextBlock Text="💰"
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="💰"
                                                                    FontSize="24"
                                                                    HorizontalAlignment="Center"
                                                                    Margin="0,0,0,8"/>
-                                                        <TextBlock FontSize="20"
+                            <TextBlock FontSize="20"
                                                                    FontWeight="Bold"
                                                                    Foreground="{DynamicResource QuitSmartPrimaryBrush}"
                                                                    HorizontalAlignment="Center">
-                                                                <Run Text="{Binding UserStatistic.MoneySaved, StringFormat=N0}"/>
+                                                                <Run Text="{Binding UserStatistic.TotalMoneySaved, StringFormat=N0}"/>
                                                                 <Run Text="₫"/>
-                                                        </TextBlock>
-                                                        <TextBlock Text="Tiền tiết kiệm"
+                            </TextBlock>
+                            <TextBlock Text="Tiền tiết kiệm"
                                                                    FontSize="12"
                                                                    Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
-                                                </StackPanel>
-                                        </Border>
+                        </StackPanel>
+                    </Border>
 
-                                        <!-- Cigarettes Avoided -->
-                                        <Border Grid.Column="2"
+                    <!-- Cigarettes Avoided -->
+                    <Border Grid.Column="2"
                                                 Style="{StaticResource StatCardStyle}">
-                                                <StackPanel HorizontalAlignment="Center">
-                                                        <TextBlock Text="🚭"
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="🚭"
                                                                    FontSize="24"
                                                                    HorizontalAlignment="Center"
                                                                    Margin="0,0,0,8"/>
-                                                        <TextBlock Text="{Binding UserStatistic.CurrentStreak}"
+                            <TextBlock Text="{Binding UserStatistic.CurrentStreak}"
                                                                    FontSize="24"
                                                                    FontWeight="Bold"
                                                                    Foreground="{DynamicResource QuitSmartPrimaryBrush}"
                                                                    HorizontalAlignment="Center"/>
-                                                        <TextBlock Text="Chuỗi ngày hiện tại"
+                            <TextBlock Text="Chuỗi ngày hiện tại"
                                                                    FontSize="12"
                                                                    Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
-                                                </StackPanel>
-                                        </Border>
-                                </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
 
-                                <!-- Recent Badges -->
-                                <TextBlock Text="🏆 Thành tựu gần đây"
+                <!-- Recent Badges -->
+                <TextBlock Text="🏆 Thành tựu gần đây"
                                            FontSize="20"
                                            FontWeight="Bold"
                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                            Margin="8,0,8,16"/>
 
-                                <ItemsControl ItemsSource="{Binding RecentBadges}"
+                <ItemsControl ItemsSource="{Binding RecentBadges}"
                                               Margin="0,0,0,32">
-                                        <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                        <WrapPanel Orientation="Horizontal"/>
-                                                </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                        <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
                                                                 BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
                                                                 BorderThickness="1"
                                                                 CornerRadius="8"
                                                                 Padding="12,8"
                                                                 Margin="4">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                        <TextBlock Text="{Binding Icon}"
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Icon}"
                                                                                    FontSize="20"
                                                                                    Margin="0,0,8,0"/>
-                                                                        <StackPanel>
-                                                                                <TextBlock Text="{Binding Name}"
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}"
                                                                                            FontWeight="SemiBold"
                                                                                            FontSize="14"/>
-                                                                                <TextBlock Text="{Binding Description}"
+                                        <TextBlock Text="{Binding Description}"
                                                                                            FontSize="12"
                                                                                            Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
-                                                                        </StackPanel>
-                                                                </StackPanel>
-                                                        </Border>
-                                                </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-                        </StackPanel>
-                </ScrollViewer>
-        </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

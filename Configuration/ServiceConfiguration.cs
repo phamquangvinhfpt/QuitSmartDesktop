@@ -45,6 +45,7 @@ namespace QuitSmartApp.Configuration
             services.AddTransient<UserDashboardViewModel>();
             services.AddTransient<GuestViewModel>();
             services.AddTransient<ProfileViewModel>();
+            services.AddTransient<ChangePasswordViewModel>();
             services.AddTransient<DailyTrackingViewModel>();
             services.AddTransient<BadgeCollectionViewModel>();
             services.AddTransient<HealthInfoViewModel>();

@@ -19,6 +19,8 @@ namespace QuitSmartApp.ViewModels
         private UserProfile? _userProfile;
         private UserStatistic? _userStatistic;
         private ObservableCollection<UserBadge> _recentBadges = new();
+        private string _username = string.Empty;
+        private string _email = string.Empty;
         private string _fullName = string.Empty;
         private DateTime? _dateOfBirth;
         private string _gender = "Male";
@@ -34,8 +36,9 @@ namespace QuitSmartApp.ViewModels
         private bool _isLoading = false;
         private bool _hasChanges = false;
 
-        // Navigation action
+        // Navigation actions
         public Action? NavigateBack { get; set; }
+        public Action? NavigateToChangePassword { get; set; }
 
         public ProfileViewModel(IUserService userService, IAuthenticationService authenticationService, IBadgeService badgeService)
         {
@@ -75,6 +78,18 @@ namespace QuitSmartApp.ViewModels
             set => SetProperty(ref _recentBadges, value);
         }
 
+        public string Username
+        {
+            get => _username;
+            set => SetProperty(ref _username, value);
+        }
+
+        public string Email
+        {
+            get => _email;
+            set => SetProperty(ref _email, value);
+        }
+
         public string FullName
         {
             get => _fullName;
@@ -112,6 +127,20 @@ namespace QuitSmartApp.ViewModels
             {
                 if (SetProperty(ref _quitStartDate, value))
                     OnProfileChanged();
+            }
+        }
+
+        public DateTime QuitStartDateTime
+        {
+            get => QuitStartDate.ToDateTime(TimeOnly.MinValue);
+            set
+            {
+                var dateOnly = DateOnly.FromDateTime(value);
+                if (QuitStartDate != dateOnly)
+                {
+                    QuitStartDate = dateOnly;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -221,6 +250,27 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
+                    // Load basic user info from authentication service
+                    Username = _authenticationService.CurrentUsername ?? string.Empty;
+
+                    // Load user from database to get email and other info
+                    try
+                    {
+                        var user = await _userService.GetUserAsync(userId);
+                        if (user != null)
+                        {
+                            Email = user.Email;
+                            FullName = user.FullName;
+                            DateOfBirth = user.DateOfBirth?.ToDateTime(TimeOnly.MinValue);
+                            Gender = user.Gender ?? "Male";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // If user lookup fails, at least set email from auth service
+                        Email = _authenticationService.CurrentUsername ?? string.Empty;
+                    }
+
                     // Load user profile
                     UserProfile = await _userService.GetUserProfileAsync(userId);
 
@@ -294,6 +344,18 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
+                    // Update user basic info
+                    var user = await _userService.GetUserAsync(userId);
+                    if (user != null)
+                    {
+                        user.FullName = FullName;
+                        user.DateOfBirth = DateOfBirth.HasValue ? DateOnly.FromDateTime(DateOfBirth.Value) : null;
+                        user.Gender = Gender;
+                        // Note: Username and Email are not editable in this view
+                        await _userService.UpdateUserAsync(user);
+                    }
+
+                    // Update user profile (smoking info)
                     var profile = new UserProfile
                     {
                         UserId = userId,
@@ -310,6 +372,10 @@ namespace QuitSmartApp.ViewModels
 
                     SuccessMessage = "Hồ sơ đã được lưu thành công!";
                     HasChanges = false;
+
+                    // Refresh statistics after profile update
+                    await _userService.RefreshUserStatisticsAsync(userId);
+                    UserStatistic = await _userService.GetUserStatisticsAsync(userId);
 
                     // Clear success message after 3 seconds
                     await Task.Delay(3000);
@@ -384,10 +450,7 @@ namespace QuitSmartApp.ViewModels
 
         private void ChangePassword()
         {
-            // TODO: Implement change password functionality
-            // This could navigate to a change password dialog or view
-            System.Windows.MessageBox.Show("Chức năng đổi mật khẩu sẽ được triển khai trong phiên bản tiếp theo.",
-                "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            NavigateToChangePassword?.Invoke();
         }
 
         private void DeleteAccount()

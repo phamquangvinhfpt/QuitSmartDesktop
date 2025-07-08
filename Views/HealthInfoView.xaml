@@ -11,19 +11,19 @@
                 <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
                 <Style x:Key="BackButtonStyle"
-                       TargetType="Button">
+                                TargetType="Button">
                         <Setter Property="Background"
-                                Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+                                        Value="{DynamicResource QuitSmartPrimaryBrush}"/>
                         <Setter Property="Foreground"
-                                Value="White"/>
+                                        Value="White"/>
                         <Setter Property="Padding"
-                                Value="16,8"/>
+                                        Value="16,8"/>
                         <Setter Property="BorderThickness"
-                                Value="0"/>
+                                        Value="0"/>
                         <Setter Property="FontWeight"
-                                Value="Medium"/>
+                                        Value="Medium"/>
                         <Setter Property="Cursor"
-                                Value="Hand"/>
+                                        Value="Hand"/>
                         <Setter Property="Template">
                                 <Setter.Value>
                                         <ControlTemplate TargetType="Button">
@@ -36,9 +36,9 @@
                                                                 <Style TargetType="Border">
                                                                         <Style.Triggers>
                                                                                 <Trigger Property="IsMouseOver"
-                                                                                         Value="True">
+                                                                                                Value="True">
                                                                                         <Setter Property="Background"
-                                                                                                Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                                                                                        Value="{DynamicResource QuitSmartSecondaryBrush}"/>
                                                                                 </Trigger>
                                                                         </Style.Triggers>
                                                                 </Style>
@@ -125,7 +125,7 @@
                 </Style>
         </UserControl.Resources>
 
-    <Grid Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+        <Grid Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
                 <ScrollViewer>
                         <StackPanel MaxWidth="1000"
                                     Margin="32,20">

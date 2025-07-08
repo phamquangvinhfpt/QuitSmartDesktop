@@ -157,7 +157,23 @@ namespace QuitSmartApp.ViewModels
                 {
                     profileViewModel.NavigateBack = () => NavigateToGuest();
                 }
+
+                // Set change password navigation
+                profileViewModel.NavigateToChangePassword = () => NavigateToChangePassword();
+
                 CurrentViewModel = profileViewModel;
+            }
+        }
+
+        private void NavigateToChangePassword()
+        {
+            CurrentView = "ChangePassword";
+            var changePasswordViewModel = App.ServiceProvider.GetService(typeof(ChangePasswordViewModel)) as ChangePasswordViewModel;
+            if (changePasswordViewModel != null)
+            {
+                // Set navigation back action to return to profile
+                changePasswordViewModel.NavigateBack = () => NavigateToProfile();
+                CurrentViewModel = changePasswordViewModel;
             }
         }
 

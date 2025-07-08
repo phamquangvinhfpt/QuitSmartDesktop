@@ -46,6 +46,10 @@
             <views:ProfileView/>
         </DataTemplate>
         
+        <DataTemplate DataType="{x:Type vm:ChangePasswordViewModel}">
+            <views:ChangePasswordView/>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type vm:DailyTrackingViewModel}">
             <views:DailyTrackingView/>
         </DataTemplate>

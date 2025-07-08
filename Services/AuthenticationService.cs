@@ -122,5 +122,43 @@ namespace QuitSmartApp.Services
                 return false;
             }
         }
+
+        public async Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
+        {
+            try
+            {
+                // Check if user is logged in
+                if (_currentUser == null || _currentUser.UserId == Guid.Empty)
+                    return false;
+
+                // Verify current password
+                if (string.IsNullOrEmpty(_currentUser.PasswordHash) ||
+                    !PasswordHelper.VerifyPassword(currentPassword, _currentUser.PasswordHash))
+                    return false;
+
+                // Hash new password
+                string newPasswordHash = PasswordHelper.HashPassword(newPassword);
+
+                // Update password in database
+                var user = await _userRepository.GetByIdAsync(_currentUser.UserId);
+                if (user == null)
+                    return false;
+
+                user.PasswordHash = newPasswordHash;
+                user.UpdatedAt = DateTime.UtcNow;
+
+                await _userRepository.UpdateAsync(user);
+                await _userRepository.SaveChangesAsync();
+
+                // Update current user session
+                _currentUser.PasswordHash = newPasswordHash;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

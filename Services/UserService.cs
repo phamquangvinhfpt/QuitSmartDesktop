@@ -32,6 +32,16 @@ namespace QuitSmartApp.Services
             _badgeService = badgeService;
         }
 
+        public async Task<User?> GetUserAsync(Guid userId)
+        {
+            return await _userRepository.GetByIdAsync(userId);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await _userRepository.UpdateAsync(user);
+        }
+
         public async Task<UserProfile?> GetUserProfileAsync(Guid userId)
         {
             return await _userProfileRepository.GetByUserIdAsync(userId);
@@ -42,10 +52,10 @@ namespace QuitSmartApp.Services
             profile.UserId = userId;
             var result = await _userProfileRepository.CreateOrUpdateAsync(profile);
             await _userProfileRepository.SaveChangesAsync();
-            
+
             // Refresh statistics after profile update
             await RefreshUserStatisticsAsync(userId);
-            
+
             return result;
         }
 
@@ -63,13 +73,13 @@ namespace QuitSmartApp.Services
         {
             var result = await _dailyLogRepository.CreateOrUpdateDailyLogAsync(userId, date, hasSmoked, healthStatus, notes);
             await _dailyLogRepository.SaveChangesAsync();
-            
+
             // Refresh statistics after logging
             await RefreshUserStatisticsAsync(userId);
-            
+
             // Check for new badges
             await _badgeService.CheckAndAwardBadgesAsync(userId);
-            
+
             return result;
         }
 
