@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for HealthInfoView.xaml
-    /// </summary>
+    // Interaction logic for HealthInfoView.xaml
     public partial class HealthInfoView : UserControl
     {
         public HealthInfoView()

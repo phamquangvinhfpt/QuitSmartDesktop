@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    /// <summary>
-    /// User service interface for user-related business operations
-    /// </summary>
+    // User service interface for user-related business operations
     public interface IUserService
     {
         // User profile management

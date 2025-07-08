@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for MotivationalMessage entity operations
-    /// </summary>
+    // Repository interface for MotivationalMessage entity operations
     public interface IMotivationalMessageRepository : IBaseRepository<MotivationalMessage>
     {
         Task<MotivationalMessage?> GetRandomDailyMessageAsync();

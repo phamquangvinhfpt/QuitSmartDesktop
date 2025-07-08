@@ -8,9 +8,7 @@ using System;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for managing health information content
-    /// </summary>
+    // ViewModel for managing health information content
     public class HealthInfoViewModel : BaseViewModel
     {
         private readonly IHealthInfoRepository _healthInfoRepository;

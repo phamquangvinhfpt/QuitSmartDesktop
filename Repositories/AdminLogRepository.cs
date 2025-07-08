@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for AdminLog entity operations
-    /// </summary>
+    // Repository implementation for AdminLog entity operations
     public class AdminLogRepository : BaseRepository<AdminLog>, IAdminLogRepository
     {
         public AdminLogRepository(QuitSmartDesktopContext context) : base(context)

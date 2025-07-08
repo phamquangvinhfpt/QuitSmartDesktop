@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for AdminDashboardView.xaml
-    /// </summary>
+    // Interaction logic for AdminDashboardView.xaml
     public partial class AdminDashboardView : UserControl
     {
         public AdminDashboardView()

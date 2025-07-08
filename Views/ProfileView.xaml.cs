@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for ProfileView.xaml
-    /// </summary>
+    // Interaction logic for ProfileView.xaml
     public partial class ProfileView : UserControl
     {
         public ProfileView()

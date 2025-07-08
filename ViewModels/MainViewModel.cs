@@ -5,9 +5,7 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// Main ViewModel for application navigation and state management
-    /// </summary>
+    // Main ViewModel for application navigation and state management
     public class MainViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;

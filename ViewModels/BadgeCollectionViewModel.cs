@@ -8,9 +8,7 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for managing user badge collection
-    /// </summary>
+    // ViewModel for managing user badge collection
     public class BadgeCollectionViewModel : BaseViewModel
     {
         private readonly IBadgeService _badgeService;

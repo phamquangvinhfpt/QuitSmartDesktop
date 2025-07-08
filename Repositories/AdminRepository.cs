@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for Admin entity operations
-    /// </summary>
+    // Repository implementation for Admin entity operations
     public class AdminRepository : BaseRepository<Admin>, IAdminRepository
     {
         public AdminRepository(QuitSmartDesktopContext context) : base(context)

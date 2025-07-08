@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    /// <summary>
-    /// Authentication service implementation for login/logout operations
-    /// </summary>
+    // Authentication service implementation for login/logout operations
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;

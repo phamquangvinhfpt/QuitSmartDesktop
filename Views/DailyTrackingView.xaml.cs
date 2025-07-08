@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for DailyTrackingView.xaml
-    /// </summary>
+    // Interaction logic for DailyTrackingView.xaml
     public partial class DailyTrackingView : UserControl
     {
         public DailyTrackingView()

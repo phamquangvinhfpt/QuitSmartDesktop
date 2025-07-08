@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    /// <summary>
-    /// Admin service interface for administrative operations
-    /// </summary>
+    // Admin service interface for administrative operations
     public interface IAdminService
     {
         // User management

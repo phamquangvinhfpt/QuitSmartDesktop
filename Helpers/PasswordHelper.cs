@@ -7,9 +7,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Helpers
 {
-    /// <summary>
-    /// Password hashing and verification utilities
-    /// </summary>
+    // Password hashing and verification utilities
     public static class PasswordHelper
     {
         /// <summary>
@@ -28,9 +26,7 @@ namespace QuitSmartApp.Helpers
             }
         }
 
-        /// <summary>
-        /// Verify a password against its hash
-        /// </summary>
+        // Verify a password against its hash
         public static bool VerifyPassword(string password, string hash)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(hash))

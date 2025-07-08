@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for GuestView.xaml
-    /// </summary>
+    // Interaction logic for GuestView.xaml
     public partial class GuestView : UserControl
     {
         public GuestView()

@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Base repository interface providing common CRUD operations
-    /// </summary>
+    // Base repository interface providing common CRUD operations
     /// <typeparam name="T">Entity type</typeparam>
     public interface IBaseRepository<T> where T : class
     {

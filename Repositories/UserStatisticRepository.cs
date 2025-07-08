@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for UserStatistic entity operations
-    /// </summary>
+    // Repository implementation for UserStatistic entity operations
     public class UserStatisticRepository : BaseRepository<UserStatistic>, IUserStatisticRepository
     {
         public UserStatisticRepository(QuitSmartDesktopContext context) : base(context)

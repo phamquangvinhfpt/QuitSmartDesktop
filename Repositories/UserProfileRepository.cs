@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for UserProfile entity operations
-    /// </summary>
+    // Repository implementation for UserProfile entity operations
     public class UserProfileRepository : BaseRepository<UserProfile>, IUserProfileRepository
     {
         public UserProfileRepository(QuitSmartDesktopContext context) : base(context)

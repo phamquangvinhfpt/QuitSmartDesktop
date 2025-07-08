@@ -9,9 +9,7 @@ using System.Linq;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Profile view handling user profile management
-    /// </summary>
+    // ViewModel for Profile view handling user profile management
     public class ProfileViewModel : BaseViewModel
     {
         private readonly IUserService _userService;

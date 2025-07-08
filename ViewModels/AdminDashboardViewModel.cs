@@ -9,9 +9,7 @@ using System.Collections.Generic;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Admin Dashboard functionality
-    /// </summary>
+    // ViewModel for Admin Dashboard functionality
     public class AdminDashboardViewModel : BaseViewModel
     {
         private readonly IAdminService _adminService;

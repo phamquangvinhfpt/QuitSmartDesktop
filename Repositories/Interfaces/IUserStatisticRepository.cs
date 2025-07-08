@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for UserStatistic entity operations
-    /// </summary>
+    // Repository interface for UserStatistic entity operations
     public interface IUserStatisticRepository : IBaseRepository<UserStatistic>
     {
         Task<UserStatistic?> GetByUserIdAsync(Guid userId);

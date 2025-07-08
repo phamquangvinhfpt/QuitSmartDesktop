@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for UserProfile entity operations
-    /// </summary>
+    // Repository interface for UserProfile entity operations
     public interface IUserProfileRepository : IBaseRepository<UserProfile>
     {
         Task<UserProfile?> GetByUserIdAsync(Guid userId);

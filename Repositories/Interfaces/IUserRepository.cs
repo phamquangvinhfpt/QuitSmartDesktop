@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for User entity operations
-    /// </summary>
+    // Repository interface for User entity operations
     public interface IUserRepository : IBaseRepository<User>
     {
         Task<User?> GetByUsernameAsync(string username);

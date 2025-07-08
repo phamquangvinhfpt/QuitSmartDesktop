@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for User entity operations
-    /// </summary>
+    // Repository implementation for User entity operations
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(QuitSmartDesktopContext context) : base(context)

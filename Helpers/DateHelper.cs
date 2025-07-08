@@ -2,31 +2,23 @@ using System;
 
 namespace QuitSmartApp.Helpers
 {
-    /// <summary>
-    /// Date and time calculation utilities for quit smoking app
-    /// </summary>
+    // Date and time calculation utilities for quit smoking app
     public static class DateHelper
     {
-        /// <summary>
-        /// Calculate days between two dates
-        /// </summary>
+        // Calculate days between two dates
         public static int CalculateDaysBetween(DateOnly startDate, DateOnly endDate)
         {
             return (endDate.ToDateTime(TimeOnly.MinValue) - startDate.ToDateTime(TimeOnly.MinValue)).Days;
         }
 
-        /// <summary>
-        /// Calculate total days since quit start date
-        /// </summary>
+        // Calculate total days since quit start date
         public static int CalculateDaysSinceQuit(DateOnly quitStartDate)
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
             return Math.Max(0, CalculateDaysBetween(quitStartDate, today));
         }
 
-        /// <summary>
-        /// Get week start date (Monday) for a given date
-        /// </summary>
+        // Get week start date (Monday) for a given date
         public static DateOnly GetWeekStartDate(DateOnly date)
         {
             var dayOfWeek = (int)date.DayOfWeek;
@@ -34,9 +26,7 @@ namespace QuitSmartApp.Helpers
             return date.AddDays(-daysToSubtract);
         }
 
-        /// <summary>
-        /// Get month start date for a given date
-        /// </summary>
+        // Get month start date for a given date
         public static DateOnly GetMonthStartDate(DateOnly date)
         {
             return new DateOnly(date.Year, date.Month, 1);

@@ -9,9 +9,7 @@ using System;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Guest view displaying app introduction and health info
-    /// </summary>
+    // ViewModel for Guest view displaying app introduction and health info
     public class GuestViewModel : BaseViewModel
     {
         private readonly IHealthInfoRepository _healthInfoRepository;

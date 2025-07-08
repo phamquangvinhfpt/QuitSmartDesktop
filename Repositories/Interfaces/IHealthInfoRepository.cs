@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for HealthInfo entity operations
-    /// </summary>
+    // Repository interface for HealthInfo entity operations
     public interface IHealthInfoRepository : IBaseRepository<HealthInfo>
     {
         Task<IEnumerable<HealthInfo>> GetActiveHealthInfoAsync();

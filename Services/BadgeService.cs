@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    /// <summary>
-    /// Badge service implementation for achievement system operations
-    /// </summary>
+    // Badge service implementation for achievement system operations
     public class BadgeService : IBadgeService
     {
         private readonly IBadgeDefinitionRepository _badgeDefinitionRepository;

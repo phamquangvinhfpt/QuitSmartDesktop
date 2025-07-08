@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for LoginView.xaml
-    /// </summary>
+    // Interaction logic for LoginView.xaml
     public partial class LoginView : UserControl
     {
         private LoginViewModel? _viewModel;

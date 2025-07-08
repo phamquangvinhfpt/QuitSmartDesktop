@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for DailyLog entity operations
-    /// </summary>
+    // Repository implementation for DailyLog entity operations
     public class DailyLogRepository : BaseRepository<DailyLog>, IDailyLogRepository
     {
         public DailyLogRepository(QuitSmartDesktopContext context) : base(context)

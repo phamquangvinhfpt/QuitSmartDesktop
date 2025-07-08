@@ -5,9 +5,7 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Login view handling authentication
-    /// </summary>
+    // ViewModel for Login view handling authentication
     public class LoginViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;

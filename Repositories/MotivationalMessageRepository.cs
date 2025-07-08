@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for MotivationalMessage entity operations
-    /// </summary>
+    // Repository implementation for MotivationalMessage entity operations
     public class MotivationalMessageRepository : BaseRepository<MotivationalMessage>, IMotivationalMessageRepository
     {
         public MotivationalMessageRepository(QuitSmartDesktopContext context) : base(context)

@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Base repository implementation providing common CRUD operations
-    /// </summary>
+    // Base repository implementation providing common CRUD operations
     /// <typeparam name="T">Entity type</typeparam>
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {

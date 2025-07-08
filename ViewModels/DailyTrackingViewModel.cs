@@ -8,9 +8,7 @@ using System.Linq;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Daily Tracking view handling daily logs
-    /// </summary>
+    // ViewModel for Daily Tracking view handling daily logs
     public class DailyTrackingViewModel : BaseViewModel
     {
         private readonly IUserService _userService;

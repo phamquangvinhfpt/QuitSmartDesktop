@@ -2,14 +2,10 @@ using System;
 
 namespace QuitSmartApp.Helpers
 {
-    /// <summary>
-    /// Money calculation utilities for quit smoking savings
-    /// </summary>
+    // Money calculation utilities for quit smoking savings
     public static class MoneyCalculationHelper
     {
-        /// <summary>
-        /// Calculate money saved based on days without smoking
-        /// </summary>
+        // Calculate money saved based on days without smoking
         public static decimal CalculateMoneySaved(int daysQuit, int cigarettesPerDay, decimal pricePerPack, int cigarettesPerPack = 20)
         {
             if (daysQuit <= 0 || cigarettesPerDay <= 0 || pricePerPack <= 0 || cigarettesPerPack <= 0)
@@ -21,17 +17,13 @@ namespace QuitSmartApp.Helpers
             return totalCigarettesAvoided * pricePerCigarette;
         }
 
-        /// <summary>
-        /// Calculate potential future savings
-        /// </summary>
+        // Calculate potential future savings
         public static decimal CalculateFutureSavings(int futureDays, int cigarettesPerDay, decimal pricePerPack, int cigarettesPerPack = 20)
         {
             return CalculateMoneySaved(futureDays, cigarettesPerDay, pricePerPack, cigarettesPerPack);
         }
 
-        /// <summary>
-        /// Format money amount to Vietnamese currency format
-        /// </summary>
+        // Format money amount to Vietnamese currency format
         public static string FormatMoney(decimal amount)
         {
             return amount.ToString("#,##0") + " đ";

@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for UserBadge entity operations
-    /// </summary>
+    // Repository interface for UserBadge entity operations
     public interface IUserBadgeRepository : IBaseRepository<UserBadge>
     {
         Task<IEnumerable<UserBadge>> GetUserBadgesAsync(Guid userId);

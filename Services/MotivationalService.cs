@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    /// <summary>
-    /// Motivational service implementation for inspirational content operations
-    /// </summary>
+    // Motivational service implementation for inspirational content operations
     public class MotivationalService : IMotivationalService
     {
         private readonly IMotivationalMessageRepository _motivationalMessageRepository;

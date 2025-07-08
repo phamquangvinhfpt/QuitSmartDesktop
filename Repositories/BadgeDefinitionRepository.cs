@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for BadgeDefinition entity operations
-    /// </summary>
+    // Repository implementation for BadgeDefinition entity operations
     public class BadgeDefinitionRepository : BaseRepository<BadgeDefinition>, IBadgeDefinitionRepository
     {
         public BadgeDefinitionRepository(QuitSmartDesktopContext context) : base(context)

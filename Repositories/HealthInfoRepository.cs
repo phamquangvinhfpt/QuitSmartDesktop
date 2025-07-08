@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories
 {
-    /// <summary>
-    /// Repository implementation for HealthInfo entity operations
-    /// </summary>
+    // Repository implementation for HealthInfo entity operations
     public class HealthInfoRepository : BaseRepository<HealthInfo>, IHealthInfoRepository
     {
         public HealthInfoRepository(QuitSmartDesktopContext context) : base(context)

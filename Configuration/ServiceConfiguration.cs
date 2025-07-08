@@ -10,14 +10,10 @@ using System;
 
 namespace QuitSmartApp.Configuration
 {
-    /// <summary>
-    /// Dependency injection configuration for the application
-    /// </summary>
+    // Dependency injection configuration for the application
     public static class ServiceConfiguration
     {
-        /// <summary>
-        /// Configure all application services and repositories
-        /// </summary>
+        // Configure all application services and repositories
         public static IServiceCollection ConfigureServices(this IServiceCollection services, string connectionString)
         {
             // Database context

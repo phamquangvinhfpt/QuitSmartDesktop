@@ -7,9 +7,7 @@ using System.Collections.Generic;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for User Dashboard displaying statistics and motivation
-    /// </summary>
+    // ViewModel for User Dashboard displaying statistics and motivation
     public class UserDashboardViewModel : BaseViewModel
     {
         private readonly IUserService _userService;

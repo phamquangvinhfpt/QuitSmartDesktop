@@ -6,9 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace QuitSmartApp.ViewModels
 {
-    /// <summary>
-    /// ViewModel for Register view handling user registration with smoking profile
-    /// </summary>
+    // ViewModel for Register view handling user registration with smoking profile
     public class RegisterViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;

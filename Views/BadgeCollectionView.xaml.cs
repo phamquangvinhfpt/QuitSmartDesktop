@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for BadgeCollectionView.xaml
-    /// </summary>
+    // Interaction logic for BadgeCollectionView.xaml
     public partial class BadgeCollectionView : UserControl
     {
         public BadgeCollectionView()

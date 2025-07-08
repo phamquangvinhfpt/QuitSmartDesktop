@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    /// <summary>
-    /// Admin service implementation for administrative operations
-    /// </summary>
+    // Admin service implementation for administrative operations
     public class AdminService : IAdminService
     {
         private readonly IUserRepository _userRepository;

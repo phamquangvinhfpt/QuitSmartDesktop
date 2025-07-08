@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    /// <summary>
-    /// Repository interface for Admin entity operations
-    /// </summary>
+    // Repository interface for Admin entity operations
     public interface IAdminRepository : IBaseRepository<Admin>
     {
         Task<Admin?> GetByUsernameAsync(string username);

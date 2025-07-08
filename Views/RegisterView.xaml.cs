@@ -3,9 +3,7 @@ using System.Windows.Controls;
 
 namespace QuitSmartApp.Views
 {
-    /// <summary>
-    /// Interaction logic for RegisterView.xaml
-    /// </summary>
+    // Interaction logic for RegisterView.xaml
     public partial class RegisterView : UserControl
     {
         private RegisterViewModel? _viewModel;

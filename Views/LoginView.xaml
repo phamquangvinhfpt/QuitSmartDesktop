@@ -63,12 +63,14 @@
                                 <TextBlock Text="QuitSmart"
                                            FontSize="36"
                                            FontWeight="Light"
+                                           TextAlignment="Center"
                                            Foreground="White"
                                            Margin="0,0,0,16"/>
                                 <TextBlock Text="Hành trình cai thuốc thành công"
                                            FontSize="16"
                                            Foreground="White"
                                            TextWrapping="Wrap"
+                                           TextAlignment="Center"
                                            MaxWidth="300"
                                            HorizontalAlignment="Center"/>
                         </StackPanel>
@@ -210,6 +212,7 @@
                                 <TextBlock Text="Tham gia cùng cộng đồng"
                                            FontSize="24"
                                            FontWeight="SemiBold"
+                                           TextAlignment="Center"
                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                            Margin="0,0,0,16"/>
                                 <TextBlock Text="Hàng nghìn người đã thành công cai thuốc với QuitSmart. Bạn cũng có thể làm được!"
@@ -217,6 +220,7 @@
                                            Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                            TextWrapping="Wrap"
                                            MaxWidth="280"
+                                           TextAlignment="Center"
                                            LineHeight="22"/>
                         </StackPanel>
                 </Border>

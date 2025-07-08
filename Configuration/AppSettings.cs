@@ -1,8 +1,6 @@
 namespace QuitSmartApp.Configuration
 {
-    /// <summary>
-    /// Application settings and configuration constants
-    /// </summary>
+    // Application settings and configuration constants
     public static class AppSettings
     {
         // Database settings
