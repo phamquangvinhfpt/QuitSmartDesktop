@@ -10,223 +10,215 @@
              d:DesignWidth="800"
              Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
-    <UserControl.Resources>
-        <Style x:Key="FormTextBoxStyle"
-               TargetType="TextBox">
-            <Setter Property="Margin"
-                    Value="0,0,0,16"/>
-            <Setter Property="Padding"
-                    Value="12,10"/>
-            <Setter Property="FontSize"
-                    Value="14"/>
-        </Style>
+        <UserControl.Resources>
+                <Style x:Key="FormTextBoxStyle"
+                       TargetType="TextBox">
+                        <Setter Property="Margin"
+                                Value="0,0,0,16"/>
+                        <Setter Property="Padding"
+                                Value="12,10"/>
+                        <Setter Property="FontSize"
+                                Value="14"/>
+                </Style>
 
-        <Style x:Key="FormPasswordBoxStyle"
-               TargetType="PasswordBox">
-            <Setter Property="Margin"
-                    Value="0,0,0,16"/>
-            <Setter Property="Padding"
-                    Value="12,10"/>
-            <Setter Property="FontSize"
-                    Value="14"/>
-        </Style>
+                <Style x:Key="FormPasswordBoxStyle"
+                       TargetType="PasswordBox">
+                        <Setter Property="Margin"
+                                Value="0,0,0,16"/>
+                        <Setter Property="Padding"
+                                Value="12,10"/>
+                        <Setter Property="FontSize"
+                                Value="14"/>
+                </Style>
 
-        <Style x:Key="FormLabelStyle"
-               TargetType="TextBlock">
-            <Setter Property="FontWeight"
-                    Value="Medium"/>
-            <Setter Property="Margin"
-                    Value="0,0,0,8"/>
-            <Setter Property="Foreground"
-                    Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
-        </Style>
-    </UserControl.Resources>
+                <Style x:Key="FormLabelStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontWeight"
+                                Value="Medium"/>
+                        <Setter Property="Margin"
+                                Value="0,0,0,8"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
+                </Style>
+        </UserControl.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- Left Panel - Decorative -->
-        <Border Grid.Column="0"
-                Background="ForestGreen">
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
-                <TextBlock Text="🚭"
-                           FontSize="80"
-                           FontWeight="Light"
-                           Foreground="Red"
-                           TextAlignment="Center"
-                           Margin="0,-60,0,24"/>
-                <TextBlock Text="QuitSmart"
-                           FontSize="36"
-                           FontWeight="Light"
-                           Foreground="White"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Hành trình cai thuốc thành công"
-                           FontSize="16"
-                           Foreground="White"
-                           TextWrapping="Wrap"
-                           MaxWidth="300"
-                           HorizontalAlignment="Center"/>
-            </StackPanel>
-        </Border>
-
-        <!-- Login Form -->
-        <Border Grid.Column="1"
-                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
-                Padding="40"
-                VerticalAlignment="Center">
-            <StackPanel MaxWidth="320">
-                <!-- Header -->
-                <StackPanel HorizontalAlignment="Center"
-                            Margin="0,0,0,32">
-                    <TextBlock Text="Đăng nhập"
-                               FontSize="28"
-                               FontWeight="Light"
-                               Foreground="ForestGreen"
-                               Margin="0,0,0,8"/>
-                    <TextBlock Text="Người dùng hoặc Quản trị viên"
-                               FontSize="14"
-                               Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
-                </StackPanel>
-
-                <!-- Error Message -->
-                <TextBlock Text="{Binding ErrorMessage}"
-                           Foreground="Crimson"
-                           FontSize="14"
-                           Margin="0,0,0,16"
-                           TextWrapping="Wrap">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility"
-                                    Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ErrorMessage}"
-                                             Value="{x:Null}">
-                                    <Setter Property="Visibility"
-                                            Value="Collapsed"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ErrorMessage}"
-                                             Value="">
-                                    <Setter Property="Visibility"
-                                            Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                <!-- Left Panel - Decorative -->
+                <Border Grid.Column="0"
+                        Background="{DynamicResource QuitSmartPrimaryBrush}">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="🚭"
+                                           FontSize="80"
+                                           FontWeight="Light"
+                                           Foreground="#E53E3E"
+                                           TextAlignment="Center"
+                                           Margin="0,-60,0,24"/>
+                                <TextBlock Text="QuitSmart"
+                                           FontSize="36"
+                                           FontWeight="Light"
+                                           Foreground="White"
+                                           Margin="0,0,0,16"/>
+                                <TextBlock Text="Hành trình cai thuốc thành công"
+                                           FontSize="16"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="300"
+                                           HorizontalAlignment="Center"/>
+                        </StackPanel>
+                </Border>
 
                 <!-- Login Form -->
-                <StackPanel>
-                    <TextBlock Text="Tên đăng nhập hoặc Email"
-                               Style="{StaticResource FormLabelStyle}"/>
-                    <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource FormTextBoxStyle}"/>
+                <Border Grid.Column="1"
+                        Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                        Padding="40"
+                        VerticalAlignment="Center">
+                        <StackPanel MaxWidth="320">
+                                <!-- Header -->
+                                <StackPanel HorizontalAlignment="Center"
+                                            Margin="0,0,0,32">
+                                        <TextBlock Text="Đăng nhập"
+                                                   FontSize="28"
+                                                   FontWeight="Light"
+                                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                                   Margin="0,0,0,8"/>
+                                        <TextBlock Text="Người dùng hoặc Quản trị viên"
+                                                   FontSize="14"
+                                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
+                                </StackPanel>
 
-                    <TextBlock Text="Mật khẩu *"
-                               Style="{StaticResource FormLabelStyle}"/>
-                    <PasswordBox x:Name="PasswordBox"
-                                 Style="{StaticResource FormPasswordBoxStyle}"
-                                 helpers:PasswordHelper.Attach="True"
-                                 helpers:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"/>
+                                <!-- Error Message -->
+                                <TextBlock Text="{Binding ErrorMessage}"
+                                           Foreground="#E53E3E"
+                                           FontSize="14"
+                                           Margin="0,0,0,16"
+                                           TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility"
+                                                                Value="Visible"/>
+                                                        <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ErrorMessage}"
+                                                                             Value="{x:Null}">
+                                                                        <Setter Property="Visibility"
+                                                                                Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ErrorMessage}"
+                                                                             Value="">
+                                                                        <Setter Property="Visibility"
+                                                                                Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                        </Style.Triggers>
+                                                </Style>
+                                        </TextBlock.Style>
+                                </TextBlock>
 
-                    <CheckBox IsChecked="{Binding RememberMe}"
-                              Content="Ghi nhớ đăng nhập"
-                              Margin="0,0,0,24"
-                              Cursor="Hand"
-                              FontSize="14"/>
+                                <!-- Login Form -->
+                                <StackPanel>
+                                        <TextBlock Text="Tên đăng nhập hoặc Email"
+                                                   Style="{StaticResource FormLabelStyle}"/>
+                                        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                                 Style="{StaticResource FormTextBoxStyle}"/>
 
-                    <Button Content="Đăng nhập"
-                            Padding="0,12"
-                            FontSize="16"
-                            FontWeight="SemiBold"
-                            Background="ForestGreen"
-                            BorderBrush="ForestGreen"
-                            Margin="0,0,0,16"
-                            Cursor="Hand"
-                            Command="{Binding LoginCommand}">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="IsEnabled"
-                                        Value="True"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoading}"
-                                                 Value="True">
-                                        <Setter Property="IsEnabled"
-                                                Value="False"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                                        <TextBlock Text="Mật khẩu *"
+                                                   Style="{StaticResource FormLabelStyle}"/>
+                                        <PasswordBox x:Name="PasswordBox"
+                                                     Style="{StaticResource FormPasswordBoxStyle}"
+                                                     helpers:PasswordHelper.Attach="True"
+                                                     helpers:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"/>
 
-                    <ui:HyperlinkButton Content="Quên mật khẩu?"
+                                        <CheckBox IsChecked="{Binding RememberMe}"
+                                                  Content="Ghi nhớ đăng nhập"
+                                                  Margin="0,0,0,24"
+                                                  Cursor="Hand"
+                                                  FontSize="14"/>
+
+                                        <Button Content="Đăng nhập"
+                                                FontSize="16"
+                                                Margin="0,0,0,16"
+                                                Command="{Binding LoginCommand}">
+                                                <Button.Style>
+                                                        <Style TargetType="Button"
+                                                               BasedOn="{StaticResource PrimaryButtonStyle}">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="True"/>
+                                                                <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsLoading}"
+                                                                                     Value="True">
+                                                                                <Setter Property="IsEnabled"
+                                                                                        Value="False"/>
+                                                                        </DataTrigger>
+                                                                </Style.Triggers>
+                                                        </Style>
+                                                </Button.Style>
+                                        </Button>
+
+                                        <ui:HyperlinkButton Content="Quên mật khẩu?"
+                                                            HorizontalAlignment="Center"
+                                                            FontSize="14"
+                                                            Margin="0,0,0,24"/>
+
+                                        <Border Height="1"
+                                                Background="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                                                Margin="0,0,0,24"/>
+
+                                        <TextBlock Text="Chưa có tài khoản?"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="14"
+                                                   Margin="0,0,0,8"/>
+                                        <Button Content="Đăng ký ngay"
+                                                Style="{StaticResource SecondaryButtonStyle}"
+                                                FontSize="14"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding NavigateToRegisterCommand}"/>
+                                </StackPanel>
+
+                                <!-- Back to Welcome -->
+                                <Button Content="← Quay về trang chủ"
                                         HorizontalAlignment="Center"
-                                        FontSize="14"
-                                        Margin="0,0,0,24"/>
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                                        FontSize="12"
+                                        Margin="0,24,0,0"
+                                        Cursor="Hand"
+                                        Command="{Binding NavigateToGuestCommand}"/>
 
-                    <Border Height="1"
-                            Background="{DynamicResource SystemControlForegroundBaseLowBrush}"
-                            Margin="0,0,0,24"/>
+                                <!-- Loading Indicator -->
+                                <ui:ProgressRing IsActive="{Binding IsLoading}"
+                                                 Margin="0,16,0,0"
+                                                 HorizontalAlignment="Center"/>
+                        </StackPanel>
+                </Border>
 
-                    <TextBlock Text="Chưa có tài khoản?"
-                               HorizontalAlignment="Center"
-                               FontSize="14"
-                               Margin="0,0,0,8"/>
-                    <Button Content="Đăng ký ngay"
-                            Background="Transparent"
-                            BorderBrush="ForestGreen"
-                            Foreground="ForestGreen"
-                            Padding="24,8"
-                            FontSize="14"
-                            HorizontalAlignment="Center"
-                            Cursor="Hand"
-                            Command="{Binding NavigateToRegisterCommand}"/>
-                </StackPanel>
-
-                <!-- Back to Welcome -->
-                <Button Content="← Quay về trang chủ"
-                        HorizontalAlignment="Center"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
-                        FontSize="12"
-                        Margin="0,24,0,0"
-                        Cursor="Hand"
-                        Command="{Binding NavigateToGuestCommand}"/>
-
-                <!-- Loading Indicator -->
-                <ui:ProgressRing IsActive="{Binding IsLoading}"
-                                 Margin="0,16,0,0"
-                                 HorizontalAlignment="Center"/>
-            </StackPanel>
-        </Border>
-
-        <!-- Right Panel - Info -->
-        <Border Grid.Column="2"
-                Background="DarkSeaGreen">
-            <StackPanel VerticalAlignment="Center"
-                        Margin="40">
-                <ui:FontIcon FontFamily="Segoe MDL2 Assets"
-                             Glyph="&#xE734;"
-                             FontSize="64"
-                             Foreground="DarkSlateGray"
-                             Margin="0,0,0,24"/>
-                <TextBlock Text="Tham gia cùng cộng đồng"
-                           FontSize="24"
-                           FontWeight="SemiBold"
-                           Foreground="DarkSlateGray"
-                           Margin="0,0,0,16"/>
-                <TextBlock Text="Hàng nghìn người đã thành công cai thuốc với QuitSmart. Bạn cũng có thể làm được!"
-                           FontSize="16"
-                           Foreground="DarkSlateGray"
-                           TextWrapping="Wrap"
-                           MaxWidth="280"
-                           LineHeight="22"/>
-            </StackPanel>
-        </Border>
-    </Grid>
+                <!-- Right Panel - Info -->
+                <Border Grid.Column="2"
+                        Background="{DynamicResource QuitSmartAccentBrush}">
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="40">
+                                <ui:FontIcon FontFamily="Segoe MDL2 Assets"
+                                             Glyph="&#xE734;"
+                                             FontSize="64"
+                                             Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                             Margin="0,0,0,24"/>
+                                <TextBlock Text="Tham gia cùng cộng đồng"
+                                           FontSize="24"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                           Margin="0,0,0,16"/>
+                                <TextBlock Text="Hàng nghìn người đã thành công cai thuốc với QuitSmart. Bạn cũng có thể làm được!"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="280"
+                                           LineHeight="22"/>
+                        </StackPanel>
+                </Border>
+        </Grid>
 </UserControl>

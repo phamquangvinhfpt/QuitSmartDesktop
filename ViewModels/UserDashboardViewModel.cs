@@ -21,6 +21,7 @@ namespace QuitSmartApp.ViewModels
         public Action? NavigateToHealthInfo { get; set; }
         public Action? NavigateToDailyTracking { get; set; }
         public Action? NavigateToBadges { get; set; }
+        public Action? NavigateToProfile { get; set; }
 
         private UserStatistic? _userStatistics;
         private UserProfile? _userProfile;
@@ -45,6 +46,7 @@ namespace QuitSmartApp.ViewModels
             LogTodayCommand = new RelayCommand(LogToday);
             ViewStatsCommand = new RelayCommand(ViewStats);
             ViewBadgesCommand = new RelayCommand(ViewBadges);
+            ViewProfileCommand = new RelayCommand(ViewProfile);
 
             LoadDashboardDataAsync();
         }
@@ -97,6 +99,7 @@ namespace QuitSmartApp.ViewModels
         public ICommand LogTodayCommand { get; }
         public ICommand ViewStatsCommand { get; }
         public ICommand ViewBadgesCommand { get; }
+        public ICommand ViewProfileCommand { get; }
 
         // Methods
         private async void LoadDashboardDataAsync()
@@ -162,6 +165,12 @@ namespace QuitSmartApp.ViewModels
         {
             // Navigate to badges view
             NavigateToBadges?.Invoke();
+        }
+
+        private void ViewProfile()
+        {
+            // Navigate to profile view
+            NavigateToProfile?.Invoke();
         }
 
         public async Task RefreshDataAsync()

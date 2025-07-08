@@ -89,7 +89,7 @@
                         <TextBlock Text="Tạo tài khoản"
                                    FontSize="28"
                                    FontWeight="Light"
-                                   Foreground="ForestGreen"
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                    Margin="0,0,0,8"/>
                         <TextBlock Text="Miễn phí và chỉ mất vài phút!"
                                    FontSize="14"
@@ -98,7 +98,7 @@
 
                     <!-- Error Message -->
                     <TextBlock Text="{Binding ErrorMessage}"
-                               Foreground="Crimson"
+                               Foreground="#E53E3E"
                                FontSize="14"
                                Margin="0,0,0,16"
                                TextWrapping="Wrap">
@@ -160,6 +160,7 @@
 
                         <CheckBox IsChecked="{Binding AgreeToTerms}"
                                   Margin="0,0,0,24"
+                                  Cursor="Hand"
                                   FontSize="14">
                             <TextBlock TextWrapping="Wrap">
                                 <Run Text="Tôi đồng ý với"/>
@@ -174,16 +175,12 @@
                         </CheckBox>
 
                         <Button Content="Tạo tài khoản"
-                                Padding="0,12"
                                 FontSize="16"
-                                FontWeight="SemiBold"
-                                Background="ForestGreen"
-                                BorderBrush="ForestGreen"
                                 Margin="0,0,0,24"
-                                Cursor="Hand"
                                 Command="{Binding RegisterCommand}">
                             <Button.Style>
-                                <Style TargetType="Button">
+                                <Style TargetType="Button"
+                                       BasedOn="{StaticResource PrimaryButtonStyle}">
                                     <Setter Property="IsEnabled"
                                             Value="True"/>
                                     <Style.Triggers>
@@ -206,13 +203,9 @@
                                    FontSize="14"
                                    Margin="0,0,0,8"/>
                         <Button Content="Đăng nhập ngay"
-                                Background="Transparent"
-                                BorderBrush="ForestGreen"
-                                Foreground="ForestGreen"
-                                Padding="24,8"
+                                Style="{StaticResource SecondaryButtonStyle}"
                                 FontSize="14"
                                 HorizontalAlignment="Center"
-                                Cursor="Hand"
                                 Command="{Binding NavigateToLoginCommand}"/>
                     </StackPanel>
 
@@ -237,18 +230,18 @@
 
         <!-- Right Panel - Benefits -->
         <Border Grid.Column="2"
-                Background="DarkSeaGreen">
+                Background="{DynamicResource QuitSmartAccentBrush}">
             <StackPanel VerticalAlignment="Center"
                         Margin="20">
                 <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                              Glyph="&#xE95E;"
                              FontSize="64"
-                             Foreground="DarkSlateGray"
+                             Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                              Margin="0,0,0,24"/>
                 <TextBlock Text="Tại sao chọn QuitSmart?"
                            FontSize="20"
                            FontWeight="SemiBold"
-                           Foreground="DarkSlateGray"
+                           Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                            Margin="0,0,0,16"/>
 
                 <StackPanel Margin="0,0,0,16">
@@ -257,43 +250,43 @@
                         <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                                      Glyph="&#xE73E;"
                                      FontSize="16"
-                                     Foreground="DarkSlateGray"
+                                     Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                      Margin="0,0,8,0"/>
                         <TextBlock Text="Theo dõi tiến trình chi tiết"
                                    FontSize="14"
-                                   Foreground="DarkSlateGray"/>
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,8">
                         <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                                      Glyph="&#xE734;"
                                      FontSize="16"
-                                     Foreground="DarkSlateGray"
+                                     Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                      Margin="0,0,8,0"/>
                         <TextBlock Text="Huy hiệu thành tích"
                                    FontSize="14"
-                                   Foreground="DarkSlateGray"/>
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,0,0,8">
                         <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                                      Glyph="&#xE8D3;"
                                      FontSize="16"
-                                     Foreground="DarkSlateGray"
+                                     Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                      Margin="0,0,8,0"/>
                         <TextBlock Text="Tính tiền tiết kiệm"
                                    FontSize="14"
-                                   Foreground="DarkSlateGray"/>
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <ui:FontIcon FontFamily="Segoe MDL2 Assets"
                                      Glyph="&#xE8C7;"
                                      FontSize="16"
-                                     Foreground="DarkSlateGray"
+                                     Foreground="{DynamicResource QuitSmartSecondaryBrush}"
                                      Margin="0,0,8,0"/>
                         <TextBlock Text="Động viên hàng ngày"
                                    FontSize="14"
-                                   Foreground="DarkSlateGray"/>
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

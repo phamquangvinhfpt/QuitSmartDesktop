@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="600"
-             d:DesignWidth="800">
+             d:DesignWidth="800"
+             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -51,9 +52,9 @@
         <Style x:Key="BadgeCardStyle"
                TargetType="Border">
             <Setter Property="Background"
-                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                    Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                    Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
             <Setter Property="BorderThickness"
                     Value="1"/>
             <Setter Property="CornerRadius"
@@ -76,11 +77,11 @@
         <Style x:Key="BadgeProgressBarStyle"
                TargetType="ProgressBar">
             <Setter Property="Background"
-                    Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                    Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
             <Setter Property="Foreground"
                     Value="{DynamicResource QuitSmartPrimaryBrush}"/>
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                    Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
             <Setter Property="BorderThickness"
                     Value="1"/>
             <Setter Property="Height"
@@ -127,7 +128,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+    <Grid Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
         <ScrollViewer>
             <StackPanel MaxWidth="1000"
                         Margin="32,20">
@@ -151,7 +152,7 @@
                                    Margin="0,0,0,8"/>
                         <TextBlock Text="Theo dõi tiến trình và thành tựu của bạn"
                                    FontSize="16"
-                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"/>
                     </StackPanel>
@@ -203,7 +204,7 @@
                                            HorizontalAlignment="Center"/>
                                 <TextBlock Text="Huy hiệu đạt được"
                                            FontSize="12"
-                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                            HorizontalAlignment="Center"
                                            TextAlignment="Center"/>
                             </StackPanel>
@@ -221,7 +222,7 @@
                                            HorizontalAlignment="Center"/>
                                 <TextBlock Text="Đang tiến triển"
                                            FontSize="12"
-                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                            HorizontalAlignment="Center"
                                            TextAlignment="Center"/>
                             </StackPanel>
@@ -235,11 +236,11 @@
                                 <TextBlock Text="{Binding TotalBadgeCount}"
                                            FontSize="24"
                                            FontWeight="Bold"
-                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                            HorizontalAlignment="Center"/>
                                 <TextBlock Text="Tổng huy hiệu"
                                            FontSize="12"
-                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                           Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                            HorizontalAlignment="Center"
                                            TextAlignment="Center"/>
                             </StackPanel>
@@ -298,7 +299,7 @@
                                                        Margin="0,0,0,8"/>
                                             <TextBlock Text="{Binding BadgeDefinition.Description}"
                                                        FontSize="12"
-                                                       Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                       Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                                        HorizontalAlignment="Center"
                                                        TextAlignment="Center"
                                                        TextWrapping="Wrap"
@@ -378,12 +379,12 @@
                         <TextBlock Text="Chưa có huy hiệu nào"
                                    FontSize="18"
                                    FontWeight="SemiBold"
-                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,8"/>
                         <TextBlock Text="Hãy bắt đầu hành trình cai thuốc để nhận những huy hiệu đầu tiên!"
                                    FontSize="14"
-                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
                                    TextWrapping="Wrap"

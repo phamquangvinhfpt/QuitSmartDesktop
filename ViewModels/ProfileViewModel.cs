@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace QuitSmartApp.ViewModels
 {
@@ -14,8 +16,11 @@ namespace QuitSmartApp.ViewModels
     {
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IBadgeService _badgeService;
 
         private UserProfile? _userProfile;
+        private UserStatistic? _userStatistic;
+        private ObservableCollection<UserBadge> _recentBadges = new();
         private string _fullName = string.Empty;
         private DateTime? _dateOfBirth;
         private string _gender = "Male";
@@ -34,15 +39,18 @@ namespace QuitSmartApp.ViewModels
         // Navigation action
         public Action? NavigateBack { get; set; }
 
-        public ProfileViewModel(IUserService userService, IAuthenticationService authenticationService)
+        public ProfileViewModel(IUserService userService, IAuthenticationService authenticationService, IBadgeService badgeService)
         {
             _userService = userService;
             _authenticationService = authenticationService;
+            _badgeService = badgeService;
 
             // Initialize commands
             SaveCommand = new RelayCommand(async () => await SaveProfileAsync(), () => _hasChanges && !_isLoading);
             CancelCommand = new RelayCommand(CancelChanges);
             BackCommand = new RelayCommand(() => NavigateBack?.Invoke());
+            ChangePasswordCommand = new RelayCommand(ChangePassword);
+            DeleteAccountCommand = new RelayCommand(DeleteAccount);
 
             // Initialize gender options
             GenderOptions = new List<string> { "Male", "Female", "Other" };
@@ -55,6 +63,18 @@ namespace QuitSmartApp.ViewModels
         {
             get => _userProfile;
             set => SetProperty(ref _userProfile, value);
+        }
+
+        public UserStatistic? UserStatistic
+        {
+            get => _userStatistic;
+            set => SetProperty(ref _userStatistic, value);
+        }
+
+        public ObservableCollection<UserBadge> RecentBadges
+        {
+            get => _recentBadges;
+            set => SetProperty(ref _recentBadges, value);
         }
 
         public string FullName
@@ -187,6 +207,9 @@ namespace QuitSmartApp.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand BackCommand { get; }
+        public ICommand SaveProfileCommand => SaveCommand; // Alias for SaveCommand
+        public ICommand ChangePasswordCommand { get; }
+        public ICommand DeleteAccountCommand { get; }
 
         // Methods
         private async void LoadProfileAsync()
@@ -199,6 +222,8 @@ namespace QuitSmartApp.ViewModels
                 if (_authenticationService.CurrentUserId.HasValue)
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
+
+                    // Load user profile
                     UserProfile = await _userService.GetUserProfileAsync(userId);
 
                     if (UserProfile != null)
@@ -211,6 +236,35 @@ namespace QuitSmartApp.ViewModels
                         CigarettesPerPack = UserProfile.CigarettesPerPack ?? 20;
                         SmokingYears = UserProfile.SmokingYears;
                         QuitReason = UserProfile.QuitReason ?? string.Empty;
+                    }
+
+                    // Load user statistics
+                    try
+                    {
+                        UserStatistic = await _userService.GetUserStatisticsAsync(userId);
+                    }
+                    catch (Exception)
+                    {
+                        // Create default statistic if not found
+                        UserStatistic = new UserStatistic
+                        {
+                            UserId = userId,
+                            TotalDaysQuit = UserProfile?.QuitStartDate != null ?
+        (DateTime.Today - UserProfile.QuitStartDate.ToDateTime(TimeOnly.MinValue)).Days : 0,
+                            TotalMoneySaved = 0,
+                            CurrentStreak = 0
+                        };
+                    }
+
+                    // Load recent badges
+                    try
+                    {
+                        var badges = await _badgeService.GetNewlyEarnedBadgesAsync(userId);
+                        RecentBadges = new ObservableCollection<UserBadge>(badges.Take(5)); // Get latest 5 badges
+                    }
+                    catch (Exception)
+                    {
+                        RecentBadges = new ObservableCollection<UserBadge>();
                     }
 
                     // Reset change tracking
@@ -328,6 +382,30 @@ namespace QuitSmartApp.ViewModels
         public async Task RefreshAsync()
         {
             await Task.Run(() => LoadProfileAsync());
+        }
+
+        private void ChangePassword()
+        {
+            // TODO: Implement change password functionality
+            // This could navigate to a change password dialog or view
+            System.Windows.MessageBox.Show("Chức năng đổi mật khẩu sẽ được triển khai trong phiên bản tiếp theo.",
+                "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+        }
+
+        private void DeleteAccount()
+        {
+            var result = System.Windows.MessageBox.Show(
+                "Bạn có chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác!",
+                "Xác nhận xóa tài khoản",
+                System.Windows.MessageBoxButton.YesNo,
+                System.Windows.MessageBoxImage.Warning);
+
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {
+                // TODO: Implement delete account functionality
+                System.Windows.MessageBox.Show("Chức năng xóa tài khoản sẽ được triển khai trong phiên bản tiếp theo.",
+                    "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            }
         }
     }
 }

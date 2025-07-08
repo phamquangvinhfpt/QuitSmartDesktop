@@ -5,9 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="700"
-             d:DesignWidth="900">
+             d:DesignWidth="900"
+             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
         <UserControl.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
                 <Style x:Key="BackButtonStyle"
                        TargetType="Button">
@@ -15,6 +17,46 @@
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
                         <Setter Property="Foreground"
                                 Value="White"/>
+                        <Setter Property="Padding"
+                                Value="16,8"/>
+                        <Setter Property="BorderThickness"
+                                Value="0"/>
+                        <Setter Property="FontWeight"
+                                Value="Medium"/>
+                        <Setter Property="Cursor"
+                                Value="Hand"/>
+                        <Setter Property="Template">
+                                <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="8"
+                                                        Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center"/>
+                                                        <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                        <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver"
+                                                                                         Value="True">
+                                                                                        <Setter Property="Background"
+                                                                                                Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                                                                </Trigger>
+                                                                        </Style.Triggers>
+                                                                </Style>
+                                                        </Border.Style>
+                                                </Border>
+                                        </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                </Style>
+
+                <!-- Enhanced button style with clear hover for dark mode -->
+                <Style x:Key="SecondaryButtonStyle"
+                       TargetType="Button">
+                        <Setter Property="Background"
+                                Value="Transparent"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource QuitSmartAccentBrush}"/>
                         <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartSecondaryBrush}"/>
                         <Setter Property="BorderThickness"
@@ -31,17 +73,70 @@
                                                 <Border Background="{TemplateBinding Background}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                                        CornerRadius="6">
+                                                        CornerRadius="6"
+                                                        Padding="{TemplateBinding Padding}">
                                                         <ContentPresenter HorizontalAlignment="Center"
-                                                                          VerticalAlignment="Center"/>
+                                                                          VerticalAlignment="Center"
+                                                                          TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                                        <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                        <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver"
+                                                                                         Value="True">
+                                                                                        <Setter Property="Background"
+                                                                                                Value="{DynamicResource QuitSmartAccentBrush}"/>
+                                                                                        <Setter Property="BorderBrush"
+                                                                                                Value="{DynamicResource QuitSmartPrimaryBrush}"/>
+                                                                                </Trigger>
+                                                                        </Style.Triggers>
+                                                                </Style>
+                                                        </Border.Style>
                                                 </Border>
                                                 <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver"
                                                                  Value="True">
-                                                                <Setter Property="Background"
-                                                                        Value="{DynamicResource QuitSmartSecondaryBrush}"/>
+                                                                <Setter Property="Foreground"
+                                                                        Value="White"/>
                                                         </Trigger>
                                                 </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                </Style>
+
+                <!-- Danger button style for delete actions -->
+                <Style x:Key="DangerButtonStyle"
+                       TargetType="Button">
+                        <Setter Property="Background"
+                                Value="#F44336"/>
+                        <Setter Property="Foreground"
+                                Value="White"/>
+                        <Setter Property="BorderThickness"
+                                Value="0"/>
+                        <Setter Property="Padding"
+                                Value="12,8"/>
+                        <Setter Property="Cursor"
+                                Value="Hand"/>
+                        <Setter Property="Template">
+                                <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="6"
+                                                        Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center"/>
+                                                        <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                        <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver"
+                                                                                         Value="True">
+                                                                                        <Setter Property="Background"
+                                                                                                Value="#D32F2F"/>
+                                                                                </Trigger>
+                                                                        </Style.Triggers>
+                                                                </Style>
+                                                        </Border.Style>
+                                                </Border>
                                         </ControlTemplate>
                                 </Setter.Value>
                         </Setter>
@@ -50,9 +145,9 @@
                 <Style x:Key="ProfileCardStyle"
                        TargetType="Border">
                         <Setter Property="Background"
-                                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
                         <Setter Property="BorderBrush"
-                                Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
                         <Setter Property="BorderThickness"
                                 Value="1"/>
                         <Setter Property="CornerRadius"
@@ -87,7 +182,7 @@
                         <Setter Property="Template">
                                 <Setter.Value>
                                         <ControlTemplate TargetType="TextBox">
-                                                <Border Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                                                <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
                                                         CornerRadius="6">
@@ -132,7 +227,7 @@
                         <Setter Property="Margin"
                                 Value="0,0,0,8"/>
                         <Setter Property="Foreground"
-                                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
                         <Setter Property="FontSize"
                                 Value="14"/>
                 </Style>
@@ -152,7 +247,7 @@
                 <Style x:Key="StatCardStyle"
                        TargetType="Border">
                         <Setter Property="Background"
-                                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
                         <Setter Property="BorderBrush"
                                 Value="{DynamicResource QuitSmartPrimaryBrush}"/>
                         <Setter Property="BorderThickness"
@@ -179,7 +274,7 @@
                         <Setter Property="FontSize"
                                 Value="14"/>
                         <Setter Property="Foreground"
-                                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                Value="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
                         <Setter Property="TextWrapping"
                                 Value="Wrap"/>
                         <Setter Property="LineHeight"
@@ -187,7 +282,7 @@
                 </Style>
         </UserControl.Resources>
 
-        <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+        <Grid Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
                 <ScrollViewer>
                         <StackPanel MaxWidth="1000"
                                     Margin="32,20">
@@ -211,7 +306,7 @@
                                                            Margin="0,0,0,8"/>
                                                 <TextBlock Text="Quản lý thông tin và theo dõi tiến trình cai thuốc"
                                                            FontSize="16"
-                                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                           Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                            HorizontalAlignment="Center"
                                                            TextAlignment="Center"/>
                                         </StackPanel>
@@ -252,8 +347,8 @@
                                                          Text="{Binding UserProfile.Username, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
                                                          IsReadOnly="True"
-                                                         Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
-                                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                                         Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
                                                 <!-- Email -->
                                                 <TextBlock Grid.Row="1"
@@ -266,8 +361,8 @@
                                                          Grid.Column="1"
                                                          Text="{Binding UserProfile.Email, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
-                                                         Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
-                                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                                         Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
                                                 <!-- Full Name -->
                                                 <TextBlock Grid.Row="2"
@@ -280,7 +375,7 @@
                                                          Grid.Column="1"
                                                          Text="{Binding UserProfile.FullName, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
-                                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
                                                 <!-- Phone -->
                                                 <TextBlock Grid.Row="3"
@@ -293,7 +388,7 @@
                                                          Grid.Column="1"
                                                          Text="{Binding UserProfile.Phone, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
-                                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
                                                 <!-- Quit Date -->
                                                 <TextBlock Grid.Row="4"
@@ -318,18 +413,14 @@
                                                          Grid.Column="1"
                                                          Text="{Binding UserProfile.DailyCigarettes, Mode=TwoWay}"
                                                          Margin="0,0,0,12"
-                                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                                                         BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
 
                                                 <!-- Delete Account Button -->
                                                 <Button Grid.Row="6"
                                                         Grid.Column="0"
                                                         Grid.ColumnSpan="2"
                                                         Content="❌ Xóa tài khoản"
-                                                        Background="#F44336"
-                                                        Foreground="White"
-                                                        Padding="12,8"
-                                                        BorderThickness="0"
-                                                        Cursor="Hand"
+                                                        Style="{StaticResource DangerButtonStyle}"
                                                         HorizontalAlignment="Right"
                                                         Margin="0,16,0,0"
                                                         Command="{Binding DeleteAccountCommand}"/>
@@ -342,17 +433,11 @@
                                             HorizontalAlignment="Center"
                                             Margin="0,16,0,24">
                                         <Button Content="💾 Lưu thông tin"
-                                                Style="{StaticResource QuitSmartButtonStyle}"
+                                                Style="{StaticResource BackButtonStyle}"
                                                 Margin="0,0,12,0"
                                                 Command="{Binding SaveProfileCommand}"/>
                                         <Button Content="🔑 Đổi mật khẩu"
-                                                Background="{DynamicResource QuitSmartAccentBrush}"
-                                                Foreground="White"
-                                                BorderBrush="{DynamicResource QuitSmartSecondaryBrush}"
-                                                BorderThickness="2"
-                                                Padding="12,8"
-                                                FontWeight="SemiBold"
-                                                Cursor="Hand"
+                                                Style="{StaticResource SecondaryButtonStyle}"
                                                 Command="{Binding ChangePasswordCommand}"/>
                                 </StackPanel>
 
@@ -378,14 +463,14 @@
                                                                    FontSize="24"
                                                                    HorizontalAlignment="Center"
                                                                    Margin="0,0,0,8"/>
-                                                        <TextBlock Text="{Binding UserStatistic.DaysQuit}"
+                                                        <TextBlock Text="{Binding UserStatistic.TotalDaysQuit}"
                                                                    FontSize="32"
                                                                    FontWeight="Bold"
                                                                    Foreground="{DynamicResource QuitSmartPrimaryBrush}"
                                                                    HorizontalAlignment="Center"/>
                                                         <TextBlock Text="Ngày cai thuốc"
                                                                    FontSize="12"
-                                                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
                                                 </StackPanel>
@@ -408,7 +493,7 @@
                                                         </TextBlock>
                                                         <TextBlock Text="Tiền tiết kiệm"
                                                                    FontSize="12"
-                                                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
                                                 </StackPanel>
@@ -422,14 +507,14 @@
                                                                    FontSize="24"
                                                                    HorizontalAlignment="Center"
                                                                    Margin="0,0,0,8"/>
-                                                        <TextBlock Text="{Binding UserStatistic.CigarettesAvoided}"
+                                                        <TextBlock Text="{Binding UserStatistic.CurrentStreak}"
                                                                    FontSize="24"
                                                                    FontWeight="Bold"
                                                                    Foreground="{DynamicResource QuitSmartPrimaryBrush}"
                                                                    HorizontalAlignment="Center"/>
-                                                        <TextBlock Text="Điếu thuốc tránh"
+                                                        <TextBlock Text="Chuỗi ngày hiện tại"
                                                                    FontSize="12"
-                                                                   Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                                                                   Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
                                                                    HorizontalAlignment="Center"
                                                                    TextAlignment="Center"/>
                                                 </StackPanel>
@@ -452,8 +537,8 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                        <Border Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
-                                                                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                                                        <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                                                                BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
                                                                 BorderThickness="1"
                                                                 CornerRadius="8"
                                                                 Padding="12,8"
@@ -468,7 +553,7 @@
                                                                                            FontSize="14"/>
                                                                                 <TextBlock Text="{Binding Description}"
                                                                                            FontSize="12"
-                                                                                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                                                                           Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"/>
                                                                         </StackPanel>
                                                                 </StackPanel>
                                                         </Border>
