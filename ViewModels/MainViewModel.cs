@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using QuitSmartApp.Models;
 using QuitSmartApp.Services.Interfaces;
 using System;
 using System.Windows.Input;
@@ -234,6 +235,10 @@ namespace QuitSmartApp.ViewModels
                 {
                     // Set navigation actions
                     adminViewModel.NavigateToGuest = () => NavigateToGuest();
+                    adminViewModel.NavigateToUserDetails = (user) => NavigateToUserDetails(user, adminViewModel);
+                    adminViewModel.NavigateToUserLogs = (user) => NavigateToUserLogs(user, adminViewModel);
+                    adminViewModel.NavigateToEditUser = (user) => NavigateToEditUser(user, adminViewModel);
+                    adminViewModel.BackToDashboard = () => NavigateToAdmin();
 
                     CurrentViewModel = adminViewModel;
 
@@ -256,6 +261,50 @@ namespace QuitSmartApp.ViewModels
             }
         }
 
+        // New navigation methods for Admin Views
+        private void NavigateToUserDetails(UserOverview user, AdminDashboardViewModel adminViewModel)
+        {
+            CurrentView = "UserDetails";
+
+            // Create a wrapper ViewModel that contains both the view type and admin view model
+            var wrapper = new AdminViewWrapper
+            {
+                ViewType = "UserDetails",
+                AdminViewModel = adminViewModel,
+                SelectedUser = user
+            };
+
+            CurrentViewModel = wrapper;
+        }
+
+        private void NavigateToUserLogs(UserOverview user, AdminDashboardViewModel adminViewModel)
+        {
+            CurrentView = "UserLogs";
+
+            var wrapper = new AdminViewWrapper
+            {
+                ViewType = "UserLogs",
+                AdminViewModel = adminViewModel,
+                SelectedUser = user
+            };
+
+            CurrentViewModel = wrapper;
+        }
+
+        private void NavigateToEditUser(UserOverview user, AdminDashboardViewModel adminViewModel)
+        {
+            CurrentView = "EditUser";
+
+            var wrapper = new AdminViewWrapper
+            {
+                ViewType = "EditUser",
+                AdminViewModel = adminViewModel,
+                SelectedUser = user
+            };
+
+            CurrentViewModel = wrapper;
+        }
+
         private async void Logout()
         {
             await _authenticationService.LogoutAsync();
@@ -270,5 +319,13 @@ namespace QuitSmartApp.ViewModels
             OnPropertyChanged(nameof(IsGuestMode));
             OnPropertyChanged(nameof(CurrentUsername));
         }
+    }
+
+    // Wrapper ViewModel for Admin sub-views
+    public class AdminViewWrapper : BaseViewModel
+    {
+        public string ViewType { get; set; } = string.Empty;
+        public AdminDashboardViewModel? AdminViewModel { get; set; }
+        public UserOverview? SelectedUser { get; set; }
     }
 }

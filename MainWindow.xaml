@@ -21,7 +21,7 @@
             <DrawingImage.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing Brush="#4CAF50"
-                            Geometry="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
+                                     Geometry="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
@@ -68,10 +68,47 @@
         <DataTemplate DataType="{x:Type vm:AdminDashboardViewModel}">
             <views:AdminDashboardView/>
         </DataTemplate>
+
+        <!-- AdminViewWrapper with conditional content -->
+        <DataTemplate DataType="{x:Type vm:AdminViewWrapper}">
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewType}"
+                                         Value="UserDetails">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <views:UserDetailsView DataContext="{Binding AdminViewModel}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewType}"
+                                         Value="UserLogs">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <views:UserLogsView DataContext="{Binding AdminViewModel}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewType}"
+                                         Value="EditUser">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <views:EditUserView DataContext="{Binding AdminViewModel}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
         <!-- Content Presenter for Views -->
-        <ContentPresenter Content="{Binding CurrentViewModel}"/>
+        <ContentPresenter x:Name="MainContentPresenter"
+                          Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

@@ -29,34 +29,75 @@ namespace QuitSmartApp.Services
         {
             try
             {
-                // Try to get real data from repository
                 var users = await _userRepository.GetActiveUsersAsync();
+                var userOverviews = new List<UserOverview>();
 
-                var userOverviews = users.Select(u => new UserOverview
+                foreach (var user in users)
                 {
-                    UserId = u.UserId,
-                    Username = u.Username,
-                    Email = u.Email,
-                    FullName = u.FullName,
-                    Gender = u.Gender,
-                    IsActive = u.IsActive,
-                    CreatedAt = u.CreatedAt,
-                    QuitStartDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-30)), // Sample data
-                    CigarettesPerDay = 10,
-                    PricePerPack = 50000,
-                    TotalDaysQuit = 30,
-                    TotalMoneySaved = 1500000,
-                    CurrentStreak = 30,
-                    LongestStreak = 30,
-                    TotalBadges = 3
-                }).ToList();
+                    var userWithDetails = await _userRepository.GetUserWithProfileAsync(user.UserId);
+                    if (userWithDetails == null) continue;
+
+                    var latestProfile = userWithDetails.UserProfiles?.OrderByDescending(p => p.CreatedAt).FirstOrDefault();
+
+                    var stats = userWithDetails.UserStatistic;
+
+                    var totalBadges = userWithDetails.UserBadges?.Count ?? 0;
+
+                    var quitStartDate = latestProfile?.QuitStartDate;
+                    var totalDaysQuit = stats?.TotalDaysQuit;
+
+                    if (quitStartDate.HasValue && !totalDaysQuit.HasValue)
+                    {
+                        var daysDiff = DateOnly.FromDateTime(DateTime.Now).DayNumber - quitStartDate.Value.DayNumber;
+                        totalDaysQuit = Math.Max(0, daysDiff);
+                    }
+
+                    decimal? totalMoneySaved = stats?.TotalMoneySaved;
+                    if (!totalMoneySaved.HasValue && latestProfile != null && totalDaysQuit.HasValue)
+                    {
+                        var cigarettesPerDay = latestProfile.CigarettesPerDay;
+                        var pricePerPack = latestProfile.PricePerPack;
+                        var cigarettesPerPack = latestProfile.CigarettesPerPack ?? 20;
+
+                        if (cigarettesPerDay > 0 && pricePerPack > 0)
+                        {
+                            var dailyCost = (decimal)cigarettesPerDay / cigarettesPerPack * pricePerPack;
+                            totalMoneySaved = dailyCost * totalDaysQuit.Value;
+                        }
+                    }
+
+                    var userOverview = new UserOverview
+                    {
+                        UserId = userWithDetails.UserId,
+                        Username = userWithDetails.Username,
+                        Email = userWithDetails.Email,
+                        FullName = userWithDetails.FullName,
+                        Gender = userWithDetails.Gender,
+                        IsActive = userWithDetails.IsActive,
+                        CreatedAt = userWithDetails.CreatedAt ?? DateTime.Now,
+
+                        QuitStartDate = quitStartDate,
+                        CigarettesPerDay = latestProfile?.CigarettesPerDay,
+                        PricePerPack = latestProfile?.PricePerPack,
+                        QuitReason = latestProfile?.QuitReason,
+
+                        TotalDaysQuit = totalDaysQuit,
+                        TotalMoneySaved = totalMoneySaved,
+                        CurrentStreak = stats?.CurrentStreak,
+                        LongestStreak = stats?.LongestStreak,
+
+                        TotalBadges = totalBadges
+                    };
+
+                    userOverviews.Add(userOverview);
+                }
 
                 return userOverviews;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There is some trouble");
-                throw new Exception("ex", ex);
+                Console.WriteLine($"Error in GetAllUsersOverviewAsync: {ex.Message}");
+                throw new Exception("Failed to get users overview", ex);
             }
         }
 

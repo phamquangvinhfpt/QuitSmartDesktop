@@ -213,7 +213,7 @@ namespace QuitSmartApp.ViewModels
             try
             {
                 // Clear authentication data
-                _authenticationService.Logout();
+                _authenticationService.LogoutAsync();
 
                 // Navigate back to login
                 NavigateToLogin?.Invoke();

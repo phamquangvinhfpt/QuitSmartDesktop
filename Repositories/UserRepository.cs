@@ -63,5 +63,16 @@ namespace QuitSmartApp.Repositories
                 .Include(u => u.UserStatistic)
                 .FirstOrDefaultAsync(u => u.UserId == userId && u.IsActive == true);
         }
+
+        public async Task<IEnumerable<User>> GetUsersWithDetailsAsync()
+        {
+            return await _dbSet
+                .Include(u => u.UserProfiles)
+                .Include(u => u.UserStatistic)
+                .Include(u => u.UserBadges)
+                .Where(u => u.IsActive == true)
+                .OrderBy(u => u.FullName)
+                .ToListAsync();
+        }
     }
 }

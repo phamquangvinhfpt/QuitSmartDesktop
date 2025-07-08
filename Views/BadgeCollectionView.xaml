@@ -280,6 +280,8 @@
                                             <!-- Earned Badge Overlay -->
                                             <Border Background="{DynamicResource QuitSmartPrimaryBrush}"
                                                     CornerRadius="15"
+                                                    Width="30"
+                                                    Height="30"
                                                     Padding="8,4"
                                                     Visibility="{Binding IsEarned, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                 <TextBlock Text="✓"

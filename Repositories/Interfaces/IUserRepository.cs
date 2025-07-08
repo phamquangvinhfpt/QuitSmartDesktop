@@ -1,5 +1,6 @@
 using QuitSmartApp.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
@@ -14,5 +15,6 @@ namespace QuitSmartApp.Repositories.Interfaces
         Task<bool> IsEmailExistsAsync(string email);
         Task<IEnumerable<User>> GetActiveUsersAsync();
         Task<User?> GetUserWithProfileAsync(Guid userId);
+        Task<IEnumerable<User>> GetUsersWithDetailsAsync();
     }
 }
