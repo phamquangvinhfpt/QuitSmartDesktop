@@ -133,6 +133,7 @@ namespace QuitSmartApp.ViewModels
                 dashboardViewModel.NavigateToDailyTracking = () => NavigateToDailyTracking();
                 dashboardViewModel.NavigateToBadges = () => NavigateToBadges();
                 dashboardViewModel.NavigateToProfile = () => NavigateToProfile();
+                dashboardViewModel.NavigateToLogin = () => NavigateToLogin();
 
                 CurrentViewModel = dashboardViewModel;
             }

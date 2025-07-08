@@ -11,57 +11,60 @@
         ui:ThemeManager.IsThemeAware="True"
         mc:Ignorable="d"
         Title="QuitSmart - Ứng dụng hỗ trợ cai thuốc lá"
-        Height="800" Width="1400"
-        MinHeight="700" MinWidth="1400">
-    
+        Height="800"
+        Width="1400"
+        MinHeight="700"
+        MinWidth="1400">
+
     <Window.Icon>
         <DrawingImage>
             <DrawingImage.Drawing>
                 <DrawingGroup>
-                    <GeometryDrawing Brush="#4CAF50" Geometry="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
+                    <GeometryDrawing Brush="#4CAF50"
+                            Geometry="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
     </Window.Icon>
-    
+
     <Window.Resources>
         <!-- DataTemplates for ViewModels -->
         <DataTemplate DataType="{x:Type vm:GuestViewModel}">
             <views:GuestView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:LoginViewModel}">
             <views:LoginView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
             <views:RegisterView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:UserDashboardViewModel}">
             <views:UserDashboardView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
             <views:ProfileView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:ChangePasswordViewModel}">
             <views:ChangePasswordView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:DailyTrackingViewModel}">
             <views:DailyTrackingView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:BadgeCollectionViewModel}">
             <views:BadgeCollectionView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:HealthInfoViewModel}">
             <views:HealthInfoView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:AdminDashboardViewModel}">
             <views:AdminDashboardView/>
         </DataTemplate>

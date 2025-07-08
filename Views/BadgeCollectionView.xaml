@@ -12,7 +12,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <Style x:Key="BackButtonStyle"
-                TargetType="Button">
+               TargetType="Button">
             <Setter Property="Background"
                     Value="{DynamicResource QuitSmartPrimaryBrush}"/>
             <Setter Property="Foreground"
@@ -37,7 +37,7 @@
                                 <Style TargetType="Border">
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver"
-                                                Value="True">
+                                                 Value="True">
                                             <Setter Property="Background"
                                                     Value="{DynamicResource QuitSmartSecondaryBrush}"/>
                                         </Trigger>
@@ -318,7 +318,7 @@
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding IsEarned}"
                                                                            Value="False"/>
-                                                                <Condition Binding="{Binding Progress}"
+                                                                <Condition Binding="{Binding Progress, Mode=OneWay}"
                                                                            Value="0"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility"
@@ -332,13 +332,13 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <ProgressBar Value="{Binding Progress}"
+                                            <ProgressBar Value="{Binding Progress, Mode=OneWay}"
                                                          Maximum="100"
                                                          Style="{StaticResource BadgeProgressBarStyle}"
                                                          Margin="0,0,0,8"/>
                                             <TextBlock FontSize="11"
                                                        HorizontalAlignment="Center">
-                                                <Run Text="{Binding Progress, StringFormat=F0}"/>
+                                                <Run Text="{Binding Progress, Mode=OneWay, StringFormat=F0}"/>
                                                 <Run Text="% hoàn thành"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -357,7 +357,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!-- Empty State -->
+                    <!-- Empty State with Preview Badges -->
                     <StackPanel HorizontalAlignment="Center"
                                 Margin="0,40,0,40">
                         <StackPanel.Style>
@@ -373,6 +373,8 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
+
+                        <!-- Main Empty State Message -->
                         <TextBlock Text="🎖️"
                                    FontSize="48"
                                    HorizontalAlignment="Center"
@@ -389,7 +391,193 @@
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
                                    TextWrapping="Wrap"
-                                   MaxWidth="400"/>
+                                   MaxWidth="400"
+                                   Margin="0,0,0,32"/>
+
+                        <!-- Preview Badge Section -->
+                        <TextBlock Text="Một số huy hiệu bạn có thể nhận được:"
+                                   FontSize="16"
+                                   FontWeight="Medium"
+                                   Foreground="{DynamicResource QuitSmartSecondaryBrush}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,20"/>
+
+                        <!-- Sample Badges Grid -->
+                        <WrapPanel HorizontalAlignment="Center"
+                                   MaxWidth="700">
+                            <!-- Badge 1: First Day -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="🌟"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Ngày đầu tiên"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Hoàn thành ngày đầu tiên không thuốc lá"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Badge 2: Week Strong -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="🏃‍♂️"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Tuần lễ mạnh mẽ"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Hoàn thành 7 ngày liên tục không hút thuốc"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Badge 3: Money Saver -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="💰"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Tiết kiệm đầu tiên"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Tiết kiệm được 100.000 VNĐ từ việc không mua thuốc"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Badge 4: Month Champion -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="💪"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Tháng quyết tâm"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Hoàn thành 30 ngày không thuốc lá"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Badge 5: Health Improver -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="❤️"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Sức khỏe cải thiện"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Theo dõi sức khỏe đều đặn trong 7 ngày"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Badge 6: Milestone Master -->
+                            <Border Style="{StaticResource LockedBadgeStyle}"
+                                    Width="160"
+                                    Height="140"
+                                    Margin="10">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="🏆"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Bậc thầy mốc quan trọng"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,0,0,5"/>
+                                    <TextBlock Text="Hoàn thành 100 ngày không thuốc lá"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Opacity="0.8"
+                                               MaxWidth="130"/>
+                                </StackPanel>
+                            </Border>
+                        </WrapPanel>
+
+                        <!-- Encouraging message -->
+                        <TextBlock Text="🚀 Bắt đầu theo dõi hành trình của bạn ngay hôm nay để mở khóa những huy hiệu tuyệt vời này!"
+                                   FontSize="14"
+                                   FontWeight="Medium"
+                                   Foreground="{DynamicResource QuitSmartPrimaryBrush}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="500"
+                                   Margin="0,24,0,0"/>
                     </StackPanel>
 
                 </StackPanel>

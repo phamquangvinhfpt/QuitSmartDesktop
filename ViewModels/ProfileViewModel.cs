@@ -18,7 +18,7 @@ namespace QuitSmartApp.ViewModels
 
         private UserProfile? _userProfile;
         private UserStatistic? _userStatistic;
-        private ObservableCollection<UserBadge> _recentBadges = new();
+        private ObservableCollection<UserBadgeCollection> _recentBadges = new();
         private string _username = string.Empty;
         private string _email = string.Empty;
         private string _fullName = string.Empty;
@@ -72,10 +72,10 @@ namespace QuitSmartApp.ViewModels
             set => SetProperty(ref _userStatistic, value);
         }
 
-        public ObservableCollection<UserBadge> RecentBadges
+        public ObservableCollection<UserBadgeCollection> RecentBadges
         {
             get => _recentBadges;
-            set => SetProperty(ref _recentBadges, value);
+            set => SetProperty<ObservableCollection<UserBadgeCollection>>(ref _recentBadges, value);
         }
 
         public string Username
@@ -307,12 +307,18 @@ namespace QuitSmartApp.ViewModels
                     // Load recent badges
                     try
                     {
-                        var badges = await _badgeService.GetNewlyEarnedBadgesAsync(userId);
-                        RecentBadges = new ObservableCollection<UserBadge>(badges.Take(5)); // Get latest 5 badges
+                        var userBadgeCollection = await _badgeService.GetUserBadgeCollectionAsync(userId);
+                        // Filter only earned badges and take latest 5
+                        var recentEarnedBadges = userBadgeCollection
+                            .Where(ub => ub.IsEarned)
+                            .OrderByDescending(ub => ub.EarnedAt)
+                            .Take(5);
+                        RecentBadges = new ObservableCollection<UserBadgeCollection>(recentEarnedBadges);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        RecentBadges = new ObservableCollection<UserBadge>();
+                        System.Diagnostics.Debug.WriteLine($"Error loading recent badges: {ex.Message}");
+                        RecentBadges = new ObservableCollection<UserBadgeCollection>();
                     }
 
                     // Reset change tracking

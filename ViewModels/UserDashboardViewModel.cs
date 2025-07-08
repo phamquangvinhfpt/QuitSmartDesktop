@@ -20,6 +20,7 @@ namespace QuitSmartApp.ViewModels
         public Action? NavigateToDailyTracking { get; set; }
         public Action? NavigateToBadges { get; set; }
         public Action? NavigateToProfile { get; set; }
+        public Action? NavigateToLogin { get; set; }
 
         private UserStatistic? _userStatistics;
         private UserProfile? _userProfile;
@@ -45,6 +46,7 @@ namespace QuitSmartApp.ViewModels
             ViewStatsCommand = new RelayCommand(ViewStats);
             ViewBadgesCommand = new RelayCommand(ViewBadges);
             ViewProfileCommand = new RelayCommand(ViewProfile);
+            LogoutCommand = new RelayCommand(Logout);
 
             LoadDashboardDataAsync();
         }
@@ -126,6 +128,7 @@ namespace QuitSmartApp.ViewModels
         public ICommand ViewStatsCommand { get; }
         public ICommand ViewBadgesCommand { get; }
         public ICommand ViewProfileCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         // Methods
         private async void LoadDashboardDataAsync()
@@ -203,6 +206,23 @@ namespace QuitSmartApp.ViewModels
         {
             // Navigate to profile view
             NavigateToProfile?.Invoke();
+        }
+
+        private void Logout()
+        {
+            try
+            {
+                // Clear authentication data
+                _authenticationService.Logout();
+
+                // Navigate back to login
+                NavigateToLogin?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                // Handle logout error
+                System.Diagnostics.Debug.WriteLine($"Logout error: {ex.Message}");
+            }
         }
 
         public async Task RefreshDataAsync()

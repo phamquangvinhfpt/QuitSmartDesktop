@@ -90,7 +90,7 @@ namespace QuitSmartApp.ViewModels
 
                 // Try user login first
                 bool userLoginSuccess = await _authenticationService.LoginUserAsync(Username, Password);
-                
+
                 if (userLoginSuccess)
                 {
                     LoginSuccessful?.Invoke();
@@ -99,7 +99,7 @@ namespace QuitSmartApp.ViewModels
 
                 // If user login fails, try admin login
                 bool adminLoginSuccess = await _authenticationService.LoginAdminAsync(Username, Password);
-                
+
                 if (adminLoginSuccess)
                 {
                     AdminLoginSuccessful?.Invoke();
