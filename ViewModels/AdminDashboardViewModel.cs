@@ -40,16 +40,12 @@ namespace QuitSmartApp.ViewModels
             DeleteUserCommand = new RelayCommand<UserOverview>(DeleteUser, CanDeleteUser);
             EditUserCommand = new RelayCommand<UserOverview>(EditUser);
             ViewUserLogsCommand = new RelayCommand<UserOverview>(ViewUserLogs);
-
-            // Don't call LoadDashboardDataAsync() here - will be called when view loads
         }
 
-        // Add this method to be called after ViewModel is fully initialized
         public async Task InitializeAsync()
         {
             try
             {
-                // Try simple initialization first without loading data
                 Users = new ObservableCollection<UserOverview>();
                 AdminLogs = new ObservableCollection<AdminLog>();
                 TotalUsers = 0;
@@ -59,19 +55,16 @@ namespace QuitSmartApp.ViewModels
                 AverageDaysQuit = 0;
                 IsLoading = false;
 
-                // Now try to load real data
                 await LoadDataSafely();
             }
             catch (Exception ex)
             {
-                // Show error to user instead of crashing
                 System.Windows.MessageBox.Show(
                     $"Lỗi khi khởi tạo Admin Dashboard:\n{ex.Message}",
                     "Lỗi khởi tạo",
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Error);
 
-                // Set default values to prevent further crashes
                 Users = new ObservableCollection<UserOverview>();
                 AdminLogs = new ObservableCollection<AdminLog>();
                 TotalUsers = 0;
@@ -87,58 +80,15 @@ namespace QuitSmartApp.ViewModels
         {
             try
             {
-                // Dispatch to UI thread for safety
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
                 {
                     await LoadDashboardDataAsync();
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Fallback to sample data
-                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    LoadSampleData();
-                });
+                throw new Exception("ex", ex);
             }
-        }
-
-        private void LoadSampleData()
-        {
-            var sampleUsers = new List<UserOverview>
-            {
-                new UserOverview
-                {
-                    UserId = Guid.NewGuid(),
-                    Username = "sample_user",
-                    Email = "sample@test.com",
-                    FullName = "Sample User",
-                    Gender = "Nam",
-                    IsActive = true,
-                    CreatedAt = DateTime.Now.AddDays(-30),
-                    QuitStartDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-15)),
-                    CigarettesPerDay = 10,
-                    PricePerPack = 50000,
-                    TotalDaysQuit = 15,
-                    TotalMoneySaved = 750000,
-                    CurrentStreak = 15,
-                    LongestStreak = 15,
-                    TotalBadges = 2
-                }
-            };
-
-            Users = new ObservableCollection<UserOverview>(sampleUsers);
-            AdminLogs = new ObservableCollection<AdminLog>();
-
-            TotalUsers = 1;
-            ActiveUsers = 1;
-            TotalSessions = 1;
-            TotalMoneySaved = 750000;
-            AverageDaysQuit = 15;
-
-            OnPropertyChanged(nameof(ActiveUsersPercentage));
-            OnPropertyChanged(nameof(InactiveUsersPercentage));
-            OnPropertyChanged(nameof(InactiveUsers));
         }
 
         // Properties
@@ -271,7 +221,6 @@ namespace QuitSmartApp.ViewModels
         {
             if (user == null) return;
 
-            // For now, show message box with user details
             var details = $"Chi tiết người dùng:\n\n" +
                          $"ID: {user.UserId}\n" +
                          $"Tên: {user.FullName}\n" +

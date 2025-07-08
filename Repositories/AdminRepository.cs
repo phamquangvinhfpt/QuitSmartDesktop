@@ -27,7 +27,6 @@ namespace QuitSmartApp.Repositories
             if (admin == null)
                 return null;
                 
-            // Use PasswordHelper for verification
             return PasswordHelper.VerifyPassword(password, admin.PasswordHash) ? admin : null;
         }
 

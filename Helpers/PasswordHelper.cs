@@ -10,10 +10,7 @@ namespace QuitSmartApp.Helpers
     // Password hashing and verification utilities
     public static class PasswordHelper
     {
-        /// <summary>
-        /// Hash a password using SHA256 (basic implementation for demo)
-        /// In production, use BCrypt or similar library
-        /// </summary>
+        // Hash a password using SHA256
         public static string HashPassword(string password)
         {
             if (string.IsNullOrEmpty(password))

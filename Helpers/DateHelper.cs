@@ -2,7 +2,7 @@ using System;
 
 namespace QuitSmartApp.Helpers
 {
-    // Date and time calculation utilities for quit smoking app
+    // Date and time calculation utilities
     public static class DateHelper
     {
         // Calculate days between two dates

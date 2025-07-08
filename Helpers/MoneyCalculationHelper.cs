@@ -2,7 +2,7 @@ using System;
 
 namespace QuitSmartApp.Helpers
 {
-    // Money calculation utilities for quit smoking savings
+    // Money calculation utilities
     public static class MoneyCalculationHelper
     {
         // Calculate money saved based on days without smoking

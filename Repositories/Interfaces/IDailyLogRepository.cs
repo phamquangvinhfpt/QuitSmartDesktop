@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Repositories.Interfaces
 {
-    // Repository interface for DailyLog entity operations
+    /// Repository interface for DailyLog entity operations
     public interface IDailyLogRepository : IBaseRepository<DailyLog>
     {
         Task<DailyLog?> GetByUserAndDateAsync(Guid userId, DateOnly date);
