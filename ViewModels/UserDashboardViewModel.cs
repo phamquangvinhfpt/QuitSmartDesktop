@@ -89,10 +89,38 @@ namespace QuitSmartApp.ViewModels
         }
 
         // Computed properties for UI binding
-        public string DaysQuitText => UserStatistics?.TotalDaysQuit?.ToString() ?? "0";
-        public string MoneySavedText => (UserStatistics?.TotalMoneySaved?.ToString("#,##0") ?? "0") + " ₫";
-        public string CurrentStreakText => UserStatistics?.CurrentStreak?.ToString() ?? "0";
-        public string MotivationText => DailyMotivation?.Content ?? "Hãy tiếp tục cố gắng!";
+        public string DaysQuitText
+        {
+            get
+            {
+                if (UserProfile == null)
+                    return "Chưa thiết lập";
+                return UserStatistics?.TotalDaysQuit?.ToString() ?? "0";
+            }
+        }
+
+        public string MoneySavedText
+        {
+            get
+            {
+                if (UserProfile == null)
+                    return "Chưa thiết lập";
+                var amount = UserStatistics?.TotalMoneySaved ?? 0;
+                return amount.ToString("#,##0") + " ₫";
+            }
+        }
+
+        public string CurrentStreakText
+        {
+            get
+            {
+                if (UserProfile == null)
+                    return "Chưa thiết lập";
+                return UserStatistics?.CurrentStreak?.ToString() ?? "0";
+            }
+        }
+
+        public string MotivationText => DailyMotivation?.Content ?? "Hãy bắt đầu hành trình cai thuốc của bạn!";
 
         // Commands
         public ICommand ViewMoreMotivationCommand { get; }
@@ -112,11 +140,17 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
-                    // Load user statistics
-                    UserStatistics = await _userService.GetUserStatisticsAsync(userId);
-
-                    // Load user profile
+                    // Load user profile first
                     UserProfile = await _userService.GetUserProfileAsync(userId);
+
+                    // Force refresh statistics if user has profile
+                    if (UserProfile != null)
+                    {
+                        await _userService.RefreshUserStatisticsAsync(userId);
+                    }
+
+                    // Load user statistics after refresh
+                    UserStatistics = await _userService.GetUserStatisticsAsync(userId);
 
                     // Load daily motivation
                     DailyMotivation = await _motivationalService.GetPersonalizedMessageAsync(userId);
@@ -132,10 +166,10 @@ namespace QuitSmartApp.ViewModels
                     OnPropertyChanged(nameof(MotivationText));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Handle error - could show in a status bar or message
-                WelcomeMessage = "Có lỗi xảy ra khi tải dữ liệu.";
+                WelcomeMessage = $"Có lỗi xảy ra khi tải dữ liệu: {ex.Message}";
             }
             finally
             {

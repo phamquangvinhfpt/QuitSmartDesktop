@@ -21,7 +21,7 @@ namespace QuitSmartApp.Services
         private Admin? _currentAdmin;
 
         public AuthenticationService(
-            IUserRepository userRepository, 
+            IUserRepository userRepository,
             IAdminRepository adminRepository,
             IAdminLogRepository adminLogRepository)
         {
@@ -64,13 +64,13 @@ namespace QuitSmartApp.Services
                 {
                     _currentAdmin = admin;
                     _currentUser = null; // Clear user session
-                    
+
                     // Update last login time
                     await _adminRepository.UpdateLastLoginAsync(admin.AdminId);
-                    
+
                     // Log admin login
                     await _adminLogRepository.LogActionAsync(admin.AdminId, "Login", null, "Admin logged in");
-                    
+
                     return true;
                 }
                 return false;
@@ -88,7 +88,7 @@ namespace QuitSmartApp.Services
             return Task.CompletedTask;
         }
 
-        public async Task<bool> RegisterUserAsync(string username, string email, string password, string fullName)
+        public async Task<bool> RegisterUserAsync(string username, string email, string password, string fullName, DateTime? dateOfBirth = null, string? gender = null)
         {
             try
             {
@@ -107,6 +107,8 @@ namespace QuitSmartApp.Services
                     Email = email,
                     PasswordHash = PasswordHelper.HashPassword(password),
                     FullName = fullName,
+                    DateOfBirth = dateOfBirth?.Date == null ? null : DateOnly.FromDateTime(dateOfBirth.Value),
+                    Gender = gender,
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow

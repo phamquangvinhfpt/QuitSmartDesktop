@@ -10,7 +10,7 @@ namespace QuitSmartApp.Services.Interfaces
         Task<bool> LoginUserAsync(string username, string password);
         Task<bool> LoginAdminAsync(string username, string password);
         Task LogoutAsync();
-        Task<bool> RegisterUserAsync(string username, string email, string password, string fullName);
+        Task<bool> RegisterUserAsync(string username, string email, string password, string fullName, DateTime? dateOfBirth = null, string? gender = null);
         bool IsUserLoggedIn { get; }
         bool IsAdminLoggedIn { get; }
         Guid? CurrentUserId { get; }
