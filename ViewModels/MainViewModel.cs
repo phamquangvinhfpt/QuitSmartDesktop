@@ -134,6 +134,7 @@ namespace QuitSmartApp.ViewModels
                 dashboardViewModel.NavigateToBadges = () => NavigateToBadges();
                 dashboardViewModel.NavigateToProfile = () => NavigateToProfile();
                 dashboardViewModel.NavigateToLogin = () => NavigateToLogin();
+                dashboardViewModel.NavigateToStatistics = () => NavigateToStatistics();
 
                 CurrentViewModel = dashboardViewModel;
 
@@ -292,6 +293,17 @@ namespace QuitSmartApp.ViewModels
             CurrentViewModel = wrapper;
         }
 
+        private void NavigateToStatistics()
+        {
+            CurrentView = "Statistics";
+            var statisticsViewModel = App.ServiceProvider.GetService(typeof(UserStatisticsViewModel)) as UserStatisticsViewModel;
+            if (statisticsViewModel != null)
+            {
+                // Set navigation back action - always go back to dashboard for statistics
+                statisticsViewModel.NavigateBack = () => NavigateToDashboard();
+                CurrentViewModel = statisticsViewModel;
+            }
+        }
 
 
         private async void Logout()

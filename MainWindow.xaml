@@ -65,6 +65,10 @@
             <views:HealthInfoView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:UserStatisticsViewModel}">
+            <views:UserStatisticsView/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:AdminDashboardViewModel}">
             <views:AdminDashboardView/>
         </DataTemplate>

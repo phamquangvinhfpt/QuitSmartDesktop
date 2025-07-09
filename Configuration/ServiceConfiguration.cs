@@ -49,6 +49,7 @@ namespace QuitSmartApp.Configuration
             services.AddTransient<HealthInfoViewModel>();
             services.AddTransient<AdminDashboardViewModel>();
             services.AddTransient<RegisterViewModel>();
+            services.AddTransient<UserStatisticsViewModel>();
 
             return services;
         }

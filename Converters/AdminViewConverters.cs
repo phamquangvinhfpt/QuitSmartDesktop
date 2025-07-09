@@ -268,4 +268,40 @@ namespace QuitSmartApp.Converters
             throw new NotImplementedException();
         }
     }
+
+    // Converter for boolean to Color (for data point colors)
+    public class BooleanToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool hasSmoked)
+            {
+                return hasSmoked ? Colors.Red : Colors.Green;
+            }
+            return Colors.Gray;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    // Converter for boolean to background Color (for log items)
+    public class BooleanToBackgroundConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool hasSmoked)
+            {
+                return hasSmoked ? Color.FromArgb(40, 244, 67, 54) : Color.FromArgb(40, 76, 175, 80); // Light red or light green
+            }
+            return Color.FromArgb(40, 158, 158, 158); // Light gray
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

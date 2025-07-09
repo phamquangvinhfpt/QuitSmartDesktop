@@ -20,6 +20,7 @@ namespace QuitSmartApp.ViewModels
         public Action? NavigateToBadges { get; set; }
         public Action? NavigateToProfile { get; set; }
         public Action? NavigateToLogin { get; set; }
+        public Action? NavigateToStatistics { get; set; }
 
         private UserStatistic? _userStatistics;
         private UserProfile? _userProfile;
@@ -203,7 +204,7 @@ namespace QuitSmartApp.ViewModels
         private void ViewStats()
         {
             // Navigate to detailed statistics view
-            NavigateToDailyTracking?.Invoke();
+            NavigateToStatistics?.Invoke();
         }
 
         private void ViewBadges()

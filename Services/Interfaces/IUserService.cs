@@ -23,6 +23,9 @@ namespace QuitSmartApp.Services.Interfaces
         Task<IEnumerable<DailyLog>> GetUserDailyLogsAsync(Guid userId, int? days = null);
         Task<DailyLog?> GetTodayLogAsync(Guid userId);
 
+        // Statistics
+        Task<object> GetDetailedUserStatisticsAsync(Guid userId);
+
         // Dashboard
         Task<object> GetUserDashboardDataAsync(Guid userId);
     }
