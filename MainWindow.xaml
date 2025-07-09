@@ -69,33 +69,39 @@
             <views:AdminDashboardView/>
         </DataTemplate>
 
-        <!-- AdminViewWrapper with conditional content -->
+        <!-- AdminViewWrapper with simplified content -->
         <DataTemplate DataType="{x:Type vm:AdminViewWrapper}">
-            <ContentControl>
+            <ContentControl Content="{Binding AdminViewModel}">
                 <ContentControl.Style>
                     <Style TargetType="ContentControl">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ViewType}"
-                                         Value="UserDetails">
-                                <Setter Property="Content">
+                                    Value="UserDetails">
+                                <Setter Property="ContentTemplate">
                                     <Setter.Value>
-                                        <views:UserDetailsView DataContext="{Binding AdminViewModel}"/>
+                                        <DataTemplate>
+                                            <views:UserDetailsView/>
+                                        </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ViewType}"
-                                         Value="UserLogs">
-                                <Setter Property="Content">
+                                    Value="UserLogs">
+                                <Setter Property="ContentTemplate">
                                     <Setter.Value>
-                                        <views:UserLogsView DataContext="{Binding AdminViewModel}"/>
+                                        <DataTemplate>
+                                            <views:UserLogsView/>
+                                        </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ViewType}"
-                                         Value="EditUser">
-                                <Setter Property="Content">
+                                    Value="EditUser">
+                                <Setter Property="ContentTemplate">
                                     <Setter.Value>
-                                        <views:EditUserView DataContext="{Binding AdminViewModel}"/>
+                                        <DataTemplate>
+                                            <views:EditUserView/>
+                                        </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>
