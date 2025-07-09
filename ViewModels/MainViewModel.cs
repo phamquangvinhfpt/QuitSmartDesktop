@@ -119,7 +119,7 @@ namespace QuitSmartApp.ViewModels
             }
         }
 
-        private void NavigateToDashboard()
+        private async void NavigateToDashboard()
         {
             CurrentView = "Dashboard";
 
@@ -136,6 +136,9 @@ namespace QuitSmartApp.ViewModels
                 dashboardViewModel.NavigateToLogin = () => NavigateToLogin();
 
                 CurrentViewModel = dashboardViewModel;
+
+                // Refresh data when navigating back to dashboard
+                await dashboardViewModel.RefreshOnNavigationAsync();
             }
         }
 

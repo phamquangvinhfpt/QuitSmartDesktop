@@ -47,26 +47,51 @@ namespace QuitSmartApp.ViewModels
             ViewProfileCommand = new RelayCommand(ViewProfile);
             LogoutCommand = new RelayCommand(Logout);
 
-            LoadDashboardDataAsync();
+            _ = LoadDashboardDataAsync();
         }
 
         // Properties
         public UserStatistic? UserStatistics
         {
             get => _userStatistics;
-            set => SetProperty(ref _userStatistics, value);
+            set
+            {
+                if (SetProperty(ref _userStatistics, value))
+                {
+                    // Notify computed properties when UserStatistics changes
+                    OnPropertyChanged(nameof(DaysQuitText));
+                    OnPropertyChanged(nameof(MoneySavedText));
+                    OnPropertyChanged(nameof(CurrentStreakText));
+                }
+            }
         }
 
         public UserProfile? UserProfile
         {
             get => _userProfile;
-            set => SetProperty(ref _userProfile, value);
+            set
+            {
+                if (SetProperty(ref _userProfile, value))
+                {
+                    // Notify computed properties when UserProfile changes
+                    OnPropertyChanged(nameof(DaysQuitText));
+                    OnPropertyChanged(nameof(MoneySavedText));
+                    OnPropertyChanged(nameof(CurrentStreakText));
+                }
+            }
         }
 
         public MotivationalMessage? DailyMotivation
         {
             get => _dailyMotivation;
-            set => SetProperty(ref _dailyMotivation, value);
+            set
+            {
+                if (SetProperty(ref _dailyMotivation, value))
+                {
+                    // Notify computed property when DailyMotivation changes
+                    OnPropertyChanged(nameof(MotivationText));
+                }
+            }
         }
 
         public string WelcomeMessage
@@ -130,7 +155,7 @@ namespace QuitSmartApp.ViewModels
         public ICommand LogoutCommand { get; }
 
         // Methods
-        private async void LoadDashboardDataAsync()
+        private async Task LoadDashboardDataAsync()
         {
             try
             {
@@ -140,25 +165,16 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
+                    // Always refresh statistics first to ensure latest data
+                    await _userService.RefreshUserStatisticsAsync(userId);
+
                     UserProfile = await _userService.GetUserProfileAsync(userId);
-
-                    if (UserProfile != null)
-                    {
-                        await _userService.RefreshUserStatisticsAsync(userId);
-                    }
-
                     UserStatistics = await _userService.GetUserStatisticsAsync(userId);
 
                     DailyMotivation = await _motivationalService.GetPersonalizedMessageAsync(userId);
 
                     WelcomeMessage = $"Chào mừng {_authenticationService.CurrentUsername} quay lại!";
                     TodayDate = DateTime.Today.ToString("dddd, dd MMMM yyyy");
-
-                    // Notify UI of computed property changes
-                    OnPropertyChanged(nameof(DaysQuitText));
-                    OnPropertyChanged(nameof(MoneySavedText));
-                    OnPropertyChanged(nameof(CurrentStreakText));
-                    OnPropertyChanged(nameof(MotivationText));
                 }
             }
             catch (Exception ex)
@@ -221,7 +237,13 @@ namespace QuitSmartApp.ViewModels
 
         public async Task RefreshDataAsync()
         {
-            await Task.Run(() => LoadDashboardDataAsync());
+            await LoadDashboardDataAsync();
+        }
+
+        // Add method to manually refresh data when navigating back
+        public async Task RefreshOnNavigationAsync()
+        {
+            await LoadDashboardDataAsync();
         }
     }
 }

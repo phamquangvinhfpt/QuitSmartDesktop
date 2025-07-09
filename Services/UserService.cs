@@ -66,6 +66,8 @@ namespace QuitSmartApp.Services
         public async Task RefreshUserStatisticsAsync(Guid userId)
         {
             await _userStatisticRepository.RefreshUserStatisticsAsync(userId);
+
+            _userStatisticRepository.ClearChangeTracker();
         }
 
         public async Task<DailyLog> LogDailyStatusAsync(Guid userId, DateOnly date, bool hasSmoked, string? healthStatus, string? notes)

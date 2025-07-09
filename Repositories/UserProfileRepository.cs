@@ -15,13 +15,15 @@ namespace QuitSmartApp.Repositories
 
         public async Task<UserProfile?> GetByUserIdAsync(Guid userId)
         {
-            return await _dbSet.FirstOrDefaultAsync(p => p.UserId == userId);
+            return await _dbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.UserId == userId);
         }
 
         public async Task<UserProfile> CreateOrUpdateAsync(UserProfile profile)
         {
             var existingProfile = await GetByUserIdAsync(profile.UserId);
-            
+
             if (existingProfile != null)
             {
                 // Update existing profile
@@ -33,7 +35,7 @@ namespace QuitSmartApp.Repositories
                 existingProfile.SmokingYears = profile.SmokingYears;
                 existingProfile.QuitReason = profile.QuitReason;
                 existingProfile.UpdatedAt = DateTime.UtcNow;
-                
+
                 return await UpdateAsync(existingProfile);
             }
             else
@@ -42,7 +44,7 @@ namespace QuitSmartApp.Repositories
                 profile.ProfileId = Guid.NewGuid();
                 profile.CreatedAt = DateTime.UtcNow;
                 profile.UpdatedAt = DateTime.UtcNow;
-                
+
                 return await AddAsync(profile);
             }
         }

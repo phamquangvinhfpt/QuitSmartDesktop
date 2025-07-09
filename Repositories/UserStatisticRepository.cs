@@ -15,13 +15,15 @@ namespace QuitSmartApp.Repositories
 
         public async Task<UserStatistic?> GetByUserIdAsync(Guid userId)
         {
-            return await _dbSet.FirstOrDefaultAsync(s => s.UserId == userId);
+            return await _dbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.UserId == userId);
         }
 
         public async Task<UserStatistic> CreateOrUpdateAsync(UserStatistic statistic)
         {
             var existing = await GetByUserIdAsync(statistic.UserId);
-            
+
             if (existing != null)
             {
                 existing.TotalDaysQuit = statistic.TotalDaysQuit;
@@ -30,7 +32,7 @@ namespace QuitSmartApp.Repositories
                 existing.LongestStreak = statistic.LongestStreak;
                 existing.LastCalculatedAt = DateTime.UtcNow;
                 existing.UpdatedAt = DateTime.UtcNow;
-                
+
                 return await UpdateAsync(existing);
             }
             else
@@ -38,7 +40,7 @@ namespace QuitSmartApp.Repositories
                 statistic.StatId = Guid.NewGuid();
                 statistic.LastCalculatedAt = DateTime.UtcNow;
                 statistic.UpdatedAt = DateTime.UtcNow;
-                
+
                 return await AddAsync(statistic);
             }
         }

@@ -48,8 +48,8 @@ namespace QuitSmartApp.Repositories
 
         public virtual async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
         {
-            return predicate == null 
-                ? await _dbSet.CountAsync() 
+            return predicate == null
+                ? await _dbSet.CountAsync()
                 : await _dbSet.CountAsync(predicate);
         }
 
@@ -90,6 +90,11 @@ namespace QuitSmartApp.Repositories
         public virtual async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        public virtual void ClearChangeTracker()
+        {
+            _context.ChangeTracker.Clear();
         }
     }
 }
