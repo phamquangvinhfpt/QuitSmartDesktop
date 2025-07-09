@@ -520,11 +520,17 @@ namespace QuitSmartApp.ViewModels
                     );
                 }
 
-                SelectedTabIndex = 3; // Switch to edit tab
+                if (NavigateToEditUser != null)
+                {
+                    NavigateToEditUser.Invoke(user);
+                }
+                else
+                {
+                    SelectedTabIndex = 3;
+                }
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show($"Lỗi khi mở form chỉnh sửa: {ex.Message}", "Lỗi",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }
@@ -536,26 +542,6 @@ namespace QuitSmartApp.ViewModels
             try
             {
                 SelectedUserForDetails = user;
-                var userLogs = await _adminService.GetUserDailyLogsAsync(user.UserId);
-
-                if (userLogs?.Any() == true)
-                {
-                    var logsText = string.Join("\n", userLogs.Take(20).Select(log =>
-                    $"[{log.LogDate:dd/MM/yyyy}] Hút thuốc: {(log.HasSmoked == true ? "Có" : "Không")}, " +
-                        $"Tình trạng: {log.HealthStatus ?? "Không ghi nhận"}, " +
-                        $"Ghi chú: {(string.IsNullOrEmpty(log.Notes) ? "Không có" : log.Notes)}"));
-
-                    UserLogsContent = $"Nhật ký hoạt động của {user.FullName}\n" +
-                                    $"Tổng số bản ghi: {userLogs.Count()}\n\n" +
-                                    "20 bản ghi gần nhất:\n" +
-                                    "─────────────────────────────────────\n" +
-                                    logsText;
-                }
-                else
-                {
-                    UserLogsContent = $"Nhật ký hoạt động của {user.FullName}\n\n" +
-                                    "Không có dữ liệu nhật ký nào được tìm thấy.";
-                }
 
                 // Log admin action
                 if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
@@ -568,12 +554,48 @@ namespace QuitSmartApp.ViewModels
                     );
                 }
 
-                SelectedTabIndex = 2; // Switch to logs tab
+                if (NavigateToUserLogs != null)
+                {
+                    NavigateToUserLogs.Invoke(user);
+                }
+                else
+                {
+                    // Load logs data for tab view
+                    var userLogs = await _adminService.GetUserDailyLogsAsync(user.UserId);
+
+                    if (userLogs?.Any() == true)
+                    {
+                        var logsText = string.Join("\n", userLogs.Take(20).Select(log =>
+                        $"[{log.LogDate:dd/MM/yyyy}] Hút thuốc: {(log.HasSmoked == true ? "Có" : "Không")}, " +
+                            $"Tình trạng: {log.HealthStatus ?? "Không ghi nhận"}, " +
+                            $"Ghi chú: {(string.IsNullOrEmpty(log.Notes) ? "Không có" : log.Notes)}"));
+
+                        UserLogsContent = $"Nhật ký hoạt động của {user.FullName}\n" +
+                                        $"Tổng số bản ghi: {userLogs.Count()}\n\n" +
+                                        "20 bản ghi gần nhất:\n" +
+                                        "─────────────────────────────────────\n" +
+                                        logsText;
+                    }
+                    else
+                    {
+                        UserLogsContent = $"Nhật ký hoạt động của {user.FullName}\n\n" +
+                                        "Không có dữ liệu nhật ký nào được tìm thấy.";
+                    }
+
+                    SelectedTabIndex = 2; // Switch to logs tab (fallback)
+                }
             }
             catch (Exception ex)
             {
-                UserLogsContent = $"Lỗi khi tải nhật ký của {user?.FullName}: {ex.Message}";
-                SelectedTabIndex = 2;
+                if (NavigateToUserLogs == null)
+                {
+                    UserLogsContent = $"Lỗi khi tải nhật ký của {user?.FullName}: {ex.Message}";
+                    SelectedTabIndex = 2;
+                }
+                else
+                {
+                        System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                }
             }
         }
 

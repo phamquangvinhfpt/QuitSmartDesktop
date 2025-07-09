@@ -280,7 +280,8 @@
                                                 Padding="16,8"
                                                 FontSize="14"
                                                 Margin="0,0,12,0"
-                                                Command="{Binding EditUserCommand}"/>
+                                                Command="{Binding EditUserCommand}"
+                                                CommandParameter="{Binding SelectedUserForDetails}"/>
                                         <Button Content="📋 Xem nhật ký"
                                                 Background="#27AE60"
                                                 Foreground="White"
@@ -288,7 +289,8 @@
                                                 Padding="16,8"
                                                 FontSize="14"
                                                 Margin="0,0,12,0"
-                                                Command="{Binding ViewUserLogsCommand}"/>
+                                                Command="{Binding ViewUserLogsCommand}"
+                                                CommandParameter="{Binding SelectedUserForDetails}"/>
                                         <!--<Button Content="🗑️ Xóa người dùng"
                                                 Background="#E74C3C"
                                                 Foreground="White"
