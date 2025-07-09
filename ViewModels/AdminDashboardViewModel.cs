@@ -6,10 +6,10 @@ using System.Windows.Input;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Windows.Threading;
 
 namespace QuitSmartApp.ViewModels
 {
-    // Chart data models for advanced statistics
     public class ChartDataPoint
     {
         public string Label { get; set; } = string.Empty;
@@ -33,7 +33,6 @@ namespace QuitSmartApp.ViewModels
         public decimal MoneySaved { get; set; }
     }
 
-    // ViewModel for Admin Dashboard functionality
     public class AdminDashboardViewModel : BaseViewModel
     {
         private readonly IAdminService _adminService;
@@ -43,7 +42,7 @@ namespace QuitSmartApp.ViewModels
         public Action? NavigateToGuest { get; set; }
         public Action<UserOverview>? NavigateToUserDetails { get; set; }
         public Action<UserOverview>? NavigateToUserLogs { get; set; }
-        public Action<UserOverview>? NavigateToEditUser { get; set; }
+
         public Action? BackToDashboard { get; set; }
 
         private ObservableCollection<UserOverview> _users = new();
@@ -86,6 +85,16 @@ namespace QuitSmartApp.ViewModels
         private double _successRate;
         private bool _hasMoreLogs;
 
+        // Pagination fields
+        private int _currentPage = 1;
+        private int _totalPages = 1;
+        private List<DailyLog> _allLogs = new();
+        private bool _isLoadingMore = false;
+        private const int PAGE_SIZE = 10;
+
+        private DispatcherTimer? _searchTimer;
+        private const int SEARCH_DELAY_MS = 500;
+
         public AdminDashboardViewModel(IAdminService adminService, IAuthenticationService authenticationService)
         {
             _adminService = adminService;
@@ -96,21 +105,25 @@ namespace QuitSmartApp.ViewModels
             RefreshDataCommand = new AsyncRelayCommand(LoadDashboardDataAsync);
             ViewUserDetailsCommand = new RelayCommand<UserOverview>(ViewUserDetails);
             DeleteUserCommand = new RelayCommand<UserOverview>(DeleteUser, CanDeleteUser);
-            EditUserCommand = new RelayCommand<UserOverview>(EditUser);
+
             ViewUserLogsCommand = new RelayCommand<UserOverview>(ViewUserLogs);
-            SaveUserEditCommand = new RelayCommand(SaveUserEdit);
+
             CloseTabCommand = new RelayCommand<string>(CloseTab);
 
             // New navigation commands
             OpenUserDetailsCommand = new RelayCommand<UserOverview>(OpenUserDetails);
             OpenUserLogsCommand = new RelayCommand<UserOverview>(OpenUserLogs);
-            OpenEditUserCommand = new RelayCommand<UserOverview>(OpenEditUser);
+
             BackToDashboardCommand = new RelayCommand(() => BackToDashboard?.Invoke());
 
             // UserLogs View specific commands  
             RefreshLogsCommand = new RelayCommand(RefreshLogs);
             LoadMoreLogsCommand = new RelayCommand(LoadMoreLogs);
             ExportLogsCommand = new RelayCommand(ExportLogs);
+
+            // Pagination commands
+            PreviousPageCommand = new RelayCommand(PreviousPage, CanGoToPreviousPage);
+            NextPageCommand = new RelayCommand(NextPage, CanGoToNextPage);
         }
 
         public async Task InitializeAsync()
@@ -126,10 +139,8 @@ namespace QuitSmartApp.ViewModels
                 AverageDaysQuit = 0;
                 IsLoading = false;
 
-                // Load data first
                 await LoadDataSafely();
 
-                // Log admin dashboard access after successful data loading
                 try
                 {
                     if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
@@ -144,7 +155,6 @@ namespace QuitSmartApp.ViewModels
                 }
                 catch (Exception logEx)
                 {
-                    // If logging fails, show warning but continue
                     System.Diagnostics.Debug.WriteLine($"Lỗi khi ghi log admin: {logEx.Message}");
                 }
             }
@@ -335,8 +345,27 @@ namespace QuitSmartApp.ViewModels
             get => _searchText;
             set
             {
-                SetProperty(ref _searchText, value);
-                FilterLogsAsync();
+                if (SetProperty(ref _searchText, value))
+                {
+                    _searchTimer?.Stop();
+                    _searchTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMilliseconds(SEARCH_DELAY_MS)
+                    };
+                    _searchTimer.Tick += (s, e) =>
+                    {
+                        _searchTimer.Stop();
+                        try
+                        {
+                            FilterLogsAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Search error: {ex.Message}");
+                        }
+                    };
+                    _searchTimer.Start();
+                }
             }
         }
 
@@ -345,8 +374,27 @@ namespace QuitSmartApp.ViewModels
             get => _filterStartDate;
             set
             {
-                SetProperty(ref _filterStartDate, value);
-                FilterLogsAsync();
+                if (SetProperty(ref _filterStartDate, value))
+                {
+                    _searchTimer?.Stop();
+                    _searchTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMilliseconds(SEARCH_DELAY_MS)
+                    };
+                    _searchTimer.Tick += (s, e) =>
+                    {
+                        _searchTimer.Stop();
+                        try
+                        {
+                            FilterLogsAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Date filter error: {ex.Message}");
+                        }
+                    };
+                    _searchTimer.Start();
+                }
             }
         }
 
@@ -355,8 +403,27 @@ namespace QuitSmartApp.ViewModels
             get => _filterEndDate;
             set
             {
-                SetProperty(ref _filterEndDate, value);
-                FilterLogsAsync();
+                if (SetProperty(ref _filterEndDate, value))
+                {
+                    _searchTimer?.Stop();
+                    _searchTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMilliseconds(SEARCH_DELAY_MS)
+                    };
+                    _searchTimer.Tick += (s, e) =>
+                    {
+                        _searchTimer.Stop();
+                        try
+                        {
+                            FilterLogsAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Date filter error: {ex.Message}");
+                        }
+                    };
+                    _searchTimer.Start();
+                }
             }
         }
 
@@ -396,26 +463,51 @@ namespace QuitSmartApp.ViewModels
             set => SetProperty(ref _hasMoreLogs, value);
         }
 
+        // Pagination properties
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set => SetProperty(ref _currentPage, value);
+        }
+
+        public int TotalPages
+        {
+            get => _totalPages;
+            set => SetProperty(ref _totalPages, value);
+        }
+
+        public bool IsLoadingMore
+        {
+            get => _isLoadingMore;
+            set => SetProperty(ref _isLoadingMore, value);
+        }
+
+        public string PageInfo => $"Trang {CurrentPage} / {TotalPages} ({TotalLogEntries} bản ghi)";
+
         // Commands
         public ICommand LogoutCommand { get; }
         public ICommand RefreshDataCommand { get; }
         public ICommand ViewUserDetailsCommand { get; }
         public ICommand DeleteUserCommand { get; }
-        public ICommand EditUserCommand { get; }
+
         public ICommand ViewUserLogsCommand { get; }
-        public ICommand SaveUserEditCommand { get; }
+
         public ICommand CloseTabCommand { get; }
 
         // New navigation commands for separate views
         public ICommand OpenUserDetailsCommand { get; }
         public ICommand OpenUserLogsCommand { get; }
-        public ICommand OpenEditUserCommand { get; }
+
         public ICommand BackToDashboardCommand { get; }
 
         // UserLogs View specific commands
         public ICommand RefreshLogsCommand { get; }
         public ICommand LoadMoreLogsCommand { get; }
         public ICommand ExportLogsCommand { get; }
+
+        // Pagination commands
+        public ICommand PreviousPageCommand { get; }
+        public ICommand NextPageCommand { get; }
 
         // Methods
         private async Task LoadDashboardDataAsync()
@@ -424,18 +516,10 @@ namespace QuitSmartApp.ViewModels
             {
                 IsLoading = true;
 
-                // Clear cache first
                 Users?.Clear();
 
-                // Load users overview with fresh data
                 var usersOverview = await _adminService.GetAllUsersOverviewAsync();
                 Users = new ObservableCollection<UserOverview>(usersOverview ?? new List<UserOverview>());
-
-                // Debug: Log badge counts
-                foreach (var user in Users.Take(5))
-                {
-                    System.Diagnostics.Debug.WriteLine($"User: {user.FullName}, TotalBadges: {user.TotalBadges}, TotalDaysQuit: {user.TotalDaysQuit}");
-                }
 
                 // Load admin logs
                 var logs = await _adminService.GetAdminLogsAsync();
@@ -585,43 +669,10 @@ namespace QuitSmartApp.ViewModels
 
         private bool CanDeleteUser(UserOverview? user)
         {
-            return user != null && user.IsActive == false; // Only allow deleting inactive users
+            return user != null && user.IsActive == false;
         }
 
-        private async void EditUser(UserOverview? user)
-        {
-            if (user == null) return;
 
-            try
-            {
-                SelectedUserForDetails = user;
-
-                // Log admin action
-                if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
-                {
-                    await _adminService.LogAdminActionAsync(
-                        _authenticationService.CurrentUserId.Value,
-                        "Mở form chỉnh sửa người dùng",
-                        user.UserId,
-                        $"Admin đã mở form chỉnh sửa thông tin người dùng {user.FullName} ({user.Username})"
-                    );
-                }
-
-                if (NavigateToEditUser != null)
-                {
-                    NavigateToEditUser.Invoke(user);
-                }
-                else
-                {
-                    SelectedTabIndex = 3;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Lỗi khi tải thông tin chi tiết: {ex.Message}", "Lỗi",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
 
         private async void ViewUserLogs(UserOverview? user)
         {
@@ -691,40 +742,11 @@ namespace QuitSmartApp.ViewModels
             }
         }
 
-        private async void SaveUserEdit()
-        {
-            if (SelectedUserForDetails == null) return;
 
-            try
-            {
-                if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
-                {
-                    await _adminService.LogAdminActionAsync(
-                        _authenticationService.CurrentUserId.Value,
-                        "Cập nhật thông tin người dùng",
-                        SelectedUserForDetails.UserId,
-                        $"Đã cập nhật thông tin người dùng {SelectedUserForDetails.FullName}"
-                    );
-                }
-
-                await LoadDashboardDataAsync();
-                SelectedTabIndex = 0; // Return to main tab
-
-                System.Windows.MessageBox.Show("Cập nhật thông tin người dùng thành công!", "Thành công",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Lỗi khi cập nhật: {ex.Message}", "Lỗi",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
 
         private void CloseTab(string tabName)
         {
-            SelectedTabIndex = 0; // Return to main dashboard
-            // Don't reset SelectedUserForDetails and UserDailyLogs to preserve data
-            // SelectedUserForDetails = null;
+            SelectedTabIndex = 0;
             UserDetailsContent = string.Empty;
             UserLogsContent = string.Empty;
         }
@@ -918,33 +940,7 @@ namespace QuitSmartApp.ViewModels
             }
         }
 
-        private async void OpenEditUser(UserOverview? user)
-        {
-            if (user == null) return;
 
-            try
-            {
-                // Log admin action
-                if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
-                {
-                    await _adminService.LogAdminActionAsync(
-                        _authenticationService.CurrentUserId.Value,
-                        "Mở view chỉnh sửa người dùng",
-                        user.UserId,
-                        $"Admin đã mở view chỉnh sửa cho người dùng {user.FullName} ({user.Username})"
-                    );
-                }
-
-                // Set selected user and navigate
-                SelectedUserForDetails = user;
-                NavigateToEditUser?.Invoke(user);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Lỗi khi mở form chỉnh sửa người dùng: {ex.Message}", "Lỗi",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
 
         // UserLogs View specific methods
         private async void RefreshLogs()
@@ -964,26 +960,43 @@ namespace QuitSmartApp.ViewModels
 
         private async void LoadMoreLogs()
         {
-            if (SelectedUserForDetails == null) return;
+            if (SelectedUserForDetails == null || IsLoadingMore) return;
 
             try
             {
-                // Load additional logs (implement pagination logic here)
-                var additionalLogs = await _adminService.GetUserDailyLogsAsync(SelectedUserForDetails.UserId);
-                // TODO: Implement pagination logic to load more logs
+                IsLoadingMore = true;
 
-                HasMoreLogs = false; // Temporarily set to false
+                // Check if there are more pages to load
+                if (CurrentPage < TotalPages)
+                {
+                    // Move to next page
+                    CurrentPage++;
+
+                    // Load the current page
+                    LoadCurrentPage();
+                }
+                else
+                {
+                    // No more pages available
+                    HasMoreLogs = false;
+                    System.Windows.MessageBox.Show("Đã tải hết tất cả nhật ký!", "Thông báo",
+                        System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Lỗi khi tải thêm nhật ký: {ex.Message}", "Lỗi",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
+            finally
+            {
+                IsLoadingMore = false;
+            }
         }
 
         private void ExportLogs()
         {
-            if (SelectedUserForDetails == null || UserDailyLogs?.Any() != true)
+            if (SelectedUserForDetails == null || _allLogs?.Any() != true)
             {
                 System.Windows.MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
@@ -992,16 +1005,63 @@ namespace QuitSmartApp.ViewModels
 
             try
             {
-                // TODO: Implement export functionality
-                var logsText = string.Join("\n", UserDailyLogs.Select(log =>
-                    $"{log.LogDate:dd/MM/yyyy},{(log.HasSmoked == true ? "Có" : "Không")},{log.HealthStatus ?? ""},{log.Notes ?? ""}"));
+                // Create SaveFileDialog
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                {
+                    Title = "Xuất nhật ký hoạt động",
+                    Filter = "CSV files (*.csv)|*.csv|Text files (*.txt)|*.txt|All files (*.*)|*.*",
+                    FilterIndex = 1,
+                    DefaultExt = "csv",
+                    FileName = $"NhatKy_{SelectedUserForDetails.FullName}_{DateTime.Now:yyyyMMdd_HHmmss}"
+                };
 
-                var header = "Ngày,Hút thuốc,Tình trạng sức khỏe,Ghi chú\n";
-                var fullExport = header + logsText;
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    // Create CSV content with all logs
+                    var csvContent = new System.Text.StringBuilder();
 
-                // For now, just show the export content
-                System.Windows.MessageBox.Show($"Dữ liệu xuất cho {SelectedUserForDetails.FullName}:\n\n{fullExport}",
-                    "Xuất nhật ký", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                    csvContent.AppendLine("Ngày,Hút thuốc,Tình trạng sức khỏe,Ghi chú");
+
+                    // Data rows
+                    foreach (var log in _allLogs)
+                    {
+                        var line = $"{log.LogDate:dd/MM/yyyy}," +
+                                  $"\"{(log.HasSmoked == true ? "Có" : "Không")}\"," +
+                                  $"\"{log.HealthStatus?.Replace("\"", "\"\"") ?? ""}\"," +
+                                  $"\"{log.Notes?.Replace("\"", "\"\"") ?? ""}\"";
+                        csvContent.AppendLine(line);
+                    }
+
+                    System.IO.File.WriteAllText(saveFileDialog.FileName, csvContent.ToString(), System.Text.Encoding.UTF8);
+
+                    // Show success message
+                    System.Windows.MessageBox.Show(
+                        $"Đã xuất thành công {_allLogs.Count} bản ghi nhật ký!\n\nFile đã được lưu tại:\n{saveFileDialog.FileName}",
+                        "Xuất nhật ký thành công",
+                        System.Windows.MessageBoxButton.OK,
+                        System.Windows.MessageBoxImage.Information);
+
+                    // Log export action
+                    if (_authenticationService.CurrentUserId.HasValue && _authenticationService.CurrentUserId.Value != Guid.Empty)
+                    {
+                        _ = Task.Run(async () =>
+                        {
+                            try
+                            {
+                                await _adminService.LogAdminActionAsync(
+                                    _authenticationService.CurrentUserId.Value,
+                                    "Xuất nhật ký người dùng",
+                                    SelectedUserForDetails.UserId,
+                                    $"Admin đã xuất {_allLogs.Count} bản ghi nhật ký của người dùng {SelectedUserForDetails.FullName} ra file {System.IO.Path.GetFileName(saveFileDialog.FileName)}"
+                                );
+                            }
+                            catch (Exception logEx)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Failed to log export action: {logEx.Message}");
+                            }
+                        });
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1020,33 +1080,146 @@ namespace QuitSmartApp.ViewModels
                 {
                     var logsList = logs.OrderByDescending(l => l.LogDate).ToList();
 
-                    // Apply filters if any
-                    if (!string.IsNullOrEmpty(SearchText))
+                    if (!string.IsNullOrWhiteSpace(SearchText))
                     {
-                        logsList = logsList.Where(l =>
-                            l.Notes?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true ||
-                            l.HealthStatus?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true)
-                            .ToList();
+                        try
+                        {
+                            var searchTextTrimmed = SearchText.Trim();
+                            logsList = logsList.Where(l =>
+                            {
+                                try
+                                {
+                                    return (l.Notes?.Contains(searchTextTrimmed, StringComparison.InvariantCultureIgnoreCase) == true) ||
+                                           (l.HealthStatus?.Contains(searchTextTrimmed, StringComparison.InvariantCultureIgnoreCase) == true);
+                                }
+                                catch
+                                {
+                                    return false;
+                                }
+                            }).ToList();
+                        }
+                        catch (Exception searchEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Search filtering error: {searchEx.Message}");
+                        }
                     }
 
                     if (FilterStartDate.HasValue)
                     {
-                        logsList = logsList.Where(l => l.LogDate >= DateOnly.FromDateTime(FilterStartDate.Value)).ToList();
+                        try
+                        {
+                            logsList = logsList.Where(l => l.LogDate >= DateOnly.FromDateTime(FilterStartDate.Value)).ToList();
+                        }
+                        catch (Exception dateEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Start date filtering error: {dateEx.Message}");
+                        }
                     }
 
                     if (FilterEndDate.HasValue)
                     {
-                        logsList = logsList.Where(l => l.LogDate <= DateOnly.FromDateTime(FilterEndDate.Value)).ToList();
+                        try
+                        {
+                            logsList = logsList.Where(l => l.LogDate <= DateOnly.FromDateTime(FilterEndDate.Value)).ToList();
+                        }
+                        catch (Exception dateEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"End date filtering error: {dateEx.Message}");
+                        }
                     }
 
-                    UserDailyLogs = new ObservableCollection<DailyLog>(logsList);
+                    // Store all filtered logs for pagination
+                    _allLogs = logsList;
                     TotalLogEntries = logsList.Count;
                     SuccessfulDays = logsList.Count(l => l.HasSmoked != true);
                     FailedDays = logsList.Count(l => l.HasSmoked == true);
                     SuccessRate = TotalLogEntries > 0 ? (double)SuccessfulDays / TotalLogEntries * 100 : 0;
-                    HasMoreLogs = false; // TODO: Implement proper pagination
+
+                    // Calculate pagination
+                    TotalPages = (int)Math.Ceiling((double)TotalLogEntries / PAGE_SIZE);
+                    if (TotalPages == 0) TotalPages = 1;
+
+                    if (CurrentPage > TotalPages)
+                    {
+                        CurrentPage = 1;
+                    }
+
+                    // Load current page
+                    LoadCurrentPage();
+
+                    // Notify pagination related properties
+                    OnPropertyChanged(nameof(PageInfo));
                 }
                 else
+                {
+                    // Reset UI khi không có data
+                    _allLogs = new List<DailyLog>();
+                    UserDailyLogs = new ObservableCollection<DailyLog>();
+                    TotalLogEntries = 0;
+                    SuccessfulDays = 0;
+                    FailedDays = 0;
+                    SuccessRate = 0;
+                    HasMoreLogs = false;
+                    CurrentPage = 1;
+                    TotalPages = 1;
+                    OnPropertyChanged(nameof(PageInfo));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"LoadUserLogsAsync error: {ex.Message}");
+
+                _allLogs = new List<DailyLog>();
+                UserDailyLogs = new ObservableCollection<DailyLog>();
+                TotalLogEntries = 0;
+                SuccessfulDays = 0;
+                FailedDays = 0;
+                SuccessRate = 0;
+                HasMoreLogs = false;
+                CurrentPage = 1;
+                TotalPages = 1;
+                OnPropertyChanged(nameof(PageInfo));
+
+                throw new Exception($"Lỗi khi tải nhật ký người dùng: {ex.Message}", ex);
+            }
+        }
+
+        private async void FilterLogsAsync()
+        {
+            if (SelectedUserForDetails == null) return;
+
+            try
+            {
+                await LoadUserLogsAsync(SelectedUserForDetails.UserId);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FilterLogsAsync error: {ex.Message}");
+
+                System.Diagnostics.Debug.WriteLine("Search filtering encountered an error, showing original data");
+
+                try
+                {
+                    var originalSearchText = SearchText;
+                    var originalStartDate = FilterStartDate;
+                    var originalEndDate = FilterEndDate;
+
+                    _searchText = string.Empty;
+                    _filterStartDate = null;
+                    _filterEndDate = null;
+
+                    await LoadUserLogsAsync(SelectedUserForDetails.UserId);
+
+                    _searchText = originalSearchText;
+                    _filterStartDate = originalStartDate;
+                    _filterEndDate = originalEndDate;
+
+                    // Notify UI of restored values
+                    OnPropertyChanged(nameof(SearchText));
+                    OnPropertyChanged(nameof(FilterStartDate));
+                    OnPropertyChanged(nameof(FilterEndDate));
+                }
+                catch
                 {
                     UserDailyLogs = new ObservableCollection<DailyLog>();
                     TotalLogEntries = 0;
@@ -1056,18 +1229,59 @@ namespace QuitSmartApp.ViewModels
                     HasMoreLogs = false;
                 }
             }
-            catch (Exception ex)
+        }
+
+        // Pagination methods
+        private void PreviousPage()
+        {
+            if (CanGoToPreviousPage())
             {
-                throw new Exception($"Lỗi khi tải nhật ký người dùng: {ex.Message}", ex);
+                CurrentPage--;
+                LoadCurrentPage();
             }
         }
 
-        private async void FilterLogsAsync()
+        private bool CanGoToPreviousPage()
         {
-            if (SelectedUserForDetails != null)
+            return CurrentPage > 1;
+        }
+
+        private void NextPage()
+        {
+            if (CanGoToNextPage())
             {
-                await LoadUserLogsAsync(SelectedUserForDetails.UserId);
+                CurrentPage++;
+                LoadCurrentPage();
             }
+        }
+
+        private bool CanGoToNextPage()
+        {
+            return CurrentPage < TotalPages;
+        }
+
+        private void LoadCurrentPage()
+        {
+            if (_allLogs?.Any() == true)
+            {
+                var skipCount = (CurrentPage - 1) * PAGE_SIZE;
+                var pageData = _allLogs.Skip(skipCount).Take(PAGE_SIZE).ToList();
+
+                UserDailyLogs = new ObservableCollection<DailyLog>(pageData);
+
+                // Update pagination status
+                HasMoreLogs = CurrentPage < TotalPages;
+
+                // Notify UI about pagination changes
+                OnPropertyChanged(nameof(PageInfo));
+                OnPropertyChanged(nameof(HasMoreLogs));
+            }
+        }
+
+        public void Dispose()
+        {
+            _searchTimer?.Stop();
+            _searchTimer = null;
         }
     }
 }

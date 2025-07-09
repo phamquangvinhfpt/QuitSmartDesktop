@@ -84,7 +84,6 @@ namespace QuitSmartApp.ViewModels
                 HealthTips = new ObservableCollection<HealthInfo>(
                     allHealthInfo.Where(h => h.InfoType == "Tips"));
 
-                // If no data from repository, load sample data
                 if (!SmokeEffects.Any() && !QuitBenefits.Any() && !HealthTips.Any())
                 {
                     LoadSampleData();
@@ -92,7 +91,6 @@ namespace QuitSmartApp.ViewModels
             }
             catch
             {
-                // Load sample data on error
                 LoadSampleData();
             }
             finally

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    // Authentication service interface for login/logout operations
     public interface IAuthenticationService
     {
         Task<bool> LoginUserAsync(string username, string password);

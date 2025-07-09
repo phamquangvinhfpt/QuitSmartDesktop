@@ -22,7 +22,7 @@ public partial class UserBadgeCollection
     // Computed properties for UI binding
     public bool IsEarned => EarnedAt.HasValue;
     
-    // Map icon names to emojis (same as BadgeDefinition)
+    // Map icon names to emojis
     public string Icon => GetIconEmoji(IconPath ?? "default");
     
     private static string GetIconEmoji(string iconName) => iconName.ToLower() switch
@@ -49,7 +49,7 @@ public partial class UserBadgeCollection
         _ => "🏅" // default fallback
     };
     
-    public double Progress => IsEarned ? 100.0 : 0.0;  // Simple demo logic
+    public double Progress => IsEarned ? 100.0 : 0.0;
     
     public string EarnedDate => EarnedAt?.ToString("dd/MM/yyyy") ?? "";
     

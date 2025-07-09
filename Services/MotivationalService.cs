@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    // Motivational service implementation for inspirational content operations
     public class MotivationalService : IMotivationalService
     {
         private readonly IMotivationalMessageRepository _motivationalMessageRepository;
@@ -34,7 +33,6 @@ namespace QuitSmartApp.Services
         {
             var statistics = await _userStatisticRepository.GetByUserIdAsync(userId);
             
-            // Customize message based on user progress
             string messageType = statistics?.CurrentStreak switch
             {
                 var s when s >= 30 => AppSettings.AchievementMessageType,

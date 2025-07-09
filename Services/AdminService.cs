@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    // Admin service implementation for administrative operations
     public class AdminService : IAdminService
     {
         private readonly IUserRepository _userRepository;

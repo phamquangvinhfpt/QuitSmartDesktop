@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services
 {
-    // User service implementation for user-related business operations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;

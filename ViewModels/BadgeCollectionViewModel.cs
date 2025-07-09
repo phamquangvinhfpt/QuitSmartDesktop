@@ -8,7 +8,6 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    // ViewModel for managing user badge collection
     public class BadgeCollectionViewModel : BaseViewModel
     {
         private readonly IBadgeService _badgeService;
@@ -86,7 +85,6 @@ namespace QuitSmartApp.ViewModels
 
                 if (_badgeService != null && _currentUserId != Guid.Empty)
                 {
-                    // Load user badges from database
                     var userBadges = await _badgeService.GetUserBadgeCollectionAsync(_currentUserId);
 
                     if (userBadges != null)
@@ -100,7 +98,6 @@ namespace QuitSmartApp.ViewModels
                         UserBadges = new ObservableCollection<UserBadgeCollection>();
                     }
 
-                    // Load available badges from database
                     var availableBadges = await _badgeService.GetAllAvailableBadgesAsync();
 
                     if (availableBadges != null)
@@ -115,7 +112,6 @@ namespace QuitSmartApp.ViewModels
                 }
                 else
                 {
-                    // No user or service available
                     UserBadges = new ObservableCollection<UserBadgeCollection>();
                     AvailableBadges = new ObservableCollection<BadgeDefinition>();
                 }
@@ -124,7 +120,6 @@ namespace QuitSmartApp.ViewModels
             }
             catch (Exception ex)
             {
-                // Handle error - log and show empty collections
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 UserBadges = new ObservableCollection<UserBadgeCollection>();
                 AvailableBadges = new ObservableCollection<BadgeDefinition>();

@@ -4,7 +4,6 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    // Implementation of ICommand for MVVM pattern
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
@@ -33,7 +32,7 @@ namespace QuitSmartApp.ViewModels
         }
     }
 
-    // Generic implementation of ICommand for MVVM pattern
+    // Generic implementation
     public class RelayCommand<T> : ICommand
     {
         private readonly Action<T> _execute;
@@ -62,7 +61,6 @@ namespace QuitSmartApp.ViewModels
         }
     }
 
-    // Async implementation of ICommand for MVVM pattern
     public class AsyncRelayCommand : ICommand
     {
         private readonly Func<Task> _execute;
@@ -103,7 +101,6 @@ namespace QuitSmartApp.ViewModels
         }
     }
 
-    // Generic async implementation of ICommand for MVVM pattern
     public class AsyncRelayCommand<T> : ICommand
     {
         private readonly Func<T, Task> _execute;

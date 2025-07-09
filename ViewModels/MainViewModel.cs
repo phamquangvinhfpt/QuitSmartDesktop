@@ -6,7 +6,6 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    // Main ViewModel for application navigation and state management
     public class MainViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;
@@ -237,7 +236,7 @@ namespace QuitSmartApp.ViewModels
                     adminViewModel.NavigateToGuest = () => NavigateToGuest();
                     adminViewModel.NavigateToUserDetails = (user) => NavigateToUserDetails(user, adminViewModel);
                     adminViewModel.NavigateToUserLogs = (user) => NavigateToUserLogs(user, adminViewModel);
-                    adminViewModel.NavigateToEditUser = (user) => NavigateToEditUser(user, adminViewModel);
+
                     adminViewModel.BackToDashboard = () => NavigateToAdmin();
 
                     CurrentViewModel = adminViewModel;
@@ -266,7 +265,6 @@ namespace QuitSmartApp.ViewModels
         {
             CurrentView = "UserDetails";
 
-            // Create a wrapper ViewModel that contains both the view type and admin view model
             var wrapper = new AdminViewWrapper
             {
                 ViewType = "UserDetails",
@@ -291,19 +289,7 @@ namespace QuitSmartApp.ViewModels
             CurrentViewModel = wrapper;
         }
 
-        private void NavigateToEditUser(UserOverview user, AdminDashboardViewModel adminViewModel)
-        {
-            CurrentView = "EditUser";
 
-            var wrapper = new AdminViewWrapper
-            {
-                ViewType = "EditUser",
-                AdminViewModel = adminViewModel,
-                SelectedUser = user
-            };
-
-            CurrentViewModel = wrapper;
-        }
 
         private async void Logout()
         {
@@ -321,7 +307,6 @@ namespace QuitSmartApp.ViewModels
         }
     }
 
-    // Wrapper ViewModel for Admin sub-views
     public class AdminViewWrapper : BaseViewModel
     {
         public string ViewType { get; set; } = string.Empty;

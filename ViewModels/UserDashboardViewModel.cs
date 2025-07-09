@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace QuitSmartApp.ViewModels
 {
-    // ViewModel for User Dashboard displaying statistics and motivation
     public class UserDashboardViewModel : BaseViewModel
     {
         private readonly IUserService _userService;
@@ -15,7 +14,7 @@ namespace QuitSmartApp.ViewModels
         private readonly IMotivationalService _motivationalService;
         private readonly IAuthenticationService _authenticationService;
 
-        // Navigation actions - can be set after construction
+        // Navigation actions
         public Action? NavigateToHealthInfo { get; set; }
         public Action? NavigateToDailyTracking { get; set; }
         public Action? NavigateToBadges { get; set; }
@@ -141,22 +140,17 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
-                    // Load user profile first
                     UserProfile = await _userService.GetUserProfileAsync(userId);
 
-                    // Force refresh statistics if user has profile
                     if (UserProfile != null)
                     {
                         await _userService.RefreshUserStatisticsAsync(userId);
                     }
 
-                    // Load user statistics after refresh
                     UserStatistics = await _userService.GetUserStatisticsAsync(userId);
 
-                    // Load daily motivation
                     DailyMotivation = await _motivationalService.GetPersonalizedMessageAsync(userId);
 
-                    // Set welcome message and date
                     WelcomeMessage = $"Chào mừng {_authenticationService.CurrentUsername} quay lại!";
                     TodayDate = DateTime.Today.ToString("dddd, dd MMMM yyyy");
 
@@ -192,7 +186,7 @@ namespace QuitSmartApp.ViewModels
 
         private void ViewStats()
         {
-            // Navigate to detailed statistics view (using daily tracking for now)
+            // Navigate to detailed statistics view
             NavigateToDailyTracking?.Invoke();
         }
 

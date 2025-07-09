@@ -76,7 +76,7 @@
                     <Style TargetType="ContentControl">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ViewType}"
-                                    Value="UserDetails">
+                                         Value="UserDetails">
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
@@ -86,7 +86,7 @@
                                 </Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ViewType}"
-                                    Value="UserLogs">
+                                         Value="UserLogs">
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
@@ -95,16 +95,7 @@
                                     </Setter.Value>
                                 </Setter>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewType}"
-                                    Value="EditUser">
-                                <Setter Property="ContentTemplate">
-                                    <Setter.Value>
-                                        <DataTemplate>
-                                            <views:EditUserView/>
-                                        </DataTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
+
                         </Style.Triggers>
                     </Style>
                 </ContentControl.Style>

@@ -260,7 +260,7 @@ namespace QuitSmartApp.Converters
                 var points = dataPoints.Select(p => $"{p.X},{p.Y}");
                 return string.Join(" ", points);
             }
-            return "0,200 100,150 200,100 300,80 400,60"; // Fallback to sample data
+            return "0,200 100,150 200,100 300,80 400,60";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

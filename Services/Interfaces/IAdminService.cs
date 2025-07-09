@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    // Admin service interface for administrative operations
     public interface IAdminService
     {
         // User management
@@ -21,7 +20,7 @@ namespace QuitSmartApp.Services.Interfaces
         Task LogAdminActionAsync(Guid adminId, string action, Guid? targetUserId = null, string? details = null);
         Task<IEnumerable<AdminLog>> GetAdminLogsAsync(Guid? adminId = null);
         
-        // Dashboard data
+        // Dashboard
         Task<object> GetAdminDashboardDataAsync();
     }
 }

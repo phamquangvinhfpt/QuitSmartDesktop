@@ -10,10 +10,8 @@ using System;
 
 namespace QuitSmartApp.Configuration
 {
-    // Dependency injection configuration for the application
     public static class ServiceConfiguration
     {
-        // Configure all application services and repositories
         public static IServiceCollection ConfigureServices(this IServiceCollection services, string connectionString)
         {
             // Database context
@@ -32,7 +30,7 @@ namespace QuitSmartApp.Configuration
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAdminLogRepository, AdminLogRepository>();
 
-            // Services - Note: Order matters due to dependencies
+            // Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IBadgeService, BadgeService>();
             services.AddScoped<IUserService, UserService>();

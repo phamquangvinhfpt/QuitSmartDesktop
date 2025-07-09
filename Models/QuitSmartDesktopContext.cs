@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using QuitSmartApp.Configuration;
 
 namespace QuitSmartApp.Models;
 
@@ -42,7 +43,7 @@ public partial class QuitSmartDesktopContext : DbContext
     public virtual DbSet<UserStatistic> UserStatistics { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=QuitSmartDesktop;User Id=sa;Password=12345;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer(AppSettings.DefaultConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace QuitSmartApp.ViewModels
 {
-    // ViewModel for Daily Tracking view handling daily logs
     public class DailyTrackingViewModel : BaseViewModel
     {
         private readonly IUserService _userService;
@@ -257,7 +256,6 @@ namespace QuitSmartApp.ViewModels
             }
             catch
             {
-                // Handle error silently for refresh
             }
         }
 

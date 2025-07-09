@@ -5,7 +5,6 @@ using System.Windows.Input;
 
 namespace QuitSmartApp.ViewModels
 {
-    // ViewModel for ChangePassword view handling password change functionality
     public class ChangePasswordViewModel : BaseViewModel
     {
         private readonly IAuthenticationService _authenticationService;

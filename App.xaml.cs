@@ -91,7 +91,7 @@ namespace QuitSmartApp
                         AdminId = Guid.NewGuid(),
                         Username = "admin",
                         Email = "admin@quitsmart.com",
-                        PasswordHash = Helpers.PasswordHelper.HashPassword("admin123"),
+                        PasswordHash = Helpers.PasswordHelper.HashPassword("123Pa$$word!"),
                         FullName = "Administrator",
                         IsActive = true,
                         CreatedAt = DateTime.UtcNow,

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    // Motivational service interface for inspirational content operations
     public interface IMotivationalService
     {
         Task<MotivationalMessage?> GetDailyMotivationAsync();

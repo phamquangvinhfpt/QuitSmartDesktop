@@ -849,18 +849,6 @@
                                                                                                         Style="{StaticResource ActionButtonStyle}"
                                                                                                         Command="{Binding DataContext.OpenUserLogsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                                                                         CommandParameter="{Binding}"/>
-                                                                                                <Button Content="✏️ Sửa"
-                                                                                                        Background="DarkOrange"
-                                                                                                        Foreground="{DynamicResource SystemControlHighlightTextBrush}"
-                                                                                                        Style="{StaticResource ActionButtonStyle}"
-                                                                                                        Command="{Binding DataContext.OpenEditUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                                                                        CommandParameter="{Binding}"/>
-                                                                                                <Button Content="🗑️ Xóa"
-                                                                                                        Background="DarkRed"
-                                                                                                        Foreground="{DynamicResource SystemControlHighlightTextBrush}"
-                                                                                                        Style="{StaticResource ActionButtonStyle}"
-                                                                                                        Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                                                                        CommandParameter="{Binding}"/>
                                                                                         </StackPanel>
                                                                                 </DataTemplate>
                                                                         </DataGridTemplateColumn.CellTemplate>

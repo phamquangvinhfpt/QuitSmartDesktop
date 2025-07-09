@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 
 namespace QuitSmartApp.ViewModels
 {
-    // Base ViewModel implementing INotifyPropertyChanged for data binding
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;

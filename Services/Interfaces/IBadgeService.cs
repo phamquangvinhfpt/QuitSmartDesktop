@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    // Badge service interface for achievement system operations
     public interface IBadgeService
     {
         Task<IEnumerable<UserBadgeCollection>> GetUserBadgeCollectionAsync(Guid userId);

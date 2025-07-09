@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace QuitSmartApp.ViewModels
 {
-    // ViewModel for Profile view handling user profile management
     public class ProfileViewModel : BaseViewModel
     {
         private readonly IUserService _userService;
@@ -250,10 +249,8 @@ namespace QuitSmartApp.ViewModels
                 {
                     var userId = _authenticationService.CurrentUserId.Value;
 
-                    // Load basic user info from authentication service
                     Username = _authenticationService.CurrentUsername ?? string.Empty;
 
-                    // Load user from database to get email and other info
                     try
                     {
                         var user = await _userService.GetUserAsync(userId);
@@ -267,7 +264,6 @@ namespace QuitSmartApp.ViewModels
                     }
                     catch (Exception)
                     {
-                        // If user lookup fails, at least set email from auth service
                         Email = _authenticationService.CurrentUsername ?? string.Empty;
                     }
 
@@ -357,7 +353,6 @@ namespace QuitSmartApp.ViewModels
                         user.FullName = FullName;
                         user.DateOfBirth = DateOfBirth.HasValue ? DateOnly.FromDateTime(DateOfBirth.Value) : null;
                         user.Gender = Gender;
-                        // Note: Username and Email are not editable in this view
                         await _userService.UpdateUserAsync(user);
                     }
 
@@ -469,7 +464,6 @@ namespace QuitSmartApp.ViewModels
 
             if (result == System.Windows.MessageBoxResult.Yes)
             {
-                // TODO: Implement delete account functionality
                 System.Windows.MessageBox.Show("Chức năng xóa tài khoản sẽ được triển khai trong phiên bản tiếp theo.",
                     "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }

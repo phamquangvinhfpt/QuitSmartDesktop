@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace QuitSmartApp.Services.Interfaces
 {
-    // User service interface for user-related business operations
     public interface IUserService
     {
         // User management
@@ -24,7 +23,7 @@ namespace QuitSmartApp.Services.Interfaces
         Task<IEnumerable<DailyLog>> GetUserDailyLogsAsync(Guid userId, int? days = null);
         Task<DailyLog?> GetTodayLogAsync(Guid userId);
 
-        // Dashboard data
+        // Dashboard
         Task<object> GetUserDashboardDataAsync(Guid userId);
     }
 }

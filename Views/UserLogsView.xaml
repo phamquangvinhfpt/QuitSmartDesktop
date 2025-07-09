@@ -171,6 +171,19 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Export Button -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,16,0,16">
+                    <Button Content="📈 Xuất báo cáo"
+                            Background="#F39C12"
+                            Foreground="White"
+                            Padding="16,8"
+                            Cursor="Hand"
+                            FontSize="14"
+                            Command="{Binding ExportLogsCommand}"/>
+                </StackPanel>
+
                 <!-- Statistics Summary -->
                 <Grid Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
@@ -325,7 +338,40 @@
                             </ItemsControl>
                         </ScrollViewer>
 
-                        <!-- Load More Button -->
+                        <!-- Pagination Controls -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,16,0,0">
+                            <!-- Previous Page Button -->
+                            <Button Content="⬅️ Trang trước"
+                                    Background="#6C7B7F"
+                                    Foreground="White"
+                                    Cursor="Hand"
+                                    Padding="12,8"
+                                    FontSize="14"
+                                    Margin="0,0,8,0"
+                                    Command="{Binding PreviousPageCommand}"/>
+
+                            <!-- Page Info -->
+                            <TextBlock Text="{Binding PageInfo}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
+                                       Margin="12,0,12,0"/>
+
+                            <!-- Next Page Button -->
+                            <Button Content="Trang sau ➡️"
+                                    Background="#6C7B7F"
+                                    Foreground="White"
+                                    Cursor="Hand"
+                                    Padding="12,8"
+                                    FontSize="14"
+                                    Margin="8,0,0,0"
+                                    Command="{Binding NextPageCommand}"/>
+                        </StackPanel>
+
+                        <!-- Legacy Load More Button (for compatibility) -->
                         <Button Content="📄 Tải thêm bản ghi"
                                 Background="#95A5A6"
                                 Foreground="White"
@@ -333,40 +379,11 @@
                                 Padding="12,8"
                                 FontSize="14"
                                 HorizontalAlignment="Center"
-                                Margin="0,16,0,0"
+                                Margin="0,8,0,0"
                                 Command="{Binding LoadMoreLogsCommand}"
                                 Visibility="{Binding HasMoreLogs, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </StackPanel>
                 </Border>
-
-                <!-- Action Buttons -->
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            Margin="0,20,0,0">
-                    <Button Content="📊 Xem chi tiết"
-                            Cursor="Hand"
-                            Background="#3498DB"
-                            Foreground="White"
-                            Padding="16,8"
-                            FontSize="14"
-                            Margin="0,0,12,0"
-                            Command="{Binding ViewUserDetailsCommand}"/>
-                    <Button Content="📝 Chỉnh sửa"
-                            Background="#27AE60"
-                            Foreground="White"
-                            Padding="16,8"
-                            Cursor="Hand"
-                            FontSize="14"
-                            Margin="0,0,12,0"
-                            Command="{Binding EditUserCommand}"/>
-                    <Button Content="📈 Xuất báo cáo"
-                            Background="#F39C12"
-                            Foreground="White"
-                            Padding="16,8"
-                            Cursor="Hand"
-                            FontSize="14"
-                            Command="{Binding ExportLogsCommand}"/>
-                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
