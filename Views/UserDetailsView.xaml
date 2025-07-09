@@ -9,292 +9,296 @@
              d:DesignWidth="900"
              Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
-    <UserControl.Resources>
-        <!-- Converters -->
-        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
-        <converters:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
-        <converters:MoneyFormatConverter x:Key="MoneyFormatConverter"/>
-        <converters:DateFormatConverter x:Key="DateFormatConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <UserControl.Resources>
+                <!-- Converters -->
+                <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+                <converters:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
+                <converters:MoneyFormatConverter x:Key="MoneyFormatConverter"/>
+                <converters:DateFormatConverter x:Key="DateFormatConverter"/>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-        <Style x:Key="DetailCardStyle"
-               TargetType="Border">
-            <Setter Property="Background"
-                    Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-            <Setter Property="BorderBrush"
-                    Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
-            <Setter Property="BorderThickness"
-                    Value="1"/>
-            <Setter Property="CornerRadius"
-                    Value="12"/>
-            <Setter Property="Padding"
-                    Value="20"/>
-            <Setter Property="Margin"
-                    Value="8"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="Gray"
-                                      Direction="270"
-                                      ShadowDepth="3"
-                                      BlurRadius="10"
-                                      Opacity="0.3"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                <Style x:Key="DetailCardStyle"
+                       TargetType="Border">
+                        <Setter Property="Background"
+                                Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+                        <Setter Property="BorderThickness"
+                                Value="1"/>
+                        <Setter Property="CornerRadius"
+                                Value="12"/>
+                        <Setter Property="Padding"
+                                Value="20"/>
+                        <Setter Property="Margin"
+                                Value="8"/>
+                        <Setter Property="Effect">
+                                <Setter.Value>
+                                        <DropShadowEffect Color="Gray"
+                                                          Direction="270"
+                                                          ShadowDepth="3"
+                                                          BlurRadius="10"
+                                                          Opacity="0.3"/>
+                                </Setter.Value>
+                        </Setter>
+                </Style>
 
-        <Style x:Key="HeaderTextStyle"
-               TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="24"/>
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-            <Setter Property="Foreground"
-                    Value="#2C3E50"/>
-            <Setter Property="Margin"
-                    Value="0,0,0,20"/>
-        </Style>
+                <Style x:Key="HeaderTextStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="24"/>
+                        <Setter Property="FontWeight"
+                                Value="SemiBold"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                        <Setter Property="Margin"
+                                Value="0,0,0,20"/>
+                </Style>
 
-        <Style x:Key="LabelTextStyle"
-               TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="14"/>
-            <Setter Property="FontWeight"
-                    Value="Medium"/>
-            <Setter Property="Foreground"
-                    Value="#7F8C8D"/>
-            <Setter Property="Margin"
-                    Value="0,8,0,4"/>
-        </Style>
+                <Style x:Key="LabelTextStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="14"/>
+                        <Setter Property="FontWeight"
+                                Value="Medium"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                        <Setter Property="Margin"
+                                Value="0,8,0,4"/>
+                </Style>
 
-        <Style x:Key="ValueTextStyle"
-               TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="16"/>
-            <Setter Property="FontWeight"
-                    Value="Normal"/>
-            <Setter Property="Foreground"
-                    Value="#2C3E50"/>
-            <Setter Property="Margin"
-                    Value="0,0,0,8"/>
-        </Style>
-    </UserControl.Resources>
+                <Style x:Key="ValueTextStyle"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="16"/>
+                        <Setter Property="FontWeight"
+                                Value="Normal"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                        <Setter Property="Margin"
+                                Value="0,0,0,8"/>
+                </Style>
+        </UserControl.Resources>
 
-    <Grid>
-        <ScrollViewer>
-            <StackPanel MaxWidth="800"
-                        Margin="24,20">
+        <Grid>
+                <ScrollViewer Margin="0,0,0,-194">
+                        <StackPanel MaxWidth="800"
+                                    Margin="24,20">
 
-                <!-- Header -->
-                <StackPanel Margin="0,0,0,24">
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0,0,0,16">
-                        <TextBlock Text="👤"
-                                   FontSize="32"
-                                   Margin="0,0,16,0"/>
-                        <TextBlock Text="Chi Tiết Người Dùng"
-                                   Style="{StaticResource HeaderTextStyle}"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
+                                <!-- Header -->
+                                <StackPanel Margin="0,0,0,24">
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    Margin="0,0,0,16">
+                                                <TextBlock Text="👤"
+                                                           FontSize="32"
+                                                           Margin="0,0,16,0"/>
+                                                <TextBlock Text="Chi Tiết Người Dùng"
+                                                           Style="{StaticResource HeaderTextStyle}"
+                                                           VerticalAlignment="Center"/>
+                                        </StackPanel>
 
-                    <Button Content="← Quay lại Dashboard"
-                            Background="#3498DB"
-                            Foreground="White"
-                            Padding="12,8"
-                            FontSize="14"
-                            HorizontalAlignment="Center"
-                            Command="{Binding BackToDashboardCommand}"/>
-                </StackPanel>
-
-                <!-- User Information Cards -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Basic Information -->
-                    <Border Grid.Column="0"
-                            Style="{StaticResource DetailCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="📋 Thông Tin Cơ Bản"
-                                       FontSize="18"
-                                       FontWeight="SemiBold"
-                                       Foreground="#3498DB"
-                                       Margin="0,0,0,16"/>
-
-                            <TextBlock Text="Họ và tên:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.FullName}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Tên đăng nhập:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.Username}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Email:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.Email}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Giới tính:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.Gender}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Trạng thái:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Width="10"
-                                         Height="10"
-                                         VerticalAlignment="Center"
-                                         Margin="0,0,8,0">
-                                    <Ellipse.Fill>
-                                        <SolidColorBrush Color="{Binding SelectedUser.IsActive, Converter={StaticResource BoolToColorConverter}}"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock Text="{Binding SelectedUser.IsActive, Converter={StaticResource BoolToStatusConverter}}"
-                                           Style="{StaticResource ValueTextStyle}"
-                                           Margin="0"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Statistics -->
-                    <Border Grid.Column="1"
-                            Style="{StaticResource DetailCardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="📊 Thống Kê Cai Thuốc"
-                                       FontSize="18"
-                                       FontWeight="SemiBold"
-                                       Foreground="#E74C3C"
-                                       Margin="0,0,0,16"/>
-
-                            <TextBlock Text="Ngày bắt đầu cai:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.QuitStartDate, StringFormat='dd/MM/yyyy'}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Số ngày đã cai:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding SelectedUser.TotalDaysQuit}"
-                                           FontSize="24"
-                                           FontWeight="Bold"
-                                           Foreground="#27AE60"
-                                           VerticalAlignment="Center"/>
-                                <TextBlock Text=" ngày"
-                                           Style="{StaticResource ValueTextStyle}"
-                                           VerticalAlignment="Center"
-                                           Margin="4,0,0,0"/>
-                            </StackPanel>
-
-                            <TextBlock Text="Tiền tiết kiệm được:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding SelectedUser.TotalMoneySaved, StringFormat='{}{0:N0}'}"
-                                           FontSize="20"
-                                           FontWeight="Bold"
-                                           Foreground="#F39C12"
-                                           VerticalAlignment="Center"/>
-                                <TextBlock Text=" VNĐ"
-                                           Style="{StaticResource ValueTextStyle}"
-                                           VerticalAlignment="Center"
-                                           Margin="4,0,0,0"/>
-                            </StackPanel>
-
-                            <TextBlock Text="Chuỗi ngày hiện tại:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.CurrentStreak, StringFormat='{}{0} ngày'}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-
-                            <TextBlock Text="Chuỗi ngày dài nhất:"
-                                       Style="{StaticResource LabelTextStyle}"/>
-                            <TextBlock Text="{Binding SelectedUser.LongestStreak, StringFormat='{}{0} ngày'}"
-                                       Style="{StaticResource ValueTextStyle}"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <!-- Account Information -->
-                <Border Style="{StaticResource DetailCardStyle}"
-                        Margin="8,16,8,8">
-                    <StackPanel>
-                        <TextBlock Text="🔐 Thông Tin Tài Khoản"
-                                   FontSize="18"
-                                   FontWeight="SemiBold"
-                                   Foreground="#9B59B6"
-                                   Margin="0,0,0,16"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Ngày tạo tài khoản:"
-                                           Style="{StaticResource LabelTextStyle}"/>
-                                <TextBlock Text="{Binding SelectedUser.CreatedAt, StringFormat='dd/MM/yyyy HH:mm:ss'}"
-                                           Style="{StaticResource ValueTextStyle}"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="User ID:"
-                                           Style="{StaticResource LabelTextStyle}"/>
-                                <TextBlock Text="{Binding SelectedUser.UserId}"
-                                           Style="{StaticResource ValueTextStyle}"
-                                           FontFamily="Consolas"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Số huy hiệu:"
-                                           Style="{StaticResource LabelTextStyle}"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🏆"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"
-                                               Margin="0,0,4,0"/>
-                                    <TextBlock Text="{Binding SelectedUser.TotalBadges}"
-                                               FontSize="18"
-                                               FontWeight="Bold"
-                                               Foreground="#F39C12"
-                                               VerticalAlignment="Center"/>
+                                        <Button Content="← Quay lại Dashboard"
+                                                Background="#3498DB"
+                                                Foreground="White"
+                                                Padding="12,8"
+                                                Cursor="Hand"
+                                                FontSize="14"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding BackToDashboardCommand}"/>
                                 </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
 
-                <!-- Action Buttons -->
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            Margin="0,20,0,0">
-                    <Button Content="📝 Chỉnh sửa"
-                            Background="#3498DB"
-                            Foreground="White"
-                            Padding="16,8"
-                            FontSize="14"
-                            Margin="0,0,12,0"
-                            Command="{Binding EditUserCommand}"/>
-                    <Button Content="📋 Xem nhật ký"
-                            Background="#27AE60"
-                            Foreground="White"
-                            Padding="16,8"
-                            FontSize="14"
-                            Margin="0,0,12,0"
-                            Command="{Binding ViewUserLogsCommand}"/>
-                    <Button Content="🗑️ Xóa người dùng"
-                            Background="#E74C3C"
-                            Foreground="White"
-                            Padding="16,8"
-                            FontSize="14"
-                            Command="{Binding DeleteUserCommand}"/>
-                </StackPanel>
+                                <!-- User Information Cards -->
+                                <Grid>
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
 
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                                        <!-- Basic Information -->
+                                        <Border Grid.Column="0"
+                                                Style="{StaticResource DetailCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="📋 Thông Tin Cơ Bản"
+                                                                   FontSize="18"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="#3498DB"
+                                                                   Margin="0,0,0,16"/>
+
+                                                        <TextBlock Text="Họ và tên:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.FullName}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Tên đăng nhập:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.Username}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Email:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.Email}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Giới tính:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.Gender}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Trạng thái:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                                <Ellipse Width="10"
+                                                                         Height="10"
+                                                                         VerticalAlignment="Center"
+                                                                         Margin="0,0,8,0">
+                                                                        <Ellipse.Fill>
+                                                                                <SolidColorBrush Color="{Binding SelectedUserForDetails.IsActive, Converter={StaticResource BoolToColorConverter}}"/>
+                                                                        </Ellipse.Fill>
+                                                                </Ellipse>
+                                                                <TextBlock Text="{Binding SelectedUserForDetails.IsActive, Converter={StaticResource BoolToStatusConverter}}"
+                                                                           Style="{StaticResource ValueTextStyle}"
+                                                                           Margin="0"/>
+                                                        </StackPanel>
+                                                </StackPanel>
+                                        </Border>
+
+                                        <!-- Statistics -->
+                                        <Border Grid.Column="1"
+                                                Style="{StaticResource DetailCardStyle}">
+                                                <StackPanel>
+                                                        <TextBlock Text="📊 Thống Kê Cai Thuốc"
+                                                                   FontSize="18"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="#E74C3C"
+                                                                   Margin="0,0,0,16"/>
+
+                                                        <TextBlock Text="Ngày bắt đầu cai:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.QuitStartDate, StringFormat='dd/MM/yyyy'}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Số ngày đã cai:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding SelectedUserForDetails.TotalDaysQuit}"
+                                                                           FontSize="24"
+                                                                           FontWeight="Bold"
+                                                                           Foreground="#27AE60"
+                                                                           VerticalAlignment="Center"/>
+                                                                <TextBlock Text=" ngày"
+                                                                           Style="{StaticResource ValueTextStyle}"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="4,0,0,0"/>
+                                                        </StackPanel>
+
+                                                        <TextBlock Text="Tiền tiết kiệm được:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding SelectedUserForDetails.TotalMoneySaved, StringFormat='{}{0:N0}'}"
+                                                                           FontSize="20"
+                                                                           FontWeight="Bold"
+                                                                           Foreground="#F39C12"
+                                                                           VerticalAlignment="Center"/>
+                                                                <TextBlock Text=" VNĐ"
+                                                                           Style="{StaticResource ValueTextStyle}"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="4,0,0,0"/>
+                                                        </StackPanel>
+
+                                                        <TextBlock Text="Chuỗi ngày hiện tại:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.CurrentStreak, StringFormat='{}{0} ngày'}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+
+                                                        <TextBlock Text="Chuỗi ngày dài nhất:"
+                                                                   Style="{StaticResource LabelTextStyle}"/>
+                                                        <TextBlock Text="{Binding SelectedUserForDetails.LongestStreak, StringFormat='{}{0} ngày'}"
+                                                                   Style="{StaticResource ValueTextStyle}"/>
+                                                </StackPanel>
+                                        </Border>
+                                </Grid>
+
+                                <!-- Account Information -->
+                                <Border Style="{StaticResource DetailCardStyle}"
+                                        Margin="8,16,8,8">
+                                        <StackPanel>
+                                                <TextBlock Text="🔐 Thông Tin Tài Khoản"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="#9B59B6"
+                                                           Margin="0,0,0,16"/>
+
+                                                <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0">
+                                                                <TextBlock Text="Ngày tạo tài khoản:"
+                                                                           Style="{StaticResource LabelTextStyle}"/>
+                                                                <TextBlock Text="{Binding SelectedUserForDetails.CreatedAt, StringFormat='dd/MM/yyyy HH:mm:ss'}"
+                                                                           Style="{StaticResource ValueTextStyle}"/>
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1">
+                                                                <TextBlock Text="Số huy hiệu:"
+                                                                           Style="{StaticResource LabelTextStyle}"/>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="🏆"
+                                                                                   FontSize="16"
+                                                                                   VerticalAlignment="Center"
+                                                                                   Margin="0,0,8,0"/>
+                                                                        <TextBlock Text="{Binding SelectedUserForDetails.TotalBadges}"
+                                                                                   Style="{StaticResource ValueTextStyle}"
+                                                                                   FontSize="18"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="#F39C12"
+                                                                                   Margin="0"/>
+                                                                </StackPanel>
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="2">
+                                                                <TextBlock Text="Tổng số Badge đã đạt:"
+                                                                           Style="{StaticResource LabelTextStyle}"/>
+                                                                <TextBlock Text="{Binding SelectedUserForDetails.TotalBadges, StringFormat='{}{0} huy hiệu'}"
+                                                                           Style="{StaticResource ValueTextStyle}"/>
+                                                        </StackPanel>
+                                                </Grid>
+                                        </StackPanel>
+                                </Border>
+
+                                <!-- Action Buttons -->
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,20,0,0">
+                                        <Button Content="📝 Chỉnh sửa"
+                                                Background="#3498DB"
+                                                Foreground="White"
+                                                Cursor="Hand"
+                                                Padding="16,8"
+                                                FontSize="14"
+                                                Margin="0,0,12,0"
+                                                Command="{Binding EditUserCommand}"/>
+                                        <Button Content="📋 Xem nhật ký"
+                                                Background="#27AE60"
+                                                Foreground="White"
+                                                Cursor="Hand"
+                                                Padding="16,8"
+                                                FontSize="14"
+                                                Margin="0,0,12,0"
+                                                Command="{Binding ViewUserLogsCommand}"/>
+                                        <!--<Button Content="🗑️ Xóa người dùng"
+                                                Background="#E74C3C"
+                                                Foreground="White"
+                                                Cursor="Hand"
+                                                Padding="16,8"
+                                                FontSize="14"
+                                                Command="{Binding DeleteUserCommand}"/>-->
+                                </StackPanel>
+
+                        </StackPanel>
+                </ScrollViewer>
+        </Grid>
 </UserControl> 

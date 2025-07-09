@@ -49,7 +49,7 @@
             <Setter Property="FontWeight"
                     Value="SemiBold"/>
             <Setter Property="Foreground"
-                    Value="#2C3E50"/>
+                    Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="Margin"
                     Value="0,0,0,20"/>
         </Style>
@@ -93,10 +93,10 @@
                                    VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <TextBlock Text="{Binding SelectedUser.FullName, StringFormat='Nhật ký của: {0}'}"
+                    <TextBlock Text="{Binding SelectedUserForDetails.FullName, StringFormat='Nhật ký của: {0}'}"
                                FontSize="16"
                                HorizontalAlignment="Center"
-                               Foreground="#7F8C8D"
+                               Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
                                Margin="0,0,0,16"/>
 
                     <Button Content="← Quay lại Dashboard"
@@ -192,7 +192,7 @@
                             <TextBlock Text="Tổng bản ghi"
                                        FontSize="12"
                                        HorizontalAlignment="Center"
-                                       Foreground="#7F8C8D"/>
+                                       Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
                         </StackPanel>
                     </Border>
 
@@ -210,7 +210,7 @@
                             <TextBlock Text="Ngày thành công"
                                        FontSize="12"
                                        HorizontalAlignment="Center"
-                                       Foreground="#7F8C8D"/>
+                                       Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
                         </StackPanel>
                     </Border>
 
@@ -228,7 +228,7 @@
                             <TextBlock Text="Ngày thất bại"
                                        FontSize="12"
                                        HorizontalAlignment="Center"
-                                       Foreground="#7F8C8D"/>
+                                       Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
                         </StackPanel>
                     </Border>
 
@@ -246,7 +246,7 @@
                             <TextBlock Text="Tỷ lệ thành công"
                                        FontSize="12"
                                        HorizontalAlignment="Center"
-                                       Foreground="#7F8C8D"/>
+                                       Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -257,7 +257,7 @@
                         <TextBlock Text="📝 Chi Tiết Nhật Ký"
                                    FontSize="18"
                                    FontWeight="SemiBold"
-                                   Foreground="#2C3E50"
+                                   Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
                                    Margin="0,0,0,16"/>
 
                         <ScrollViewer MaxHeight="400">
@@ -306,7 +306,7 @@
                                                     <TextBlock Text="{Binding Notes, StringFormat='Ghi chú: {0}'}"
                                                                FontSize="12"
                                                                FontStyle="Italic"
-                                                               Foreground="#7F8C8D"
+                                                               Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
                                                                TextWrapping="Wrap"
                                                                Visibility="{Binding Notes, Converter={StaticResource StringToVisibilityConverter}}"/>
                                                 </StackPanel>

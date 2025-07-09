@@ -19,6 +19,8 @@
                                          x:Key="PieSliceConverter"/>
                 <local:BoolToStatusConverter xmlns:local="clr-namespace:QuitSmartApp.Converters"
                                              x:Key="BoolToStatusConverter"/>
+                <local:LineChartPointsConverter xmlns:local="clr-namespace:QuitSmartApp.Converters"
+                                                x:Key="LineChartPointsConverter"/>
 
                 <!-- Theme-aware Color Resources -->
                 <SolidColorBrush x:Key="PrimaryBrush"
@@ -395,7 +397,7 @@
                                         <StackPanel Orientation="Horizontal"
                                                     HorizontalAlignment="Center">
                                                 <Button Content="🔄 Làm mới dữ liệu"
-                                                        Background="{DynamicResource SystemAccentBrush}"
+                                                        Background="#3498DB"
                                                         Foreground="White"
                                                         Style="{StaticResource ActionButtonStyle}"
                                                         Padding="20,10"
@@ -432,7 +434,7 @@
                                                                    Margin="0,0,0,8"/>
                                                         <TextBlock Text="{Binding TotalUsers}"
                                                                    Style="{StaticResource StatValueStyle}"
-                                                                   Foreground="{DynamicResource SystemAccentBrush}"/>
+                                                                   Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
                                                         <TextBlock Text="Tổng người dùng"
                                                                    Style="{StaticResource StatLabelStyle}"/>
                                                 </StackPanel>
@@ -611,7 +613,7 @@
                                                                            Style="{StaticResource ChartTitleStyle}"
                                                                            Foreground="{StaticResource DangerBrush}"/>
 
-                                                                <Canvas Height="200"
+                                                                <Canvas Height="240"
                                                                         Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
                                                                         Margin="0,10">
                                                                         <!-- Grid Lines -->
@@ -634,42 +636,89 @@
                                                                               Stroke="{StaticResource ChartGridBrush}"
                                                                               StrokeThickness="1"/>
 
-                                                                        <!-- Sample Line Chart -->
-                                                                        <Polyline Points="0,150 100,120 200,80 300,60 400,40"
+                                                                        <!-- Real Data Line Chart -->
+                                                                        <Polyline Points="{Binding SuccessRateLineChartData, Converter={StaticResource LineChartPointsConverter}}"
                                                                                   Stroke="{StaticResource DangerBrush}"
                                                                                   StrokeThickness="3"
                                                                                   Fill="Transparent"/>
 
-                                                                        <!-- Data Points -->
-                                                                        <Ellipse Canvas.Left="95"
-                                                                                 Canvas.Top="115"
-                                                                                 Width="10"
-                                                                                 Height="10"
-                                                                                 Fill="{StaticResource DangerBrush}"/>
-                                                                        <Ellipse Canvas.Left="195"
-                                                                                 Canvas.Top="75"
-                                                                                 Width="10"
-                                                                                 Height="10"
-                                                                                 Fill="{StaticResource DangerBrush}"/>
-                                                                        <Ellipse Canvas.Left="295"
-                                                                                 Canvas.Top="55"
-                                                                                 Width="10"
-                                                                                 Height="10"
-                                                                                 Fill="{StaticResource DangerBrush}"/>
-                                                                        <Ellipse Canvas.Left="395"
-                                                                                 Canvas.Top="35"
-                                                                                 Width="10"
-                                                                                 Height="10"
-                                                                                 Fill="{StaticResource DangerBrush}"/>
+                                                                        <!-- Real Data Points -->
+                                                                        <ItemsControl ItemsSource="{Binding SuccessRateLineChartData}">
+                                                                                <ItemsControl.ItemsPanel>
+                                                                                        <ItemsPanelTemplate>
+                                                                                                <Canvas/>
+                                                                                        </ItemsPanelTemplate>
+                                                                                </ItemsControl.ItemsPanel>
+                                                                                <ItemsControl.ItemContainerStyle>
+                                                                                        <Style TargetType="ContentPresenter">
+                                                                                                <Setter Property="Canvas.Left"
+                                                                                                        Value="{Binding X}"/>
+                                                                                                <Setter Property="Canvas.Top"
+                                                                                                        Value="{Binding Y}"/>
+                                                                                        </Style>
+                                                                                </ItemsControl.ItemContainerStyle>
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                        <DataTemplate>
+                                                                                                <StackPanel>
+                                                                                                        <Ellipse Width="10"
+                                                                                                                 Height="10"
+                                                                                                                 Fill="{StaticResource DangerBrush}"
+                                                                                                                 Margin="-5,-5,0,0"/>
+                                                                                                        <TextBlock Text="{Binding Value}"
+                                                                                                                   FontSize="9"
+                                                                                                                   FontWeight="Bold"
+                                                                                                                   Foreground="{StaticResource DangerBrush}"
+                                                                                                                   HorizontalAlignment="Center"
+                                                                                                                   Margin="0,-20,0,0"/>
+                                                                                                </StackPanel>
+                                                                                        </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                        </ItemsControl>
+
+                                                                        <!-- X-Axis Labels -->
+                                                                        <ItemsControl ItemsSource="{Binding SuccessRateLineChartData}">
+                                                                                <ItemsControl.ItemsPanel>
+                                                                                        <ItemsPanelTemplate>
+                                                                                                <Canvas/>
+                                                                                        </ItemsPanelTemplate>
+                                                                                </ItemsControl.ItemsPanel>
+                                                                                <ItemsControl.ItemContainerStyle>
+                                                                                        <Style TargetType="ContentPresenter">
+                                                                                                <Setter Property="Canvas.Left"
+                                                                                                        Value="{Binding X}"/>
+                                                                                                <Setter Property="Canvas.Top"
+                                                                                                        Value="210"/>
+                                                                                        </Style>
+                                                                                </ItemsControl.ItemContainerStyle>
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                        <DataTemplate>
+                                                                                                <TextBlock Text="{Binding Label}"
+                                                                                                           FontSize="9"
+                                                                                                           FontWeight="Medium"
+                                                                                                           Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
+                                                                                                           HorizontalAlignment="Center"
+                                                                                                           Margin="-20,0,0,0"
+                                                                                                           TextAlignment="Center"/>
+                                                                                        </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                        </ItemsControl>
                                                                 </Canvas>
 
                                                                 <StackPanel Orientation="Horizontal"
                                                                             HorizontalAlignment="Center"
                                                                             Margin="0,10,0,0">
-                                                                        <TextBlock Text="30 ngày: "
+                                                                        <TextBlock Text="7 ngày: "
                                                                                    FontSize="12"
                                                                                    Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
-                                                                        <TextBlock Text="{Binding UsersQuitOver30Days}"
+                                                                        <TextBlock Text="{Binding SuccessRateLineChartData[0].Value}"
+                                                                                   FontSize="12"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="{StaticResource DangerBrush}"/>
+                                                                        <TextBlock Text=" | 30 ngày: "
+                                                                                   FontSize="12"
+                                                                                   Margin="12,0,0,0"
+                                                                                   Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                                                                        <TextBlock Text="{Binding SuccessRateLineChartData[1].Value}"
                                                                                    FontSize="12"
                                                                                    FontWeight="Bold"
                                                                                    Foreground="{StaticResource DangerBrush}"/>
@@ -677,7 +726,7 @@
                                                                                    FontSize="12"
                                                                                    Margin="12,0,0,0"
                                                                                    Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
-                                                                        <TextBlock Text="{Binding UsersQuitOver90Days}"
+                                                                        <TextBlock Text="{Binding SuccessRateLineChartData[2].Value}"
                                                                                    FontSize="12"
                                                                                    FontWeight="Bold"
                                                                                    Foreground="{StaticResource DangerBrush}"/>
@@ -685,7 +734,7 @@
                                                                                    FontSize="12"
                                                                                    Margin="12,0,0,0"
                                                                                    Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
-                                                                        <TextBlock Text="{Binding UsersQuitOver365Days}"
+                                                                        <TextBlock Text="{Binding SuccessRateLineChartData[4].Value}"
                                                                                    FontSize="12"
                                                                                    FontWeight="Bold"
                                                                                    Foreground="{StaticResource DangerBrush}"/>
@@ -844,3 +893,4 @@
                 </ScrollViewer>
         </Grid>
 </UserControl>
+

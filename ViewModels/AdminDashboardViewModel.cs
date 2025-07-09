@@ -17,6 +17,14 @@ namespace QuitSmartApp.ViewModels
         public string Color { get; set; } = "#007ACC";
     }
 
+    public class LineChartDataPoint
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string Label { get; set; } = string.Empty;
+        public int Value { get; set; }
+    }
+
     public class MonthlyStatistic
     {
         public string Month { get; set; } = string.Empty;
@@ -53,6 +61,7 @@ namespace QuitSmartApp.ViewModels
         private ObservableCollection<ChartDataPoint> _ageGroupDistribution = new();
         private ObservableCollection<MonthlyStatistic> _monthlyStats = new();
         private ObservableCollection<ChartDataPoint> _successRateByDays = new();
+        private ObservableCollection<LineChartDataPoint> _successRateLineChartData = new();
         private int _totalBadgesAwarded;
         private decimal _averageMoneySavedPerUser;
         private int _newUsersThisMonth;
@@ -238,6 +247,12 @@ namespace QuitSmartApp.ViewModels
             set => SetProperty(ref _successRateByDays, value);
         }
 
+        public ObservableCollection<LineChartDataPoint> SuccessRateLineChartData
+        {
+            get => _successRateLineChartData;
+            set => SetProperty(ref _successRateLineChartData, value);
+        }
+
         public int TotalBadgesAwarded
         {
             get => _totalBadgesAwarded;
@@ -322,9 +337,18 @@ namespace QuitSmartApp.ViewModels
             {
                 IsLoading = true;
 
-                // Load users overview  
+                // Clear cache first
+                Users?.Clear();
+
+                // Load users overview with fresh data
                 var usersOverview = await _adminService.GetAllUsersOverviewAsync();
                 Users = new ObservableCollection<UserOverview>(usersOverview ?? new List<UserOverview>());
+
+                // Debug: Log badge counts
+                foreach (var user in Users.Take(5))
+                {
+                    System.Diagnostics.Debug.WriteLine($"User: {user.FullName}, TotalBadges: {user.TotalBadges}, TotalDaysQuit: {user.TotalDaysQuit}");
+                }
 
                 // Load admin logs
                 var logs = await _adminService.GetAdminLogsAsync();
@@ -344,6 +368,13 @@ namespace QuitSmartApp.ViewModels
                 OnPropertyChanged(nameof(ActiveUsersPercentage));
                 OnPropertyChanged(nameof(InactiveUsersPercentage));
                 OnPropertyChanged(nameof(InactiveUsers));
+
+                // Force refresh all properties
+                OnPropertyChanged(nameof(Users));
+                OnPropertyChanged(nameof(TotalUsers));
+                OnPropertyChanged(nameof(ActiveUsers));
+                OnPropertyChanged(nameof(TotalMoneySaved));
+                OnPropertyChanged(nameof(AverageDaysQuit));
             }
             catch (Exception ex)
             {
@@ -619,6 +650,29 @@ namespace QuitSmartApp.ViewModels
              };
             SuccessRateByDays = new ObservableCollection<ChartDataPoint>(successRates);
 
+            // Success rate line chart data
+            var lineChartData = new List<LineChartDataPoint>();
+            var totalUsers = Users.Count();
+            if (totalUsers > 0)
+            {
+                // Tính tỷ lệ thành công cho từng khoảng thời gian
+                var users7Days = Users.Count(u => (u.TotalDaysQuit ?? 0) >= 7);
+                var users30Days = Users.Count(u => (u.TotalDaysQuit ?? 0) >= 30);
+                var users90Days = Users.Count(u => (u.TotalDaysQuit ?? 0) >= 90);
+                var users180Days = Users.Count(u => (u.TotalDaysQuit ?? 0) >= 180);
+                var users365Days = Users.Count(u => (u.TotalDaysQuit ?? 0) >= 365);
+
+                var chartHeight = 200.0;
+                var chartWidth = 400.0;
+
+                lineChartData.Add(new LineChartDataPoint { X = 0, Y = chartHeight - (users7Days / (double)totalUsers * chartHeight), Label = "7 ngày", Value = users7Days });
+                lineChartData.Add(new LineChartDataPoint { X = chartWidth * 0.25, Y = chartHeight - (users30Days / (double)totalUsers * chartHeight), Label = "30 ngày", Value = users30Days });
+                lineChartData.Add(new LineChartDataPoint { X = chartWidth * 0.5, Y = chartHeight - (users90Days / (double)totalUsers * chartHeight), Label = "90 ngày", Value = users90Days });
+                lineChartData.Add(new LineChartDataPoint { X = chartWidth * 0.75, Y = chartHeight - (users180Days / (double)totalUsers * chartHeight), Label = "180 ngày", Value = users180Days });
+                lineChartData.Add(new LineChartDataPoint { X = chartWidth, Y = chartHeight - (users365Days / (double)totalUsers * chartHeight), Label = "365 ngày", Value = users365Days });
+            }
+            SuccessRateLineChartData = new ObservableCollection<LineChartDataPoint>(lineChartData);
+
             // Additional statistics
             TotalBadgesAwarded = Users.Sum(u => u.TotalBadges ?? 0);
             AverageMoneySavedPerUser = Users.Any() ? Users.Average(u => u.TotalMoneySaved ?? 0) : 0;
@@ -694,9 +748,21 @@ namespace QuitSmartApp.ViewModels
                     );
                 }
 
-                // Set selected user and navigate
-                SelectedUserForDetails = user;
-                NavigateToUserDetails?.Invoke(user);
+                // Refresh user data trước khi navigate
+                await LoadDashboardDataAsync();
+
+                // Find the refreshed user data
+                var refreshedUser = Users.FirstOrDefault(u => u.UserId == user.UserId);
+                if (refreshedUser != null)
+                {
+                    SelectedUserForDetails = refreshedUser;
+                    NavigateToUserDetails?.Invoke(refreshedUser);
+                }
+                else
+                {
+                    SelectedUserForDetails = user;
+                    NavigateToUserDetails?.Invoke(user);
+                }
             }
             catch (Exception ex)
             {

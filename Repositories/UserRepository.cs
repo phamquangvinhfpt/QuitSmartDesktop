@@ -33,7 +33,7 @@ namespace QuitSmartApp.Repositories
             var user = await GetByUsernameAsync(username);
             if (user == null || string.IsNullOrEmpty(user.PasswordHash))
                 return null;
-                
+
             // Use PasswordHelper to verify password against hash
             return PasswordHelper.VerifyPassword(password, user.PasswordHash) ? user : null;
         }
@@ -61,6 +61,7 @@ namespace QuitSmartApp.Repositories
             return await _dbSet
                 .Include(u => u.UserProfiles)
                 .Include(u => u.UserStatistic)
+                .Include(u => u.UserBadges)
                 .FirstOrDefaultAsync(u => u.UserId == userId && u.IsActive == true);
         }
 

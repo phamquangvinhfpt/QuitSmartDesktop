@@ -131,8 +131,6 @@ namespace QuitSmartApp.Services
 
         public Task<IEnumerable<HealthTrackingOverview>> GetHealthTrackingOverviewAsync()
         {
-            // This would require implementing HealthTrackingOverview repository
-            // For now, return empty collection
             return Task.FromResult<IEnumerable<HealthTrackingOverview>>(new List<HealthTrackingOverview>());
         }
 

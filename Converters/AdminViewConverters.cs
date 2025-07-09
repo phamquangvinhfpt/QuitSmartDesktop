@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using QuitSmartApp.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace QuitSmartApp.Converters
 {
@@ -238,6 +242,25 @@ namespace QuitSmartApp.Converters
                 return Math.Max(0, Math.Min(360, intPercentage * 3.6));
             }
             return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    // Converter để tạo Points string cho Polyline từ LineChartDataPoint collection
+    public class LineChartPointsConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is ObservableCollection<LineChartDataPoint> dataPoints && dataPoints.Any())
+            {
+                var points = dataPoints.Select(p => $"{p.X},{p.Y}");
+                return string.Join(" ", points);
+            }
+            return "0,200 100,150 200,100 300,80 400,60"; // Fallback to sample data
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
