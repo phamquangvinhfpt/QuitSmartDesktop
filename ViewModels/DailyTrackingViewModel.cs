@@ -213,7 +213,7 @@ namespace QuitSmartApp.ViewModels
                     await RefreshRecentLogsAsync();
 
                     // Clear success message after 3 seconds
-                    await Task.Delay(3000);
+                    await Task.Delay(1000);
                     SuccessMessage = string.Empty;
                 }
             }
